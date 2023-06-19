@@ -3,7 +3,7 @@ import { AdminRouter } from "./routes/admin-router";
 import { isAdmin } from "./utils/helpers";
 import { DashboardView } from "./layout/DashboardView";
 import interceptorsService from "./services/InterceptorsService";
-import { AuthView } from "./layout/AuthView";
+import { AuthView } from "./components/auth/AuthView";
 
 interceptorsService.createInterceptors();
 
@@ -12,10 +12,9 @@ export const App = () => {
 
   if (user) {
     if (isAdmin(user)) {
-      return <AdminRouter />
+      return <AdminRouter />;
     };
-    return <DashboardView />
+    return <DashboardView />;
   };
-
-  return <AuthView />
-}
+  return <AuthView />;
+};

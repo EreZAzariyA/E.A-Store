@@ -1,6 +1,6 @@
 import { Button, Form, Input } from "antd";
 import { authServices } from "../../../services/auth-services";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getError } from "../../../utils/helpers";
 
 export const Register = () => {
@@ -14,28 +14,42 @@ export const Register = () => {
       console.log(getError(err));
     }
   };
-  
+
+  const formItemLayout = {
+    className: 'auth-form register',
+    layout: "horizontal",
+    labelAlign: 'left',
+    labelCol: {
+      sm: { span: 8 },
+      md: { span: 6 },
+      lg: { span: 4 },
+    },
+    wrapperCol: {span: 24},
+  };
+
   return (
-    <Form onFinish={onFinish}>
-      <Form.Item>
-        <Form.Item label={'First-name'} name={'first_name'}>
-          <Input type="text" />
-        </Form.Item>
-        <Form.Item label={'Last-name'} name={'last_name'}>
-          <Input type="text" />
-        </Form.Item>
-      
-      </Form.Item>
+    <div className="auth-form-main-container">
+      <div className="auth-form-inner-container">
+        <Form onFinish={onFinish} {...formItemLayout}>
+            <Form.Item label={'First-name'} name={'first_name'}>
+              <Input type="text" />
+            </Form.Item>
+            <Form.Item label={'Last-name'} name={'last_name'}>
+              <Input type="text" />
+            </Form.Item>
 
-      <Form.Item label={'Email'} name={'email'}>
-        <Input type="email" />
-      </Form.Item>
+            <Form.Item label={'Email'} name={'email'}>
+              <Input type="email" />
+            </Form.Item>
 
-      <Form.Item label={'Password'} name={'password'}>
-        <Input type="password" />
-      </Form.Item>
+            <Form.Item label={'Password'} name={'password'}>
+              <Input.Password />
+            </Form.Item>
 
-      <Button htmlType="submit">Sign-up</Button>
-    </Form>
+            <Button htmlType="submit">Sign-up</Button>
+            <p>Already have account? <Link to={'/auth/login'}>Login</Link></p>
+        </Form>
+      </div>
+    </div>
   );
 };

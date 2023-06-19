@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from "antd";
 import { authServices } from "../../../services/auth-services";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getError } from "../../../utils/helpers";
 
 export const Login = () => {
@@ -18,17 +18,34 @@ export const Login = () => {
     };
   };
 
-  return (
-    <Form onFinish={onFinish}>
-      <Form.Item label={'Email'} name={'email'}>
-        <Input type="email" />
-      </Form.Item>
-      
-      <Form.Item label={'Password'} name={'password'}>
-        <Input type="password" />
-      </Form.Item>
+  const formItemLayout = {
+    className: 'auth-form login',
+    layout: "horizontal",
+    labelAlign: 'left',
+    labelCol: {
+      sm: { span: 6 },
+      lg: { span: 4 },
+    },
+    wrapperCol: {span: 24},
+  };
 
-      <Button htmlType="submit">Sign-in</Button>
-    </Form>
+  return (
+    <div className="auth-form-main-container">
+      <div className="auth-form-inner-container">
+        <Form onFinish={onFinish} {...formItemLayout}>
+          <Form.Item label={'Email'} name={'email'}>
+            <Input type="email" />
+          </Form.Item>
+          
+          <Form.Item label={'Password'} name={'password'}>
+            <Input.Password />
+          </Form.Item>
+
+          <Button htmlType="submit">Sign-in</Button>
+          <p>D'ont have account? <Link to={'/auth/register'}>Register</Link></p>
+        </Form>
+
+      </div>
+    </div>
   );
 };
