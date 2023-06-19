@@ -1,6 +1,6 @@
 import { Button, Col, Form, Input, Radio, Row } from "antd"
 import { useState } from "react"
-import { adminServices } from "../../../services/admin-services";
+import { adminServices } from "../../../../services/admin-services";
 
 
 const STEPS = {

@@ -1,18 +1,35 @@
 import { createReducer } from 'redux-promise-middleware-actions';
 import { combineReducers } from 'redux';
+import jwtDecode from "jwt-decode";
 import { AuthActions, CategoriesActions, ProductsActions } from './actions';
 
+const token = localStorage.getItem('token');
 
-const authReducer = createReducer(null, (handleAction) => [
+const initialValue = token ? {
+  token: token,
+  user: jwtDecode(token)
+} : null;
+
+const authReducer = createReducer(initialValue, (handleAction) => [
   handleAction(AuthActions.login, (state, {payload}) => {
-    return {...state, ...payload};
+    const { token } = payload;
+    localStorage.setItem('token', token);
+    return {
+      ...state,
+      token: token,
+      user: jwtDecode(token)
+    };
   }),
   handleAction(AuthActions.register, (state, {payload}) => {
     return {...state, ...payload};
+  }),
+  handleAction(AuthActions.logout, () => {
+    localStorage.removeItem('token');
+    return null;
   })
 ]);
 
-const productsReducer = createReducer(null, (handleAction) => [
+const productsReducer = createReducer([], (handleAction) => [
   handleAction(ProductsActions.fetchProducts , (state, { payload }) => {
     return {
       ...state,
@@ -25,7 +42,7 @@ const productsReducer = createReducer(null, (handleAction) => [
   })),
 ]);
 
-const categoriesReducer = createReducer(null, (handleAction) => [
+const categoriesReducer = createReducer([], (handleAction) => [
   handleAction(CategoriesActions.fetchCategories , (state, { payload }) => {
     return {
       ...state,
@@ -48,36 +65,6 @@ const categoriesReducer = createReducer(null, (handleAction) => [
   })),
 ]);
 
-
-// const productsReducer = createReducer(null, (handleAction) => [
-  // handleAction(ProductsActions.addProduct.pending ,(state) => ({
-  //   ...state,
-  //   pending: true
-  // })),
-  // handleAction(ProductsActions.addProduct.rejected, (state) => ({
-  //   ...state,
-  //   pending: false
-  // })),
-  // handleAction(ProductsActions.addProduct.fulfilled, (state, { payload }) => ({
-  //   ...state,
-  //   ...payload,
-  //   pending: false
-  // }))
-//   handleAction(ProductsActions.fetchProducts.pending , (state) => ()),
-//   handleAction(ProductsActions.addProduct.pending ,(state) => ({
-//     ...state,
-//     pending: true
-//   })),
-//   handleAction(ProductsActions.addProduct.rejected, (state) => ({
-//     ...state,
-//     pending: false
-//   })),
-//   handleAction(ProductsActions.addProduct.fulfilled, (state, { payload }) => ({
-//     ...state,
-//     ...payload,
-//     pending: false
-//   }))
-// ])
 
 export default combineReducers({
   authReducer,

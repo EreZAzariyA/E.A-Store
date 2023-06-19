@@ -1,14 +1,20 @@
 class Config {
   urls = {
+    auth: {
+      register: "",
+      login: ""
+    },
     products: {
       fetchAllProducts: ""
     },
     categories: {
       fetchAllCategories: "",
+      fetchOneCategory: "",
       fetchProductsByCategoryId: ""
     },
     subCategories: {
       fetchAllSubCategories: "",
+      fetchOneSubCategory: "",
       fetchSubCategoriesByCategoryId: "",
       fetchProductsBySubCategoryId: ""
     },
@@ -20,15 +26,21 @@ class Config {
 
   constructor(baseUrl) {
     this.urls = {
+      auth: {
+        register: baseUrl + 'auth/register',
+        login: baseUrl + 'auth/login',
+      },
       products: {
         fetchAllProducts: baseUrl + 'products/all',
       },
       categories: {
         fetchAllCategories: baseUrl + 'categories/all',
+        fetchOneCategory: baseUrl + 'categories/',
         fetchProductsByCategoryId: baseUrl + 'categories/products/all',
       },
       subCategories: {
         fetchAllSubCategories: baseUrl + 'categories/sub-categories/all',
+        fetchOneSubCategory: baseUrl + 'categories/sub-categories/',
         fetchSubCategoriesByCategoryId: baseUrl + 'categories/sub-categories/',
         fetchProductsByCategoryId: baseUrl + 'categories/products/all',
       },
@@ -50,6 +62,7 @@ class DevelopmentConfig extends Config {
 class ProductionConfig extends Config {
   constructor() {
     super("https://ea-store.herokuapp.com/api/");
+    // super("http://localhost:5000/api/");
   }
 }
 

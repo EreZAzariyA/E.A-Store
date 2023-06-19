@@ -1,8 +1,9 @@
-import { createAsyncAction, createAction } from 'redux-promise-middleware-actions';
+import { createAction } from 'redux-promise-middleware-actions';
 
 export const AuthActionsTypes = {
   LOGIN: 'LOGIN',
-  REGISTER: 'REGISTER'
+  REGISTER: 'REGISTER',
+  LOGOUT: 'LOGOUT'
 };
 
 export const ProductsActionsType = {
@@ -18,8 +19,9 @@ export const CategoriesActionsType = {
 };
 
 export const AuthActions = {
-  login: createAction(AuthActionsTypes.LOGIN, (user) => ({user})),
-  register: createAction(AuthActionsTypes.REGISTER, (user) => ({user}))
+  login: createAction(AuthActionsTypes.LOGIN, (token) => ({token})),
+  register: createAction(AuthActionsTypes.REGISTER, (user) => ({user})),
+  logout: createAction(AuthActionsTypes.LOGOUT)
 };
 
 export const ProductsActions = {

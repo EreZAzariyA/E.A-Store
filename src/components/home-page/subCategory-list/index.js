@@ -1,9 +1,9 @@
-import { ProductCard } from "../../productCard";
 import { Col, Row } from "antd";
 import { useSelector } from "react-redux";
+import { SubCategoryCard } from "./subCategory-card";
 
 export const SubCategoryList = () => {
-  const subCategories = useSelector((state) => (state.categoriesReducer?.subCategories));
+  const subCategories = useSelector((state) => (state.categories?.subCategories));
 
   return (
     <div className="subCategories-list-main-container">
@@ -13,7 +13,7 @@ export const SubCategoryList = () => {
           <Row align={"stretch"} justify={'space-evenly'} gutter={[0, 15]}>
             {subCategories?.map((subCategory) => (
               <Col key={subCategory?._id}>
-                <ProductCard subCategory={subCategory} />
+                <SubCategoryCard subCategory={subCategory} />
               </Col>
             ))}
           </Row>

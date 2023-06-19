@@ -1,7 +1,7 @@
-.main-layout {
+.layout {
   height: 100vh;
 }
 
-.main-layout .ant-layout-header {
-  background: transparent;
+.layout .ant-layout-header {
+  background: white;
 }
