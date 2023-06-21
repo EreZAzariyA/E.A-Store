@@ -3,7 +3,7 @@ import { AdminRouter } from "./routes/admin-router";
 import { isAdmin } from "./utils/helpers";
 import { DashboardView } from "./layout/DashboardView";
 import interceptorsService from "./services/InterceptorsService";
-import { AuthView } from "./components/auth/AuthView";
+import { AuthView } from "./layout/AuthView";
 
 interceptorsService.createInterceptors();
 
