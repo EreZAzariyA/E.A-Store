@@ -3,6 +3,7 @@ import { DashboardHeader } from "./DashboardHeader";
 import { DashboardFooter } from "./DashboardFooter";
 import { CustomDivider } from "../../components/components/Divider";
 import { UserRouter } from "../../routes/user-router";
+import { DashboardWrapper } from "./DashboardWrapper";
 
 const { Content } = Layout;
 
@@ -12,6 +13,7 @@ export const DashboardView = () => (
     <CustomDivider />
     
     <Content>
+      <DashboardWrapper />
       <UserRouter />
     </Content>
 

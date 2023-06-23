@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { productsServices } from "../../services/productsServices";
 import { authServices } from "../../services/auth-services";
-import { Layout, Menu, Spin } from "antd";
+import { Col, Input, Layout, Menu, Row, Spin } from "antd";
 import  UserOutlined  from "@ant-design/icons/UserOutlined";
 
 const { Header } = Layout;
@@ -12,8 +12,8 @@ export const DashboardHeader = () => {
   const location = useLocation();
   const [ isLoading, setIsLoading ] = useState(true);
   const [ categories, setCategories ] = useState([]);
-  const [current, setCurrent] = useState('/home');
-  
+  const [ current, setCurrent ] = useState('/');
+
   useEffect(() => {
     const fetchCategories = async () => {
       const categories = await productsServices.fetchAllCategories();
@@ -31,8 +31,8 @@ export const DashboardHeader = () => {
   const defaultItems = [
     {
       label: 'Home',
-      key: '/home',
-      onClick: () => navigate('/home')
+      key: '/',
+      onClick: () => navigate('/')
     },
   ];
 
@@ -62,12 +62,32 @@ export const DashboardHeader = () => {
   if (!isLoading) {
     return (
       <Header>
-        <Menu
+        <Row>
+          <Col span={24}>
+            <p>We guarantee the lowest price in your city of residence for equal delivery and payment terms</p>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col span={6} className="promotions">
+
+          </Col>
+          
+          <Col span={12} className="search">
+            <Input />
+          </Col>
+        
+          <Col span={6} className="personal"></Col>
+        
+        </Row>
+
+
+        {/* <Menu
           mode="horizontal"
           style={{background: 'transparent', width: '100%'}}
           items={defaultItems.concat(mappedCategories).concat(authOptions)}
           selectedKeys={[current]}
-        />
+        /> */}
       </Header>
     );
   } return <Spin />

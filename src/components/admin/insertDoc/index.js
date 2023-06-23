@@ -1,7 +1,8 @@
 import { Tabs } from "antd"
-import { AddProduct } from "./add-product";
-import { AddCategory } from "./add-category";
-
+import { AddProduct } from "./addProduct";
+import { AddCategory } from "./addCategory";
+import { AddSubCategory } from "./addSubCategory";
+import "./insertDoc.css";
 
 export const AdminInsert = () => {
 
@@ -16,9 +17,14 @@ export const AdminInsert = () => {
       key: 'add-category',
       children: <AddCategory />
     },
+    {
+      label: 'Add Sub-Category' ,
+      key: 'add-sub-category',
+      children: <AddSubCategory />
+    },
   ];
 
   return (
-    <Tabs items={items} />
+    <Tabs items={items} className="admin-insert-tabs" />
   );
 };

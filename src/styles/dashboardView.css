@@ -4,4 +4,27 @@
 
 .layout .ant-layout-header {
   background: white;
+  height: min-content;
+
+  line-height: 5px;
+  padding: 0 0 15px;
+
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.layout.admin-layout .ant-layout-header {
+  padding: 10px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 765px) {
+  .layout .ant-layout-header p {
+    line-height: normal;
+  }
 }

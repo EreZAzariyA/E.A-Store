@@ -1,22 +1,22 @@
 import { Card } from "antd";
+import { useNavigate } from "react-router-dom";
 import "./subCategoryCard.css";
 
 export const SubCategoryCard = (props) => {
-  // const { subCategory } = props;
+  const { subCategory } = props;
+  const navigate = useNavigate();
 
   return (
-    <>
-    <div className="card-bg"></div>
-      <Card
-        hoverable
-        style={{
-          width: 240,
-        }}
-      >
-
-        {/* <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
-      </Card>
-
-    </>
+    <Card
+      onClick={() => navigate(`/categories/${subCategory.category_id}/sub-category/${subCategory._id}`)}
+      hoverable
+      style={{
+        width: 240,
+        borderRadius: '50%'
+      }}
+    >
+      <img alt="example" style={{width: '150px',height: '120px', objectFit: 'contain'}} src={subCategory?.image_url} />
+      <Card.Meta description={subCategory.subCategory}/>
+    </Card>
   );
 };

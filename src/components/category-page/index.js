@@ -36,7 +36,7 @@ export const CategoryPage = () => {
           mode="horizontal"
           style={{background: 'transparent'}}
           selectedKeys={[current]}
-          items={[...subCategories].map((subCategory) => {
+          items={subCategories?.map((subCategory) => {
             return {
               key: 'sub-category/' + subCategory._id,
               label: subCategory.subCategory,

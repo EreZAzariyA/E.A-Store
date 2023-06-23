@@ -15,6 +15,12 @@ class AdminServices {
     const uploadedCategory = response.data;
     return uploadedCategory;
   }
+  
+  addSubCategory = async (subCategoryToAdd) => {
+    const response = await axios.post(config.urls.admin.addSubCategory, subCategoryToAdd);
+    const uploadedCategory = response.data;
+    return uploadedCategory;
+  }
 
 };
 

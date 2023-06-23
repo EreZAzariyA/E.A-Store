@@ -41,6 +41,7 @@ class ProductsServices {
     if (!store.getState().categoriesReducer.subCategories) {
       const response = await axios.get(config.urls.subCategories.fetchAllSubCategories);
       const subCategories = response.data;
+      // console.log(subCategories);
       store.dispatch(CategoriesActions.fetchSubCategories(subCategories));
       return subCategories;
     };
@@ -56,22 +57,23 @@ class ProductsServices {
     };
     const category = store.getState().categoriesReducer.subCategories.find((subC) => subC._id === subCategory_id);
     return category;
-  }
-
-  
-  fetchSubCategoriesByCategoryId = async (categoryId) => {
-    if (!store.getState().categoriesReducer.subCategories) {
-      const response = await axios.get(config.urls.subCategories.fetchSubCategoriesByCategoryId + categoryId);
-      const subCategories = response.data;
-      console.log({subCategories});
-      return subCategories;
-    };
-    const subCategories = store.getState().categoriesReducer.subCategories;
-    console.log({subCategories});
-    const subCategoriesByCategoryId = [...subCategories].filter((subC) => (subC.category_id === categoryId));
-    return subCategoriesByCategoryId;
   };
 
+  fetchSubCategoriesByCategoryId = async (categoryId) => {
+    const response = await axios.get(config.urls.subCategories.fetchSubCategoriesByCategoryId + categoryId);
+    const subCategories = response.data;
+    return subCategories;
+  };
+
+  fetchProductsByCategoryId = async (categoryId) => {
+    if (!store.getState().productsReducer.product) {
+      const response = await axios.get(config.urls.products.fetchProductsByCategoryId + categoryId);
+      const productsByCategory = response.data;
+      return productsByCategory;
+    }
+    const productsByCategory = [...store.getState().productsReducer.products].filter((product) => (product.category_id !== categoryId));
+    return productsByCategory;
+  };
 };
 
 export const productsServices = new ProductsServices();

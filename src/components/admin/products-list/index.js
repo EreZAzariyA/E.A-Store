@@ -2,35 +2,16 @@ import { useEffect, useState } from "react";
 import { productsServices } from "../../../services/productsServices";
 import { Form, Input, InputNumber, Popconfirm, Select, Spin, Table, Typography } from "antd";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const ProductsList = () => {
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ products, setProducts ] = useState([]);
-  const [ categories, setCategories ] = useState([]);
-  const [ subCategories, setSubCategories ] = useState([]);
+  const products = useSelector((state) => (state.productsReducer?.products));
+  const categories = useSelector((state) => (state.categoriesReducer?.categories));
+  const subCategories = useSelector((state) => (state.categoriesReducer?.subCategories));
+  // const [ subCategories, setSubCategories ] = useState([]);
   const [ editingKey, setEditingKey ] = useState('');
   const [ form ] = Form.useForm();
   const isEditing = (record) => record._id === editingKey;
-
-  useEffect(() => {
-    const fetchAllProducts = async () => {
-      const products = await productsServices.fetchAllProducts();
-      setProducts(products);
-    };
-    const fetchCategories = async () => {
-      const categories = await productsServices.fetchAllCategories();
-      setCategories(categories);
-    };
-    const fetchSubCategories = async () => {
-      const subCategories = await productsServices.fetchAllSubCategories();
-      setSubCategories(subCategories);
-    };
-
-    fetchAllProducts();
-    fetchCategories();
-    fetchSubCategories();
-    setIsLoading(false);
-  }, []);
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -54,11 +35,11 @@ export const ProductsList = () => {
           ...item,
           ...row,
         });
-        setProducts(newData);
+        console.info(newData);
         setEditingKey('');
       } else {
         newData.push(row);
-        setProducts(newData);
+        console.info(newData);
         setEditingKey('');
       }
     } catch (errInfo) {
@@ -74,9 +55,7 @@ export const ProductsList = () => {
       fixed: 'left',
       editable: true,
       width: 150,
-      sorter: (a, b) => {
-        return a.name - b.name
-      }
+      sorter: (a, b) => (a.name.localeCompare(b.name))
     },
     {
       title: 'Category',
@@ -86,10 +65,10 @@ export const ProductsList = () => {
       render: (value, record) => {
         const category = categories?.find((c) => (c._id === value));
         return (
-          <Link to={`/all-categories/${category?._id}`}>{category?.category}</Link>
+          <Link to={`/admin/all-categories/${category?._id}`}>{category?.category}</Link>
         )
       },
-      sorter: (a, b) => (a.category_id - b.category_id)
+      sorter: (a, b) => (a.category_id > b.category_id)
     },
     {
       title: 'Sub-Category',
@@ -102,6 +81,7 @@ export const ProductsList = () => {
           <p>{subCategory?.subCategory}</p>
         )
       },
+      sorter: (a, b) => (a.subCategory_id.localeCompare(b.subCategory_id))
     },
     {
       title: 'Description',
@@ -114,6 +94,7 @@ export const ProductsList = () => {
       key: 'price',
       dataIndex: 'price',
       editable: true,
+      sorter: (a, b) => (a.price > b.price)
     },
     {
       title: 'Image',
@@ -209,11 +190,11 @@ export const ProductsList = () => {
     };
   });
 
-  if (!isLoading) {
+  if (products?.length) {
     return (
       <Form form={form} component={false}>
         <Table
-          loading={!products?.length}
+          loading={!products.length}
           bordered
           rowKey={'_id'}
           dataSource={products}

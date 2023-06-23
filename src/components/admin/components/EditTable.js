@@ -143,7 +143,6 @@ export const EditTable = ({columns, dataSource, ...rest}) => {
         bordered
         columns={columns}
         dataSource={dataSource}
-        scroll={{x: 'auto'}}
       />
     </Form>
   );

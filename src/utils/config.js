@@ -5,7 +5,8 @@ class Config {
       login: ""
     },
     products: {
-      fetchAllProducts: ""
+      fetchAllProducts: "",
+      fetchProductsByCategoryId: ""
     },
     categories: {
       fetchAllCategories: "",
@@ -20,7 +21,8 @@ class Config {
     },
     admin: {
       addProduct: "",
-      addCategory: ""
+      addCategory: "",
+      addSubCategory: ""
     }
   }
 
@@ -32,6 +34,7 @@ class Config {
       },
       products: {
         fetchAllProducts: baseUrl + 'products/all',
+        fetchProductsByCategoryId: baseUrl + 'products/by-category-id/'
       },
       categories: {
         fetchAllCategories: baseUrl + 'categories/all',
@@ -40,14 +43,14 @@ class Config {
       },
       subCategories: {
         fetchAllSubCategories: baseUrl + 'categories/sub-categories/all',
-        fetchOneSubCategory: baseUrl + 'categories/sub-categories/',
+        fetchOneSubCategory: baseUrl + 'categories/sub-category/',
         fetchSubCategoriesByCategoryId: baseUrl + 'categories/sub-categories/',
         fetchProductsByCategoryId: baseUrl + 'categories/products/all',
       },
       admin: {
         addProduct: baseUrl + 'admin/add-product',
         addCategory: baseUrl + 'admin/add-category',
-
+        addSubCategory: baseUrl + 'admin/add-sub-category',
       }
     }
   }
@@ -65,7 +68,8 @@ class ProductionConfig extends Config {
     // super("http://localhost:5000/api/");
   }
 }
-
 const config = process.env.NODE_ENV === "development" ? new DevelopmentConfig() : new ProductionConfig();
+
+console.log(process.env.NODE_ENV);
 
 export default config;
