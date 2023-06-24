@@ -1,20 +1,9 @@
-import { useEffect, useState } from "react";
-import { productsServices } from "../../services/productsServices";
 import { ProductCard } from "../productCard";
 import { Space } from "antd";
-import { useDispatch } from "react-redux";
-import { ProductsActions } from "../../redux/actions";
+import { useSelector } from "react-redux";
 
 export const ProductsList = () => {
-  const dispatch = useDispatch();
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    productsServices.fetchAllProducts().then((products) => {
-      setProducts(products);
-      dispatch(ProductsActions.fetchProducts(products));
-    });
-  }, []);
+  const products = useSelector((state) => (state.productsReducer?.products));
 
   return (
     <div className="products-list-main-container">

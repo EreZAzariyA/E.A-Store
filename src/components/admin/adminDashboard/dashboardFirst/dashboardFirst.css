@@ -16,16 +16,17 @@
   font-size: 22px;
   font-weight: 700;
   text-align: left;
+  letter-spacing: 1px;
 }
 
-.dashboard-first-container .tag.total-purchases-tag .total-purchases {
-  width: 55%;
+.dashboard-first-container .tag .total {
+  width: 60%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.dashboard-first-container .tag.total-purchases-tag .total-purchases .percentage {
+.dashboard-first-container .tag .total .percentage {
   color: green;
   font-weight: 600;
 }

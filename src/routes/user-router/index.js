@@ -5,10 +5,10 @@ import { Logout } from "../../layout/AuthView/logout";
 
 export const UserRouter = () => (
   <Routes>
-    {/* <Route path="/" element={<Navigate to="/" replace />} /> */}
-    
+    <Route path="auth/login" element={<Navigate to={{pathname: '/'}} replace />} />
+
     <Route path="/" element={<Dashboard />} />
-    <Route path="/categories/:category_id/*" element={<CategoryPage />} />
+    <Route path="categories/:category_id/*" element={<CategoryPage />} />
 
     <Route path="/logout" element={<Logout />} />
     <Route path="*" element={<p>Page not found</p>} />

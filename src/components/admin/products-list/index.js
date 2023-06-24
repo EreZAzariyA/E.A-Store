@@ -1,17 +1,47 @@
 import { useEffect, useState } from "react";
-import { productsServices } from "../../../services/productsServices";
-import { Form, Input, InputNumber, Popconfirm, Select, Spin, Table, Typography } from "antd";
+import { Form, Input, InputNumber, Popconfirm, Select, Space, Table, Typography, message } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { adminServices } from "../../../services/admin-services";
 
 export const ProductsList = () => {
+  const [ form ] = Form.useForm();
   const products = useSelector((state) => (state.productsReducer?.products));
   const categories = useSelector((state) => (state.categoriesReducer?.categories));
   const subCategories = useSelector((state) => (state.categoriesReducer?.subCategories));
-  // const [ subCategories, setSubCategories ] = useState([]);
+  const [ filteredProducts, setFilteredProducts] = useState([]);
   const [ editingKey, setEditingKey ] = useState('');
-  const [ form ] = Form.useForm();
+  const [selectedRows, setSelectedRows] = useState([]);
   const isEditing = (record) => record._id === editingKey;
+
+  const [ filterState, setFilterState ] = useState({
+    name: '',
+    category_id: '',
+    subCategory_id: ''
+  });
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const filtering = () => {
+
+    let filteredProducts = products;
+
+    if (filterState.name) {
+      filteredProducts = filteredProducts?.filter((p) => p.name.startsWith(filterState.name))
+    };
+    if (filterState.category_id) {
+      filteredProducts = filteredProducts?.filter((p) => (p.category_id === filterState.category_id))
+    }
+    if (filterState.subCategory_id) {
+      filteredProducts = filteredProducts?.filter((p) => (p.subCategory_id === filterState.subCategory_id))
+    };
+
+    return filteredProducts;
+  };
+  
+  useEffect(() => {
+    const f = filtering();
+    setFilteredProducts(f);
+  }, [filterState, products]);
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -47,7 +77,23 @@ export const ProductsList = () => {
     }
   };
 
+  const removeProduct = async (product_id) => {
+    try {
+      await adminServices.removeProduct(product_id);
+      message.success('Removed');
+    } catch (err) {
+      message.error(err.message);
+    };
+  };
+
   const columns = [
+    {
+      title: 'name',
+      key: 'name',
+      dataIndex: 'name',
+      fixed: 'left',
+      width: 150,
+    },
     {
       title: 'name',
       key: 'name',
@@ -97,12 +143,6 @@ export const ProductsList = () => {
       sorter: (a, b) => (a.price > b.price)
     },
     {
-      title: 'Image',
-      key: 'image',
-      dataIndex: 'image',
-      editable: true,
-    },
-    {
       title: 'Action',
       key: 'action',
       width: 150,
@@ -126,9 +166,19 @@ export const ProductsList = () => {
             </Popconfirm>
           </span>
         ) : (
-          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-            Edit
-          </Typography.Link>
+          <Space>
+            <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+              Edit
+            </Typography.Link>
+            <Popconfirm
+              title="Are you sure?"
+              onConfirm={() => removeProduct(record._id)}
+            >
+              <Typography.Link disabled={editingKey !== ''}>
+                Delete
+              </Typography.Link>
+            </Popconfirm>
+          </Space>
         );
       },
     },
@@ -190,27 +240,65 @@ export const ProductsList = () => {
     };
   });
 
-  if (products?.length) {
-    return (
-      <Form form={form} component={false}>
-        <Table
-          loading={!products.length}
-          bordered
-          rowKey={'_id'}
-          dataSource={products}
-          columns={mergedColumns}
-          rowClassName="editable-row"
-          scroll={{x: 'auto'}}
-          components={{
-            body: {
-              cell: EditableCell,
-            },
-          }}
-          pagination={{
-            onChange: cancel,
-          }}
+  return (
+    <Space direction="vertical" style={{width: '99%'}}>
+      <Space className="mt-10" align="center" wrap>
+        <Input
+          allowClear
+          type="text"
+          placeholder="Search product"
+          onChange={(val) => setFilterState({...filterState, name: val.target.value})}
         />
-      </Form>
-    );
-  } return <Spin />
+
+        <Select
+          allowClear
+          onClear={() => setFilterState({...filterState, category_id: ''})}
+          style={{width: '200px'}}
+          value={filterState.category_id}
+          onSelect={(val) => setFilterState({...filterState, category_id: val })}
+        >
+          <Select.Option key={''} disabled>Select category</Select.Option>
+          {categories?.map((category) => (
+            <Select.Option key={category._id}>{category.category}</Select.Option>
+          ))}
+        </Select>
+  
+        <Select
+          allowClear
+          onClear={() => setFilterState({...filterState, subCategory_id: ''})}
+          style={{width: '200px'}}
+          value={filterState.subCategory_id}
+          onSelect={(val) => setFilterState({...filterState, subCategory_id: val })}
+        >
+          <Select.Option key={''} disabled>Select sub-category</Select.Option>
+          {subCategories?.map((subCategory) => (
+            <Select.Option key={subCategory._id}>{subCategory.subCategory}</Select.Option>
+          ))}
+        </Select>
+      </Space>
+
+      <Table
+        loading={!products}
+        bordered
+        rowKey={'_id'}
+        dataSource={filteredProducts}
+        columns={mergedColumns}
+        rowClassName="editable-row"
+        scroll={{x: 'auto'}}
+        components={{
+          body: {
+            cell: EditableCell,
+          },
+        }}
+        pagination={{
+          onChange: cancel,
+        }}
+        rowSelection={{
+          onChange: (_, selectedRows) => {
+            setSelectedRows(selectedRows)
+          }
+        }}
+      />
+    </Space>
+  );
 };

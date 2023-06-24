@@ -73,7 +73,7 @@ export const AdminLayout = () => {
         <Sider theme="light" collapsible>
           {menu()}
         </Sider>
-        <Content>
+        <Content style={{overflow: 'auto'}}>
           <AdminRouter />
         </Content>
       </Layout>

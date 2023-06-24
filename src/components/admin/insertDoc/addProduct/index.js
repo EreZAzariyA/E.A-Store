@@ -1,41 +1,36 @@
 import { Button, Form, Input, InputNumber, Select, message } from "antd"
 import { useEffect, useState } from "react";
-import { productsServices } from "../../../../services/productsServices";
+import { useSelector } from "react-redux";
 import TextArea from "antd/es/input/TextArea";
 import { adminServices } from "../../../../services/admin-services";
 import { getError } from "../../../../utils/helpers";
 
 export const AddProduct = () => {
   const [ form ] = Form.useForm();
-  const [ categories, setCategories ] = useState([]);
-  const [ subCategories, setSubCategories ] = useState([]);
+  const categories = useSelector((state) => state.categoriesReducer?.categories);
+  const subCategories = useSelector((state) => state.categoriesReducer?.subCategories);
+  const [ filteredSubCategories, setFilteredSubCategories ] = useState([]);
   const [ initialValues, setInitialValues ] = useState({
     name: '',
     category_id: '',
     subCategory_id: '',
     description: '',
     price: '',
+    image_url: ''
   });
 
-  const fetchCategories = async () => {
-    const categories = await productsServices.fetchAllCategories();
-    setCategories(categories);
-  };
+  // const fetchSubCategories = async (category_id) => {
+  //   const subCategories = await productsServices.fetchSubCategoriesByCategoryId(category_id);
+  //   setSubCategories(subCategories);
+  // };
 
-  const fetchSubCategories = async (category_id) => {
-    const subCategories = await productsServices.fetchSubCategoriesByCategoryId(category_id);
-    setSubCategories(subCategories);
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   useEffect(() => {
     if (initialValues.category_id) {
-      fetchSubCategories(initialValues.category_id);
+      const filteredSubCategories = [...subCategories]?.filter((subCategory) => (subCategory.category_id === initialValues.category_id));
+      setFilteredSubCategories(filteredSubCategories);
     };
-  }, [initialValues.category_id]);
+  }, [initialValues.category_id, subCategories]);
 
   const onFinish = async (values) => {
     try {
@@ -68,10 +63,7 @@ export const AddProduct = () => {
       <Form.Item label={'Product'} name={'name'} rules={[{ required: true, message: 'Product name is missing' }]}>
         <Input
           type="text"
-          onChange={(val) => {
-            setInitialValues({...initialValues, name: val.target.value})
-            console.log(val.target.value);
-          }
+          onChange={(val) => setInitialValues({...initialValues, name: val.target.value})
         }
         />
       </Form.Item>
@@ -79,8 +71,7 @@ export const AddProduct = () => {
       <Form.Item label={'Category'} name={'category_id'} rules={[{ required: true, message: 'Category id is missing' }]}>
         <Select
           onSelect={(val) => {
-            setInitialValues({...initialValues, category_id: val, subCategory_id: ''});
-            console.log(subCategories);
+            setInitialValues({...initialValues, category_id: val, subCategory_id: filteredSubCategories[0]?._id});
           }}
         >
           <Select.Option key={''} disabled>Select category</Select.Option>
@@ -94,11 +85,11 @@ export const AddProduct = () => {
         <Select
           disabled={!initialValues.category_id}
           onSelect={(val) => {
-            setInitialValues({...initialValues, subCategory_id: val});
+            setInitialValues({...initialValues, subCategory_id: val });
           }}
         >
           <Select.Option key={''} disabled>Select sub category</Select.Option>
-          {subCategories?.map((subC) => (
+          {filteredSubCategories?.map((subC) => (
             <Select.Option key={subC._id}>{subC.subCategory}</Select.Option>
           ))}
         </Select>
@@ -108,6 +99,10 @@ export const AddProduct = () => {
         <TextArea />
       </Form.Item>
       
+      <Form.Item label={'Image url'} name={'image_url'} rules={[{ required: true, message: 'Image url is missing' }]}>
+        <Input onChange={(val) => setInitialValues({...initialValues, image_url: val.target.value})} />
+      </Form.Item>
+
       <Form.Item label={'Price'} name={'price'} rules={[{ required: true, message: 'Price is missing' }]}>
         <InputNumber min={0} />
       </Form.Item>

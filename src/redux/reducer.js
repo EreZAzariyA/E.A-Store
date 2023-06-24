@@ -36,10 +36,23 @@ const productsReducer = createReducer([], (handleAction) => [
       ...payload
     }
   }),
-  handleAction(ProductsActions.addProduct , (state, { payload }) => ({
-    ...state,
-    ...payload
-  })),
+  handleAction(ProductsActions.addProduct , (state, { payload }) => {
+    state = {
+      ...state,
+      products: [...state?.products, payload]
+    };
+    
+    return {
+      ...state,
+    }
+    // return [...state.products, payload]
+  }),
+  handleAction(ProductsActions.removeProduct, (state, {payload}) => {
+    state.products = [...state?.products]?.filter((p) => p._id !== payload);
+    return {
+      ...state
+    }
+  })
 ]);
 
 const categoriesReducer = createReducer([], (handleAction) => [

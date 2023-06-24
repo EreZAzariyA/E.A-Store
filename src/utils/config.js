@@ -21,8 +21,11 @@ class Config {
     },
     admin: {
       addProduct: "",
+      removeProduct: "",
       addCategory: "",
-      addSubCategory: ""
+      removeCategory: "",
+      addSubCategory: "",
+      removeSubCategory: ""
     }
   }
 
@@ -49,8 +52,11 @@ class Config {
       },
       admin: {
         addProduct: baseUrl + 'admin/add-product',
+        removeProduct: baseUrl + 'admin/remove-product/',
         addCategory: baseUrl + 'admin/add-category',
+        removeCategory: baseUrl + 'admin/remove-category/',
         addSubCategory: baseUrl + 'admin/add-sub-category',
+        removeSubCategory: baseUrl + 'admin/remove-sub-category/'
       }
     }
   }

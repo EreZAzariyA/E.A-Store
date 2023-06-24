@@ -1,26 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Breadcrumb, Menu, message } from "antd";
-import { productsServices } from "../../services/productsServices";
+import { Breadcrumb, Menu } from "antd";
+import { useSelector } from "react-redux";
 
 export const DashboardWrapper = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const categories = useSelector((state) => (state.categoriesReducer?.categories));
   const [ patchOptions, setPatchOptions] = useState([]);
-  const [ categories, setCategories ] = useState([]);
   const [ current, setCurrent ] = useState('');
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const categories = await productsServices.fetchAllCategories();
-        setCategories(categories);
-      } catch (err) {
-        message.error(err.message);
-      }
-    };
-    fetchCategories();
-  }, []);
 
   useEffect(() => {
     let locationArray = location.pathname.split('/');

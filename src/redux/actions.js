@@ -3,12 +3,14 @@ import { createAction } from 'redux-promise-middleware-actions';
 export const AuthActionsTypes = {
   LOGIN: 'LOGIN',
   REGISTER: 'REGISTER',
-  LOGOUT: 'LOGOUT'
+  LOGOUT: 'LOGOUT',
+  EXPIRES_LOGIN_DATE: 'EXPIRES_LOGIN_DATE'
 };
 
 export const ProductsActionsType = {
   FETCH_PRODUCTS: 'FETCH_PRODUCTS',
   ADD_PRODUCT: 'ADD_PRODUCT',
+  REMOVE_PRODUCT: 'REMOVE_PRODUCT'
 };
 
 export const CategoriesActionsType = {
@@ -21,12 +23,14 @@ export const CategoriesActionsType = {
 export const AuthActions = {
   login: createAction(AuthActionsTypes.LOGIN, (token) => ({token})),
   register: createAction(AuthActionsTypes.REGISTER, (user) => ({user})),
-  logout: createAction(AuthActionsTypes.LOGOUT)
+  logout: createAction(AuthActionsTypes.LOGOUT),
+  expiresLoginDate: createAction(AuthActionsTypes.EXPIRES_LOGIN_DATE, (date) => (date))
 };
 
 export const ProductsActions = {
   fetchProducts: createAction(ProductsActionsType.FETCH_PRODUCTS, (products) => ({products})),
-  addProduct: createAction(ProductsActionsType.ADD_PRODUCT),
+  addProduct: createAction(ProductsActionsType.ADD_PRODUCT, (product) => (product)),
+  removeProduct: createAction(ProductsActionsType.REMOVE_PRODUCT, (product_id) => (product_id))
 };
 
 export const CategoriesActions = {

@@ -19,6 +19,7 @@ export const Dashboard = () => {
 
   return (
     <div className="home-main-container">
+      {/* <p>home</p> */}
       <div className="home-inner-container">
         <div className="sub-categories-container mt-20">
           <CategoriesList />

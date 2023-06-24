@@ -11,8 +11,8 @@ export const DashboardView = () => (
   <Layout className="layout main-layout">
     <DashboardHeader />
     <CustomDivider />
-    
-    <Content>
+
+    <Content className="site-layout">
       <DashboardWrapper />
       <UserRouter />
     </Content>
