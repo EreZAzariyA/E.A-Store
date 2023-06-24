@@ -2,7 +2,7 @@
 
 
 export const isAdmin = (user) => {
-  return user?.isAdmin;
+  return user?.admin;
 };
 
 export const getError = (err)=> {

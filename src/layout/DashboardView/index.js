@@ -2,8 +2,8 @@ import { Layout } from "antd";
 import { DashboardHeader } from "./DashboardHeader";
 import { DashboardFooter } from "./DashboardFooter";
 import { CustomDivider } from "../../components/components/Divider";
-import { UserRouter } from "../../routes/user-router";
 import { DashboardWrapper } from "./DashboardWrapper";
+import { Outlet } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -14,7 +14,7 @@ export const DashboardView = () => (
 
     <Content className="site-layout">
       <DashboardWrapper />
-      <UserRouter />
+      <Outlet />
     </Content>
 
     <DashboardFooter />

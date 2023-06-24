@@ -1,18 +1,16 @@
 import { Layout } from "antd";
-import { AuthRouter } from "../../routes/auth-router";
+import { Outlet } from "react-router-dom";
 import "./AuthView.css";
 
 const { Content } = Layout;
 
-export const AuthView = () => {
-  return (
-    <>
+export const AuthView = () =>  (
+  <>
     <div id="auth-bg"></div>
-      <Layout className="layout auth-layout">
-        <Content>
-          <AuthRouter />
-        </Content>
-      </Layout>
-    </>
-  );
-};
+    <Layout className="layout auth-layout">
+      <Content>
+        <Outlet />
+      </Content>
+    </Layout>
+  </>
+);

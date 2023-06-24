@@ -1,6 +1,9 @@
 import axios from "axios";
 import store from "../redux/store";
 import { getError } from "../utils/helpers";
+import { useDispatch } from "react-redux";
+import { AuthActions } from "../redux/actions";
+import { message } from "antd";
 
 class InterceptorsService {
 
@@ -18,9 +21,9 @@ class InterceptorsService {
       return response;
     }, (error) => {
       if (error.response.status === 401) {
-        console.log(getError(error));
+        store.dispatch(AuthActions.logout());
       }
-      return error
+      message.error(getError(error));
     });
   };
 };

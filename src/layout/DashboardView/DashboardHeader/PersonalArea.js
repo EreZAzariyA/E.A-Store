@@ -1,13 +1,18 @@
 import { Button, Col, Dropdown, Row, Space } from "antd";
-import { Link, useNavigate } from "react-router-dom";
 import UserOutlined from "@ant-design/icons/UserOutlined";
+import { useDispatch } from "react-redux";
+import { AuthActions } from "../../../redux/actions";
 
 export const PersonalArea = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(AuthActions.logout());
+  };
 
   const items = [
-    {label: <Button type="text" danger>Logout</Button>, key: 'logout', onClick: () => navigate('/logout')}
-  ]
+    {label: <Button type="text" danger>Logout</Button>, key: 'logout', onClick: () => logout()}
+  ];
 
   return (
     <Row align={'middle'} justify={'space-evenly'}>

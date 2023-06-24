@@ -1,17 +1,18 @@
-import { useSelector } from "react-redux";
 import { AdminRouter } from "./routes/admin-router";
-import { isAdmin } from "./utils/helpers";
-import { DashboardView } from "./layout/DashboardView";
-import { AuthView } from "./layout/AuthView";
+import { Route, Routes } from "react-router-dom";
+import { UserRouter } from "./routes/user-router";
+import AdminRoute from "./routes/AdminRoute";
 
 export const App = () => {
-  const user = useSelector((state) => (state.authReducer?.user));
+  return (
+    <Routes>
+      <Route path="/*" element={<UserRouter />}/>
 
-  if (user) {
-    if (isAdmin(user)) {
-      return <AdminRouter />;
-    };
-    return <DashboardView />;
-  };
-  return <AuthView />;
+      <Route path="/admin/*" element={
+        <AdminRoute>
+          <AdminRouter />
+        </AdminRoute> 
+      }/>
+    </Routes>
+  );
 };
