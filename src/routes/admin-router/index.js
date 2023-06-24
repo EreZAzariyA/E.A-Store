@@ -4,7 +4,6 @@ import { ProductsList } from "../../components/admin/products-list";
 import { AdminDashboard } from "../../components/admin/adminDashboard";
 import { CategoriesList } from "../../components/admin/categories-list";
 import { AdminInsert } from "../../components/admin/insertDoc";
-import { Logout } from "../../layout/AuthView/logout";
 
 export const AdminRouter = () => (
   <Routes>
@@ -17,7 +16,6 @@ export const AdminRouter = () => (
     {/* <Route path="all-categories/:category_id" element={<CategoriesList  />} /> */}
     <Route path="insert-doc" element={<AdminInsert />} />
     
-    <Route path="/logout" element={<Logout />} />
     <Route path="*" element={<p>Page not found</p>} />
   </Routes>
 );
