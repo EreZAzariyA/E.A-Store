@@ -4,7 +4,7 @@ export const AuthActionsTypes = {
   LOGIN: 'LOGIN',
   REGISTER: 'REGISTER',
   LOGOUT: 'LOGOUT',
-  EXPIRES_LOGIN_DATE: 'EXPIRES_LOGIN_DATE'
+  REFRESH_TOKEN: 'REFRESH_TOKEN'
 };
 
 export const ProductsActionsType = {
@@ -24,7 +24,7 @@ export const AuthActions = {
   login: createAction(AuthActionsTypes.LOGIN, (token) => ({token})),
   register: createAction(AuthActionsTypes.REGISTER, (user) => ({user})),
   logout: createAction(AuthActionsTypes.LOGOUT),
-  expiresLoginDate: createAction(AuthActionsTypes.EXPIRES_LOGIN_DATE, (date) => (date))
+  refreshToken: createAction(AuthActionsTypes.REFRESH_TOKEN, (token) => ({token}))
 };
 
 export const ProductsActions = {

@@ -26,6 +26,11 @@ const authReducer = createReducer(initialValue, (handleAction) => [
   handleAction(AuthActions.logout, () => {
     localStorage.removeItem('token');
     return null;
+  }),
+  handleAction(AuthActions.refreshToken, (state, {payload}) => {
+    localStorage.setItem('token', token);
+    // state.token = payload.token;
+    return {...state, ...payload}
   })
 ]);
 
