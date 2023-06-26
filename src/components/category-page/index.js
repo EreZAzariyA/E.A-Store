@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
 import { productsServices } from "../../services/productsServices";
-import { Menu, Spin } from "antd";
+import { Menu, Spin, message } from "antd";
 import { SubCategoryPage } from "../subCategoryPage";
 
 export const CategoryPage = () => {
@@ -15,8 +15,12 @@ export const CategoryPage = () => {
   
   useEffect(() => {
     const fetchSubCategoriesByCategoryId = async (category_id) => {
-      const subCategories = await productsServices.fetchSubCategoriesByCategoryId(category_id);
-      setSubCategories(subCategories);
+      try {
+        const subCategories = await productsServices.fetchSubCategoriesByCategoryId(category_id);
+        setSubCategories(subCategories);
+      } catch (err) {
+        message.error(err.message)
+      }
     };
     fetchSubCategoriesByCategoryId(category_id);
     setIsLoading(false);

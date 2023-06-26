@@ -78,7 +78,6 @@ const categoriesReducer = createReducer([], (handleAction) => [
   })),
 ]);
 
-
 export default combineReducers({
   authReducer,
   productsReducer,

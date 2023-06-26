@@ -6,15 +6,12 @@ import { Login } from "../../layout/AuthView/login";
 import { Register } from "../../layout/AuthView/register";
 import { AuthView } from "../../layout/AuthView";
 import { DashboardView } from "../../layout/DashboardView";
+import { PageNotFound } from "../../components/PageNotFound";
 
 export const UserRouter = () => (
   <Routes>
 
-    <Route path="/auth/*" element={<AuthView />}>
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
-      <Route path="*" element={<Navigate to={'login'} replace />} />
-    </Route>
+    <Route path="/auth" element={<Navigate to={'/'} replace />} />
 
     <Route path="/" element={<PrivateRoute>
         <DashboardView />
@@ -22,7 +19,9 @@ export const UserRouter = () => (
     }>
       <Route path="/" element={<Dashboard />} />
       <Route path="categories/:category_id/*" element={<CategoryPage />} />
-      <Route path="*" element={<Navigate to={'/'} replace />} />
+
+
+      <Route path="*" element={<PageNotFound />} />
     </Route>
   </Routes>
 );

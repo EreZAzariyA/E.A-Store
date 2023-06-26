@@ -33,7 +33,7 @@ export const DashboardWrapper = () => {
         mode="horizontal"
         selectedKeys={[current]}
         style={{background: 'transparent', justifyContent: 'center'}}
-        items={defaultItems.concat(categories?.map((category) => {
+        items={defaultItems.concat(!categories?.length ? [] : categories?.map((category) => {
           return {
             key: category._id,
             label: category.category,
