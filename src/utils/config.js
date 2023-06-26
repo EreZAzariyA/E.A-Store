@@ -70,12 +70,9 @@ class DevelopmentConfig extends Config {
 
 class ProductionConfig extends Config {
   constructor() {
-    super("https://ea-store.herokuapp.com/api/");
-    // super("http://localhost:5000/api/");
+    super("https://k6u7v23xwh.execute-api.eu-central-1.amazonaws.com/api/");
   }
 }
 const config = process.env.NODE_ENV === "development" ? new DevelopmentConfig() : new ProductionConfig();
-
-console.log(process.env.NODE_ENV);
 
 export default config;
