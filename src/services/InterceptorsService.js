@@ -19,10 +19,10 @@ class InterceptorsService {
     }));
 
     axios.interceptors.response.use((response) => {
-      if (response.headers.hasAuthorization) {
-        const token = response.headers.get('authorization');
-        store.dispatch(AuthActions.refreshToken({ token }));
-      } 
+      const token = response?.headers?.get('authorization');
+      if (token) {
+        store.dispatch(AuthActions.refreshToken(token));
+      }
       return response;
     }, (error) => {
       if (error.response.status === 401) {

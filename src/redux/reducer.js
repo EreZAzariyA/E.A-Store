@@ -8,7 +8,7 @@ const token = localStorage.getItem('token');
 const initialValue = token ? {
   token: token,
   user: jwtDecode(token)
-} : null;
+} : '';
 
 const authReducer = createReducer(initialValue, (handleAction) => [
   handleAction(AuthActions.login, (state, {payload}) => {
@@ -28,9 +28,9 @@ const authReducer = createReducer(initialValue, (handleAction) => [
     return null;
   }),
   handleAction(AuthActions.refreshToken, (state, {payload}) => {
-    localStorage.setItem('token', token);
-    // state.token = payload.token;
-    return {...state, ...payload}
+    localStorage.setItem('token', payload.token);
+    return {...state, token: payload.token, user: jwtDecode(payload.token)
+    }
   })
 ]);
 
