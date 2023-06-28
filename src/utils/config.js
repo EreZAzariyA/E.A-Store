@@ -6,7 +6,8 @@ class Config {
     },
     products: {
       fetchAllProducts: "",
-      fetchProductsByCategoryId: ""
+      fetchProductsByCategoryId: "",
+      fetchProductsBySubCategoryId: ""
     },
     categories: {
       fetchAllCategories: "",
@@ -37,7 +38,8 @@ class Config {
       },
       products: {
         fetchAllProducts: baseUrl + 'products/all',
-        fetchProductsByCategoryId: baseUrl + 'products/by-category-id/'
+        fetchProductsByCategoryId: baseUrl + 'products/by-category-id/',
+        fetchProductsBySubCategoryId: baseUrl + 'products/by-subCategory-id/'
       },
       categories: {
         fetchAllCategories: baseUrl + 'categories/all',
