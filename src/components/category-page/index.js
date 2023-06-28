@@ -3,6 +3,7 @@ import { Route, Routes, useLocation, useNavigate, useParams } from "react-router
 import { productsServices } from "../../services/productsServices";
 import { Menu, Spin, message } from "antd";
 import { SubCategoryPage } from "../subCategoryPage";
+import { SubCategoryList } from "./subCategories-list";
 
 export const CategoryPage = () => {
   const { category_id } = useParams();
@@ -12,7 +13,6 @@ export const CategoryPage = () => {
   const location = useLocation();
   const [current, setCurrent] = useState('');
 
-  
   useEffect(() => {
     const fetchSubCategoriesByCategoryId = async (category_id) => {
       try {
@@ -49,6 +49,7 @@ export const CategoryPage = () => {
           })}
         />
         <Routes>
+          <Route path="/" element={<SubCategoryList category_id={category_id} />} />
           <Route path="/sub-category/:subCategoryId" element={<SubCategoryPage />} />
         </Routes>
       </>

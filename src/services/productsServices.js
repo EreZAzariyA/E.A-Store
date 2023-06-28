@@ -23,7 +23,7 @@ class ProductsServices {
       return productsBySubCategory;
     };
     const products = store.getState().productsReducer.products;
-    const productsBySubCategory = [...products]?.filter((p) => (p.subCategory_id !== subCategory_id));
+    const productsBySubCategory = [...products]?.filter((p) => (p.subCategory_id === subCategory_id));
     return productsBySubCategory;
   };
 
