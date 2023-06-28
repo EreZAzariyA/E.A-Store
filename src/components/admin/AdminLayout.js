@@ -1,8 +1,13 @@
-import { Layout, Menu, message } from "antd";
+import { Button, Layout, Menu, message } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { productsServices } from "../../services/productsServices";
 import { authServices } from "../../services/auth-services";
+import AppstoreOutlined from "@ant-design/icons/AppstoreOutlined";
+import OrderedListOutlined from "@ant-design/icons/OrderedListOutlined";
+import HddOutlined from "@ant-design/icons/HddOutlined";
+import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
+import UploadOutlined from "@ant-design/icons/UploadOutlined";
 
 const { Content, Sider, Header } = Layout;
 
@@ -33,19 +38,23 @@ export const AdminLayout = () => {
     const items = [
       {
         label: 'Dashboard',
-        key: 'dashboard'
+        key: 'dashboard',
+        icon: <AppstoreOutlined />
       },
       {
         label: 'All-Products',
-        key: 'all-products'
+        key: 'all-products',
+        icon: <OrderedListOutlined />
       },
       {
         label: 'All-Categories',
-        key: 'all-categories'
+        key: 'all-categories',
+        icon: <HddOutlined />
       },
       {
         label: 'Insert Doc',
-        key: 'insert-doc'
+        key: 'insert-doc',
+        icon: <UploadOutlined />
       },
       // {
       //   label: 'Add-Product',
@@ -56,8 +65,9 @@ export const AdminLayout = () => {
       //   key: 'add-category'
       // },
       {
-        label: 'Logout',
+        label: <Button danger type="text">Logout</Button>,
         key: '/',
+        icon: <LogoutOutlined />,
         style: {'position': 'absolute', 'bottom': 0 },
         onClick: () => authServices.logout()
       }

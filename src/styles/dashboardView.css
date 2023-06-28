@@ -32,6 +32,10 @@
   z-index: 5;
 }
 
+.layout .ant-layout-sider .ant-menu .ant-menu-item .ant-menu-item-icon {
+  vertical-align: middle;
+}
+
 @media (max-width: 765px) {
   .layout .ant-layout-header p {
     line-height: normal;
