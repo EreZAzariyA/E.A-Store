@@ -50,7 +50,7 @@ export const CategoriesList = () => {
       shouldUpdate: false,
       editable: true,
       render: (_,record) => {
-        const productsLength = products?.length > 0 ? [...products].filter((p) => (p.category_id === record._id)).length : null;
+        const productsLength = products?.length > 0 ? [...products].filter((p) => (p.category_id === record._id)).length : 0;
         return <p>{ productsLength ?? 0}</p>
       },
       sorter: (a, b) => {
@@ -67,27 +67,6 @@ export const CategoriesList = () => {
       }
 
     },
-    // {
-    //   key: 'actions',
-    //   title: 'Actions',
-    //   render: (_, record) => (
-    //     <Space size="middle">
-    //       <Popconfirm
-    //         onConfirm={async () => {
-              // try {
-              //   await adminServices.removeCategory(record._id)
-              //   message.success('Removed');
-              // } catch (err) {
-              //   message.error(err.message);
-              // }
-    //         }}
-    //         title='Are you sure?'
-    //       >
-    //         <Typography.Link>Delete</Typography.Link>
-    //       </Popconfirm>
-    //     </Space>
-    //   ),
-    // }
   ];
 
   return (

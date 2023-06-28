@@ -12,7 +12,7 @@ export const DashboardWrapper = () => {
 
   useEffect(() => {
     let locationArray = location.pathname.split('/');
-    const patchOptions = locationArray.filter((p) =>(p !== '')).map((p) => ({
+    const patchOptions = locationArray.filter((p) =>(p !== '' && p !== 'home')).map((p) => ({
       title: <Link to={p}>{p}</Link>, onClick: () => navigate(`/${p}`)
     }));
     setPatchOptions(patchOptions);
@@ -22,8 +22,8 @@ export const DashboardWrapper = () => {
   const defaultItems = [
     {
       label: 'Home',
-      key: '/',
-      onClick: () => navigate('/')
+      key: '/home',
+      onClick: () => navigate('/home')
     },
   ];
 

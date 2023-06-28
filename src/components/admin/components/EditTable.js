@@ -49,7 +49,6 @@ export const EditTable = ({columns, dataSource, isCategoriesList, ...rest}) => {
     }
   };
 
-
   const EditableCell = ({
     editing,
     dataIndex,
@@ -91,10 +90,11 @@ export const EditTable = ({columns, dataSource, isCategoriesList, ...rest}) => {
     try {
       if (isCategoriesList) {
         await adminServices.removeCategory(record._id)
-        return message.success('Removed');
-      };
-      await adminServices.removeProduct(record._id);
-      message.success('Removed');
+        message.success('Removed');
+      } else {
+        await adminServices.removeProduct(record._id);
+        message.success('Removed');
+      }
     } catch (err) {
       message.error(err.message);
     }
@@ -171,7 +171,6 @@ export const EditTable = ({columns, dataSource, isCategoriesList, ...rest}) => {
     <Form form={form}>
       <Table
         {...rest}
-        loading={!data.length}
         bordered
         columns={mergedColumns}
         dataSource={data}
