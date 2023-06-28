@@ -1,47 +1,19 @@
 import { useEffect, useState } from "react";
-import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm } from "antd";
+import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider } from "antd";
+import { adminServices } from "../../../services/admin-services";
 
-
-export const EditTable = ({columns, dataSource, ...rest}) => {
+export const EditTable = ({columns, dataSource, isCategoriesList, ...rest}) => {
   const [ form ] = Form.useForm();
   const [ editingKey, setEditingKey ] = useState('');
-  const [ data, setData ] = useState(dataSource);
+  const [ selectedRows, setSelectedRows ] = useState([]);
+  const [ data, setData ] = useState([]);
   const isEditing = (record) => record._id === editingKey;
 
   useEffect(() => {
-    setData(dataSource);
-    columns.push({
-      title: 'Action',
-      key: 'action',
-      width: 150,
-      fixed: 'right',
-      render: (_, record) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <Typography.Link
-              onClick={() => save(record._id)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              Save
-            </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <Typography.Link>
-                Cancel
-              </Typography.Link>
-            </Popconfirm>
-          </span>
-        ) : (
-          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-            Edit
-          </Typography.Link>
-        );
-      },
-    });
+    if (dataSource && dataSource.length) {
+      setData([...dataSource]);
+    };
   }, [dataSource]);
-  
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -54,11 +26,11 @@ export const EditTable = ({columns, dataSource, ...rest}) => {
     setEditingKey('');
   };
 
-  const save = async (key) => {
+  const save = async (record) => {
     try {
       const row = await form.validateFields();
       const newData = [...dataSource];
-      const index = newData.findIndex((item) => key === item._id);
+      const index = newData.findIndex((item) => record._id === item._id);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
@@ -115,7 +87,18 @@ export const EditTable = ({columns, dataSource, ...rest}) => {
     );
   };
 
-
+  const remove = async (record) => {
+    try {
+      if (isCategoriesList) {
+        await adminServices.removeCategory(record._id)
+        return message.success('Removed');
+      };
+      await adminServices.removeProduct(record._id);
+      message.success('Removed');
+    } catch (err) {
+      message.error(err.message);
+    }
+  };
 
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
@@ -136,13 +119,63 @@ export const EditTable = ({columns, dataSource, ...rest}) => {
     };
   });
 
+  mergedColumns.push({
+    title: 'Actions',
+    key: 'action',
+    width: '250',
+    fixed: 'right',
+    render: (_, record) => {
+      const editable = isEditing(record);
+      return editable ? (
+        <Row align={'middle'}>
+          <Col>
+            <Typography.Link
+              onClick={() => save(record)}
+            >
+              Save
+            </Typography.Link>
+          </Col>
+          <Divider type="vertical" />
+          <Col>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              <Typography.Link>
+                Cancel
+              </Typography.Link>
+            </Popconfirm>
+          </Col>
+        </Row>
+      ) : (
+        <Row align={'middle'}>
+          <Col>
+            <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+              Edit
+            </Typography.Link>
+          </Col>
+          <Divider type="vertical" />
+          <Col>
+            <Popconfirm
+              title="Are you sure?"
+              onConfirm={() => remove(record)}
+            >
+              <Typography.Link disabled={editingKey !== ''}>
+                Delete
+              </Typography.Link>
+            </Popconfirm>
+          </Col>
+        </Row>
+      );
+    },
+  });
+
   return (
     <Form form={form}>
       <Table
         {...rest}
+        loading={!data.length}
         bordered
         columns={mergedColumns}
         dataSource={data}
+        rowClassName="editable-row"
         components={{
           body: {
             cell: EditableCell,
@@ -150,6 +183,11 @@ export const EditTable = ({columns, dataSource, ...rest}) => {
         }}
         pagination={{
           onChange: cancel,
+        }}
+        rowSelection={{
+          onChange: (_, selectedRows) => {
+            setSelectedRows(selectedRows)
+          }
         }}
       />
     </Form>
