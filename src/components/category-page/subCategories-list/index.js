@@ -7,7 +7,7 @@ export const SubCategoryList = ({category_id}) => {
     ?.filter((subCategory) => (subCategory.category_id === category_id));
 
   return (
-    <div className="subCategories-list-main-container">
+    <div className="subCategories-list-main-container mt-10">
       <div className="subCategories-list-inner-container">
         <div className="subCategories-list">
           <Row align={"stretch"} justify={'space-evenly'} gutter={[0, 15]}>

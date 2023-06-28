@@ -9,9 +9,9 @@ export const CategoryPage = () => {
   const { category_id } = useParams();
   const [ subCategories, setSubCategories ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(true);
+  const [current, setCurrent] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const [current, setCurrent] = useState('');
 
   useEffect(() => {
     const fetchSubCategoriesByCategoryId = async (category_id) => {
@@ -48,6 +48,7 @@ export const CategoryPage = () => {
             };
           })}
         />
+
         <Routes>
           <Route path="/" element={<SubCategoryList category_id={category_id} />} />
           <Route path="/sub-category/:subCategoryId" element={<SubCategoryPage />} />

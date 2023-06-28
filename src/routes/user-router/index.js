@@ -6,9 +6,9 @@ import { PageNotFound } from "../../components/PageNotFound";
 
 export const UserRouter = () => (
   <Routes>
-    <Route path="/" element={<Navigate to={'/home'} replace />} />
-
     <Route path="/" element={<DashboardView />}>
+      <Route path="/" element={<Navigate to={'/home'} replace />} />
+
       <Route path="/home" element={<Dashboard />} />
       <Route path="categories/:category_id/*" element={<CategoryPage />} />
 
