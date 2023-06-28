@@ -16,6 +16,17 @@ class ProductsServices {
     return products;
   };
 
+  fetchProductsBySubCategoryId = async (subCategory_id) => {
+    if (!store.getState().productsReducer.products) {
+      const response = await axios.get(config.urls.products.fetchProductsBySubCategoryId + subCategory_id);
+      const productsBySubCategory = response.data;
+      return productsBySubCategory;
+    };
+    const products = store.getState().productsReducer.products;
+    const productsBySubCategory = [...products]?.filter((p) => (p.subCategory_id !== subCategory_id));
+    return productsBySubCategory;
+  };
+
   fetchAllCategories = async () => {
     if (!store.getState().categoriesReducer.categories) {
       const response = await axios.get(config.urls.categories.fetchAllCategories);
