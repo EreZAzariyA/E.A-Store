@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import { UserRouter } from "./routes/user-router";
 import AdminRoute from "./routes/AdminRoute";
 import { AuthRouter } from "./routes/auth-router";
-import { AuthView } from "./layout/AuthView";
 import PrivateRoute from "./routes/PrivateRoute";
 import { PublicRoute } from "./routes/PublicRoute";
 

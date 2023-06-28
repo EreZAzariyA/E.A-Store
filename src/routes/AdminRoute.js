@@ -4,10 +4,9 @@ import { isAdmin } from '../utils/helpers';
 
 const AdminRoute = ({ children }) => {
   let location = useLocation();
-
   const user  = useSelector((state) => (state.authReducer?.user));
 
-  if (!isAdmin(user)) {
+  if (!user && !isAdmin(user)) {
     return <Navigate to="/auth/login" state={{ from: location }} />;
   };
 

@@ -8,14 +8,17 @@ import { AdminInsert } from "../../components/admin/insertDoc";
 export const AdminRouter = () => (
   <Routes>
     <Route path="/" element={<Navigate to={'/admin/dashboard'} replace />} />
-    <Route path="admin/*" element={<AdminLayout />}/>
 
-    <Route path="dashboard" element={<AdminDashboard />} />
-    <Route path="all-products" element={<ProductsList />} />
-    <Route path="all-categories/*" element={<CategoriesList />} />
-    {/* <Route path="all-categories/:category_id" element={<CategoriesList  />} /> */}
-    <Route path="insert-doc" element={<AdminInsert />} />
+    <Route path="/*" element={<AdminLayout />}>
+      <Route path="dashboard" element={<AdminDashboard />} />
+      <Route path="all-products" element={<ProductsList />} />
+      <Route path="all-categories/*" element={<CategoriesList />} />
+      {/* <Route path="all-categories/:category_id" element={<CategoriesList  />} /> */}
+      <Route path="insert-doc" element={<AdminInsert />} />
+
+      <Route path="*" element={<p>Page not found</p>} />
+    </Route>
+
     
-    <Route path="*" element={<p>Page not found</p>} />
   </Routes>
 );

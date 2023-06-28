@@ -1,8 +1,8 @@
 import { Layout, Menu, message } from "antd";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { AdminRouter } from "../../routes/admin-router";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { productsServices } from "../../services/productsServices";
+import { authServices } from "../../services/auth-services";
 
 const { Content, Sider, Header } = Layout;
 
@@ -57,11 +57,19 @@ export const AdminLayout = () => {
       // },
       {
         label: 'Logout',
-        key: 'logout',
-        style: {'marginTop': 'max-content' }
+        key: '/',
+        style: {'position': 'absolute', 'bottom': 0 },
+        onClick: () => authServices.logout()
       }
     ]
-    return <Menu selectedKeys={[current]} items={items} onClick={(e) => navigate(`${e.key}`)}/>;
+    return (
+      <Menu
+        items={items}
+        onClick={(e) => navigate(`${e.key}`)}
+        selectedKeys={[current]}
+        style={{ position: 'relative', height: '100%' }}
+      />
+    );
   };
 
   return (
@@ -74,9 +82,9 @@ export const AdminLayout = () => {
           {menu()}
         </Sider>
         <Content style={{overflow: 'auto'}}>
-          <AdminRouter />
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
-  )
-}
+  );
+};
