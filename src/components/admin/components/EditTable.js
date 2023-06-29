@@ -29,18 +29,19 @@ export const EditTable = ({columns, dataSource, isCategoriesList, ...rest}) => {
   const save = async (record) => {
     try {
       const row = await form.validateFields();
+      const updatedProduct = await adminServices.updateProduct({...row, _id: record._id});
       const newData = [...dataSource];
       const index = newData.findIndex((item) => record._id === item._id);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
           ...item,
-          ...row,
+          ...updatedProduct,
         });
         setData(newData);
         setEditingKey('');
       } else {
-        newData.push(row);
+        newData.push(updatedProduct);
         setData(newData);
         setEditingKey('');
       }
