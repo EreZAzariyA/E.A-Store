@@ -23,6 +23,7 @@ class Config {
     admin: {
       addProduct: "",
       removeProduct: "",
+      updateProduct: "",
       addCategory: "",
       removeCategory: "",
       addSubCategory: "",
@@ -55,6 +56,7 @@ class Config {
       admin: {
         addProduct: baseUrl + 'admin/add-product',
         removeProduct: baseUrl + 'admin/remove-product/',
+        updateProduct: baseUrl + 'admin/update-product',
         addCategory: baseUrl + 'admin/add-category',
         removeCategory: baseUrl + 'admin/remove-category/',
         addSubCategory: baseUrl + 'admin/add-sub-category',
