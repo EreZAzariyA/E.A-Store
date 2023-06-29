@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider } from "antd";
 import { adminServices } from "../../../services/admin-services";
 
-export const EditTable = ({columns, dataSource, isCategoriesList, ...rest}) => {
+export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategoriesList, ...rest}) => {
   const [ form ] = Form.useForm();
   const [ editingKey, setEditingKey ] = useState('');
   const [ selectedRows, setSelectedRows ] = useState([]);
@@ -29,19 +29,26 @@ export const EditTable = ({columns, dataSource, isCategoriesList, ...rest}) => {
   const save = async (record) => {
     try {
       const row = await form.validateFields();
-      const updatedProduct = await adminServices.updateProduct({...row, _id: record._id});
+      let updatedValue;
+      if (isCategoriesList) {
+        updatedValue = await adminServices.updateCategory({...row, _id: record._id });
+      } else if (isSubCategoriesList) {
+        console.log('not ready !');
+      } else {
+        updatedValue = await adminServices.updateProduct({...row, _id: record._id});
+      }
       const newData = [...dataSource];
       const index = newData.findIndex((item) => record._id === item._id);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
           ...item,
-          ...updatedProduct,
+          ...updatedValue,
         });
         setData(newData);
         setEditingKey('');
       } else {
-        newData.push(updatedProduct);
+        newData.push(updatedValue);
         setData(newData);
         setEditingKey('');
       }
