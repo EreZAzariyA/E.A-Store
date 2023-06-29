@@ -20,8 +20,8 @@ class AdminServices {
     return removedItem;
   };
 
-  updateProduct = async (productToUpload) => {
-    const response = await axios.put(config.urls.admin.updateProduct, productToUpload);
+  updateProduct = async (productToUpdate) => {
+    const response = await axios.put(config.urls.admin.updateProduct, productToUpdate);
     const updatedProduct = response.data;
     return updatedProduct;
   };
@@ -36,8 +36,9 @@ class AdminServices {
     const response = await axios.delete(config.urls.admin.removeCategory + category_id);
     const removedItem = response.data;
     return removedItem;
-  }
-  
+  };
+
+
   addSubCategory = async (subCategoryToAdd) => {
     const response = await axios.post(config.urls.admin.addSubCategory, subCategoryToAdd);
     const uploadedCategory = response.data;

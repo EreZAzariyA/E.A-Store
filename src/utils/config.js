@@ -26,8 +26,10 @@ class Config {
       updateProduct: "",
       addCategory: "",
       removeCategory: "",
+      updateCategory: "",
       addSubCategory: "",
-      removeSubCategory: ""
+      removeSubCategory: "",
+      updateSubCategory: "",
     }
   }
 
@@ -59,8 +61,10 @@ class Config {
         updateProduct: baseUrl + 'admin/update-product',
         addCategory: baseUrl + 'admin/add-category',
         removeCategory: baseUrl + 'admin/remove-category/',
+        updateCategory: baseUrl + 'admin/update-category',
         addSubCategory: baseUrl + 'admin/add-sub-category',
-        removeSubCategory: baseUrl + 'admin/remove-sub-category/'
+        removeSubCategory: baseUrl + 'admin/remove-sub-category/',
+        updateSubCategory: baseUrl + 'admin/update-sub-category',
       }
     }
   }
