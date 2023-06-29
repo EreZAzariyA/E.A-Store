@@ -20,6 +20,12 @@ class AdminServices {
     return removedItem;
   };
 
+  updateProduct = async (productToUpload) => {
+    const response = await axios.put(config.urls.admin.updateProduct, productToUpload);
+    const updatedProduct = response.data;
+    return updatedProduct;
+  };
+
   addCategory = async (categoryToAdd) => {
     const response = await axios.post(config.urls.admin.addCategory, categoryToAdd);
     const uploadedCategory = response.data;
