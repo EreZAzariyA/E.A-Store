@@ -2,6 +2,7 @@ import { Button, Layout, Menu, message } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { productsServices } from "../../services/productsServices";
+import { categoriesServices } from "../../services/categoriesServices";
 import { authServices } from "../../services/auth-services";
 import AppstoreOutlined from "@ant-design/icons/AppstoreOutlined";
 import OrderedListOutlined from "@ant-design/icons/OrderedListOutlined";
@@ -20,8 +21,8 @@ export const AdminLayout = () => {
     const fetchAllData = async () => {
       try {
         await productsServices.fetchAllProducts();
-        await productsServices.fetchAllCategories();
-        await productsServices.fetchAllSubCategories();
+        await categoriesServices.fetchAllCategories();
+        await categoriesServices.fetchAllSubCategories();
       } catch (err) {
         message.error(err.message);
       }

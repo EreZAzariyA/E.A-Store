@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { adminServices } from "../../../../services/admin-services";
-import { productsServices } from "../../../../services/productsServices";
-import { Button, Form, Input, Select, message } from "antd"
+import { categoriesServices } from "../../../../services/categoriesServices";
 import { getError } from "../../../../utils/helpers";
+import { Button, Form, Input, Select, message } from "antd"
 
 export const AddSubCategory = () => {
   const [ form ] = Form.useForm();
@@ -15,7 +15,7 @@ export const AddSubCategory = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const categories = await productsServices.fetchAllCategories();
+      const categories = await categoriesServices.fetchAllCategories();
       setCategories(categories);
     };
     fetchCategories();

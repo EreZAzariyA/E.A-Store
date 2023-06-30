@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export const DashboardWrapper = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const categories = useSelector((state) => (state.categoriesReducer?.categories));
+  const categories = useSelector((state) => (state.categories));
   const [ patchOptions, setPatchOptions] = useState([]);
   const [ current, setCurrent ] = useState('');
 
@@ -17,7 +17,7 @@ export const DashboardWrapper = () => {
     }));
     setPatchOptions(patchOptions);
     setCurrent([...locationArray].pop() === '' ? '/' : [...locationArray].pop());
-  }, [location.pathname]);
+  }, [location.pathname, navigate]);
 
   const defaultItems = [
     {

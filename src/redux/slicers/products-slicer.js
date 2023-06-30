@@ -22,5 +22,5 @@ const productsSlicer = createSlice({
   }
 });
 
-export const { fetchProducts } = productsSlicer.actions;
+export const { fetchProducts, addProduct, removeProduct } = productsSlicer.actions;
 export default productsSlicer;

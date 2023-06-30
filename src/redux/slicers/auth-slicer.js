@@ -8,7 +8,7 @@ const initialState = token ? {
   user: jwtDecode(token)
 } : null;
 
-const authSlice = createSlice({
+const authSlicer = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -38,5 +38,5 @@ const authSlice = createSlice({
   }
 });
 
-export const { login, register, logout, refreshToken } = authSlice.actions;
-export default authSlice;
+export const { login, register, logout, refreshToken } = authSlicer.actions;
+export default authSlicer;

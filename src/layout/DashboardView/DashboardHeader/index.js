@@ -1,18 +1,20 @@
 import { useEffect } from "react";
 import { productsServices } from "../../../services/productsServices";
-import { Col, Input, Layout, Row, message } from "antd";
+import { categoriesServices } from "../../../services/categoriesServices";
 import { PersonalArea } from "./PersonalArea";
 import { PromotionsArea } from "./PromotionsArea";
+import { Col, Input, Layout, Row, message } from "antd";
 
 const { Header } = Layout;
 
 export const DashboardHeader = () => {
+
   useEffect(() => {
     const fetchAllData = async () => {
       try {
         await productsServices.fetchAllProducts();
-        await productsServices.fetchAllCategories();
-        await productsServices.fetchAllSubCategories();
+        await categoriesServices.fetchAllCategories();
+        await categoriesServices.fetchAllSubCategories();
       } catch (err) {
         message.error(err.message);
       }

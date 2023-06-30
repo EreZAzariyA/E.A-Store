@@ -6,8 +6,8 @@ import { EditTable } from "../components/EditTable";
 
 export const ProductsList = () => {
   const products = useSelector((state) => (state.products));
-  const categories = useSelector((state) => (state.categoriesReducer?.categories));
-  const subCategories = useSelector((state) => (state.categoriesReducer?.subCategories));
+  const categories = useSelector((state) => (state.categories));
+  const subCategories = useSelector((state) => (state.subCategories));
   const [ filteredProducts, setFilteredProducts] = useState(products);
 
   const [ filterState, setFilterState ] = useState({
