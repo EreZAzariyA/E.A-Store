@@ -46,4 +46,4 @@ export const AdminRouter = () => (
     </Provider>
   </BrowserRouter>
 );
-;
+
