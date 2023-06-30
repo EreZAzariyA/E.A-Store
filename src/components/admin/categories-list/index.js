@@ -6,9 +6,9 @@ import { EditTable } from "../components/EditTable";
 
 export const CategoriesList = () => {
   const { pathname } = useLocation();
-  const categories = useSelector((state) => (state.categoriesReducer?.categories));
+  const categories = useSelector((state) => (state.categories));
   const [filteredCategories, setFilteredCategories] = useState([]);
-  const products = useSelector((state) => (state.productsReducer?.products));
+  const products = useSelector((state) => (state.products));
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
 
   const [filterState, setFilterState] = useState({

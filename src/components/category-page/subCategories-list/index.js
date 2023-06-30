@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { SubCategoryCard } from "./subCategory-card";
 
 export const SubCategoryList = ({category_id}) => {
-  const subCategories = useSelector((state) => (state.categoriesReducer?.subCategories))
+  const subCategories = useSelector((state) => (state.subCategories))
     ?.filter((subCategory) => (subCategory.category_id === category_id));
 
   return (

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { CategoryCard } from "./categoryCard";
 
 export const CategoriesList = () => {
-  const categories = useSelector((state) => (state.categoriesReducer?.categories));
+  const categories = useSelector((state) => (state.categories));
 
   return (
     <div className="subCategories-list-main-container">

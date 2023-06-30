@@ -5,7 +5,7 @@ import { message } from "antd";
 
 export const PublicRoute = ({children}) => {
   let location = useLocation();
-  const user  = useSelector((state) => (state.authReducer?.user));
+  const user  = useSelector((state) => (state.auth?.user));
 
   useEffect(() => {
     if (user) {

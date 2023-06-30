@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
 
 export const ProductsList = () => {
-  const products = useSelector((state) => (state.productsReducer?.products));
-  const categories = useSelector((state) => (state.categoriesReducer?.categories));
-  const subCategories = useSelector((state) => (state.categoriesReducer?.subCategories));
-  const [ filteredProducts, setFilteredProducts] = useState([]);
+  const products = useSelector((state) => (state.products));
+  const categories = useSelector((state) => (state.categories));
+  const subCategories = useSelector((state) => (state.subCategories));
+  const [ filteredProducts, setFilteredProducts] = useState(products);
 
   const [ filterState, setFilterState ] = useState({
     name: '',

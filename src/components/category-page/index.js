@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
-import { productsServices } from "../../services/productsServices";
-import { Menu, Spin, message } from "antd";
+import { categoriesServices } from "../../services/categoriesServices";
 import { SubCategoryPage } from "../subCategoryPage";
 import { SubCategoryList } from "./subCategories-list";
+import { Menu, Spin, message } from "antd";
 
 export const CategoryPage = () => {
   const { category_id } = useParams();
@@ -16,7 +16,7 @@ export const CategoryPage = () => {
   useEffect(() => {
     const fetchSubCategoriesByCategoryId = async (category_id) => {
       try {
-        const subCategories = await productsServices.fetchSubCategoriesByCategoryId(category_id);
+        const subCategories = await categoriesServices.fetchSubCategoriesByCategoryId(category_id);
         setSubCategories(subCategories);
       } catch (err) {
         message.error(err.message)
