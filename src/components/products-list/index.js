@@ -3,7 +3,7 @@ import { Space } from "antd";
 import { useSelector } from "react-redux";
 
 export const ProductsList = () => {
-  const products = useSelector((state) => (state.productsReducer?.products));
+  const products = useSelector((state) => (state.products?.products));
 
   return (
     <div className="products-list-main-container">

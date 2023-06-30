@@ -8,7 +8,7 @@ export const CategoriesList = () => {
   const { pathname } = useLocation();
   const categories = useSelector((state) => (state.categoriesReducer?.categories));
   const [filteredCategories, setFilteredCategories] = useState([]);
-  const products = useSelector((state) => (state.productsReducer?.products));
+  const products = useSelector((state) => (state.products?.products));
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
 
   const [filterState, setFilterState] = useState({
