@@ -1,15 +1,15 @@
 import axios from "axios";
 import store from "../redux/store";
 import { getError } from "../utils/helpers";
-import { AuthActions } from "../redux/actions";
+import { logout, refreshToken } from "../redux/slicers/auth-slicer";
 
 class InterceptorsService {
 
   createInterceptors = () => {
     axios.interceptors.request.use((request) => {
-      if(store.getState().authReducer?.token) {
+      if(store.getState().auth?.token) {
         request.headers = {
-          authorization: "Bearer " + store.getState().authReducer.token,
+          authorization: "Bearer " + store.getState().auth.token,
         };
       };
       return request;
@@ -20,12 +20,12 @@ class InterceptorsService {
     axios.interceptors.response.use((response) => {
       const token = response?.headers?.get('authorization');
       if (token) {
-        store.dispatch(AuthActions.refreshToken(token));
+        store.dispatch(refreshToken(token));
       };
       return response;
     }, (err) => {
       if (err.response.status === 401) {
-        store.dispatch(AuthActions.logout());
+        store.dispatch(logout());
       };
       throw new Error(getError(err))
     });

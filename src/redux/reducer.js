@@ -1,40 +1,11 @@
 import { createReducer } from 'redux-promise-middleware-actions';
 import { combineReducers } from 'redux';
-import jwtDecode from "jwt-decode";
-import { AuthActions, CategoriesActions, ProductsActions } from './actions';
+import { CategoriesActions, ProductsActions } from './actions';
 
-const token = localStorage.getItem('token');
 
-const initialValue = token ? {
-  token: token,
-  user: jwtDecode(token)
-} : '';
 
-const authReducer = createReducer(initialValue, (handleAction) => [
-  handleAction(AuthActions.login, (state, {payload}) => {
-    const { token } = payload;
-    localStorage.setItem('token', token);
-    return {
-      ...state,
-      token: token,
-      user: jwtDecode(token)
-    };
-  }),
-  handleAction(AuthActions.register, (state, {payload}) => {
-    return {...state, ...payload};
-  }),
-  handleAction(AuthActions.logout, () => {
-    localStorage.removeItem('token');
-    return null;
-  }),
-  handleAction(AuthActions.refreshToken, (state, {payload}) => {
-    localStorage.setItem('token', payload.token);
-    return {...state, token: payload.token, user: jwtDecode(payload.token)
-    }
-  })
-]);
 
-const productsReducer = createReducer([], (handleAction) => [
+const products = createReducer([], (handleAction) => [
   handleAction(ProductsActions.fetchProducts , (state, { payload }) => {
     return {
       ...state,
@@ -84,7 +55,6 @@ const categoriesReducer = createReducer([], (handleAction) => [
 ]);
 
 export default combineReducers({
-  authReducer,
-  productsReducer,
+  products,
   categoriesReducer
 });

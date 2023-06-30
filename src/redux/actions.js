@@ -1,12 +1,5 @@
 import { createAction } from 'redux-promise-middleware-actions';
 
-export const AuthActionsTypes = {
-  LOGIN: 'LOGIN',
-  REGISTER: 'REGISTER',
-  LOGOUT: 'LOGOUT',
-  REFRESH_TOKEN: 'REFRESH_TOKEN'
-};
-
 export const ProductsActionsType = {
   FETCH_PRODUCTS: 'FETCH_PRODUCTS',
   ADD_PRODUCT: 'ADD_PRODUCT',
@@ -18,13 +11,6 @@ export const CategoriesActionsType = {
   ADD_CATEGORY: 'ADD_CATEGORY',
   FETCH_SUB_CATEGORIES: 'FETCH_SUB_CATEGORIES',
   ADD_SUB_CATEGORY: 'ADD_SUB_CATEGORY'
-};
-
-export const AuthActions = {
-  login: createAction(AuthActionsTypes.LOGIN, (token) => ({token})),
-  register: createAction(AuthActionsTypes.REGISTER, (user) => ({user})),
-  logout: createAction(AuthActionsTypes.LOGOUT),
-  refreshToken: createAction(AuthActionsTypes.REFRESH_TOKEN, (token) => ({token}))
 };
 
 export const ProductsActions = {
