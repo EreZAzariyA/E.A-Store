@@ -2,7 +2,6 @@ import axios from "axios";
 import store from "../redux/store";
 import { getError } from "../utils/helpers";
 import { AuthActions } from "../redux/actions";
-import { message } from "antd";
 
 class InterceptorsService {
 
@@ -19,16 +18,16 @@ class InterceptorsService {
     }));
 
     axios.interceptors.response.use((response) => {
-      const token = response.headers?.get('authorization');
+      const token = response?.headers?.get('authorization');
       if (token) {
         store.dispatch(AuthActions.refreshToken(token));
-      }
+      };
       return response;
-    }, (error) => {
-      if (error.response.status === 401) {
+    }, (err) => {
+      if (err.response.status === 401) {
         store.dispatch(AuthActions.logout());
-      }
-      message.error(getError(error));
+      };
+      throw new Error(getError(err))
     });
   };
 };
