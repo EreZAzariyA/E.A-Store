@@ -1,9 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./reducer";
 import { middleware } from "./middleware";
+import authSlice from "./slicers/auth-slicer"
+import productsSlicer from "./slicers/products-slicer";
+
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    auth: authSlice.reducer,
+    products: productsSlicer.reducer
+  },
   middleware: [middleware]
 })
 
