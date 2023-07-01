@@ -11,7 +11,7 @@ export const AdminRoute = ({ children }) => {
   const user  = useSelector((state) => (state.auth?.user));
 
   useEffect(() => {
-    if (user && !isAdmin(user)) {
+    if (!isAdmin(user)) {
       message.error('You are not authorize')
       dispatch(logout());
     };

@@ -8,27 +8,24 @@ import { AuthView } from "../../layout/AuthView";
 import { UserRoute } from "../UserRoute";
 import store from "../../redux/store";
 
-export const UserRouter = () => (
-  <BrowserRouter>
-    <Provider store={store}>
-      <Routes>
-        <Route path="/" element={<Navigate to={'/home'} replace />} />
+const UserRouter = () => (
+  <Routes>
+    <Route path="/" element={<Navigate to={'home'} replace />} />
 
-        <Route path="/" element={
-          <UserRoute>
-            <DashboardView />
-          </UserRoute>}
-        >
-          <Route path="/home" element={<Dashboard />} />
-          <Route path="categories/:category_id/*" element={<CategoryPage />} />
+    <Route path="/" element={
+      <UserRoute>
+        <DashboardView />
+      </UserRoute>}
+    >
+      <Route path="/home" element={<Dashboard />} />
+      <Route path="categories/:category_id/*" element={<CategoryPage />} />
 
-          <Route path="page-not-found" element={<PageNotFound />} />
-          <Route path="*" element={<Navigate to={'/page-not-found'} />} />
-        </Route>
+      <Route path="page-not-found" element={<PageNotFound />} />
+      <Route path="*" element={<Navigate to={'/page-not-found'} />} />
+    </Route>
 
-        <Route path="auth/*" element={<AuthView />} />
-        <Route path="*" element={<Navigate to={'/auth/login'} />} />
-      </Routes>
-    </Provider>
-  </BrowserRouter>
+    {/* <Route path="*" element={<Navigate to={'/auth/login'} />} /> */}
+  </Routes>
 );
+
+export default UserRouter;

@@ -18,7 +18,7 @@ class InterceptorsService {
     }));
 
     axios.interceptors.response.use((response) => {
-      const token = response?.headers?.get('authorization');
+      const token = response.headers.get('authorization');
       if (token) {
         store.dispatch(refreshToken(token));
       };
@@ -27,7 +27,7 @@ class InterceptorsService {
       if (err.response.status === 401) {
         store.dispatch(logout());
       };
-      throw new Error(getError(err))
+      return getError(err);
     });
   };
 };
