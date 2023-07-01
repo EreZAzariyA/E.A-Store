@@ -12,11 +12,9 @@ const AdminRouter = () => (
     <Route path="/" element={<AdminLayout />}>
       <Route path="dashboard" element={<AdminDashboard />} />
       <Route path="tables" element={<AdminTables />} />
-      {/* <Route path="all-products" element={<ProductsList />} />
-      <Route path="all-categories/*" element={<CategoriesList />} /> */}
       <Route path="insert-doc" element={<AdminInsert />} />
+      
       <Route path="page-not-found" element={<PageNotFound />} />
-
       <Route path="*" element={<Navigate to={'page-not-found'} replace />} />
     </Route>
   </Routes>

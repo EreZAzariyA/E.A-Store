@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router";
-import { UserRoute } from "./routes/UserRoute";
-import { AdminRoute } from "./routes/AdminRoute";
-import { PublicRoute } from "./routes/PublicRoute";
 import UserRouter from "./routes/user-router";
 import AdminRouter from "./routes/admin-router";
 import AuthRouter from "./routes/auth-router";
+import { UserRoute } from "./routes/UserRoute";
+import { AdminRoute } from "./routes/AdminRoute";
+import { PublicRoute } from "./routes/PublicRoute";
 
 export const App = () => {
   return (

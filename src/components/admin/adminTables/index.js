@@ -1,6 +1,7 @@
 import { Tabs } from "antd";
-import { ProductsList } from "./products-list";
-import { CategoriesList } from "./categories-list";
+import { ProductsTable } from "./products-table";
+import { CategoriesTable } from "./categories-table";
+import { SubCategoriesTable } from "./subCategories-table";
 
 
 export const AdminTables = () => {
@@ -9,19 +10,19 @@ export const AdminTables = () => {
     {
       label: 'Products',
       key: 'products',
-      children: <ProductsList />
+      children: <ProductsTable />
     },
     {
       label: 'Categories',
       key: 'categories',
-      children: <CategoriesList />
+      children: <CategoriesTable />
     },
     {
       label: 'Sub-Categories',
       key: 'sub-categories',
-      children: <CategoriesList />
+      children: <SubCategoriesTable/>
     },
-  ]
+  ];
 
   return (
     <Tabs items={tabsItems} />

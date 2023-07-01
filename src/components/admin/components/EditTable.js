@@ -10,9 +10,7 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
   const isEditing = (record) => record._id === editingKey;
 
   useEffect(() => {
-    if (dataSource && dataSource.length) {
-      setData([...dataSource]);
-    };
+    setData(dataSource);
   }, [dataSource]);
 
   const edit = (record) => {
