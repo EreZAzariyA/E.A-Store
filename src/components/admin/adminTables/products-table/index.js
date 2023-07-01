@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Input, Select, Space } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { EditTable } from "../components/EditTable";
+import { EditTable } from "../../components/EditTable";
 
-export const ProductsList = () => {
+export const ProductsTable = () => {
   const products = useSelector((state) => (state.products));
   const categories = useSelector((state) => (state.categories));
   const subCategories = useSelector((state) => (state.subCategories));
-  const [ filteredProducts, setFilteredProducts] = useState(products);
+  const [ filteredProducts, setFilteredProducts ] = useState([]);
 
   const [ filterState, setFilterState ] = useState({
     name: '',
@@ -17,7 +17,6 @@ export const ProductsList = () => {
   });
 
   const filtering = () => {
-
     let filteredProducts = products;
 
     if (filterState.name) {
@@ -93,7 +92,7 @@ export const ProductsList = () => {
 
   return (
     <Space direction="vertical" style={{width: '99%'}}>
-      <Space className="mt-10" align="center" wrap>
+      <Space align="center" wrap>
         <Input
           allowClear
           type="text"
