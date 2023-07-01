@@ -10,8 +10,8 @@ export const PublicRoute = ({children}) => {
 
   useEffect(() => {
     if (user) {
-      message.info('Your already logged in');
-    }
+      message.info('Your already logged-in');
+    };
   }, []);
 
   if (user && isAdmin(user)) {
@@ -20,6 +20,5 @@ export const PublicRoute = ({children}) => {
   if (user) {
     return <Navigate to="/" state={{ from: location }} />;
   };
-
   return children;
 };
