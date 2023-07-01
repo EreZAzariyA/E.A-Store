@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { isAdmin } from "../utils/helpers";
 import { message } from "antd";
 
 export const PublicRoute = ({children}) => {
@@ -11,11 +12,15 @@ export const PublicRoute = ({children}) => {
     if (user) {
       message.info('Your already logged in');
     }
-  }, [user]);
+  }, []);
 
+  if (user && isAdmin(user)) {
+    return <Navigate to="/admin" state={{ from: location }} />;
+  };
   if (user) {
     return <Navigate to="/" state={{ from: location }} />;
   };
+
 
   return children;
 };

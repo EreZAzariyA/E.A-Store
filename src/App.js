@@ -1,34 +1,32 @@
-import { useSelector } from "react-redux";
-import { isAdmin } from "./utils/helpers";
-import { Suspense, lazy } from "react";
-import { Spin } from "antd";
+import { Route, Routes } from "react-router";
+import { UserRoute } from "./routes/UserRoute";
+import { AdminRoute } from "./routes/AdminRoute";
+import { PublicRoute } from "./routes/PublicRoute";
+import UserRouter from "./routes/user-router";
+import AdminRouter from "./routes/admin-router";
+import AuthRouter from "./routes/auth-router";
 
 export const App = () => {
-  const user = useSelector((state) => state.auth?.user);
-
-  if (user) {
-
-    if (isAdmin(user)) {
-      const AdminRouter = lazy(() => import('./routes/admin-router'));
-      return (
-        <Suspense fallback={<Spin />}>
-          <AdminRouter />
-        </Suspense>
-      );
-    };
-
-    const UserRouter = lazy(() => import('./routes/user-router'));
-    return (
-      <Suspense fallback={<Spin />}>
-        <UserRouter />
-      </Suspense>
-    );
-  };
-
-  const AuthRouter = lazy(() => import('./routes/auth-router'));
   return (
-    <Suspense fallback={<Spin />}>
-      <AuthRouter />
-    </Suspense>
+    <Routes>
+      <Route path="/*" element={
+        <UserRoute>
+          <UserRouter />
+        </UserRoute>
+      }/>
+
+      <Route path="admin/*" element={
+        <AdminRoute>
+          <AdminRouter />
+        </AdminRoute>
+      }/>
+
+      <Route path="auth/*" element={
+        <PublicRoute>
+          <AuthRouter />
+        </PublicRoute>
+      }/>
+    </Routes>
   );
 };
+

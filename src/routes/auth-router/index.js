@@ -8,7 +8,7 @@ const AuthRouter = () => (
   <Routes>
     <Route path="/" element={<Navigate to={'auth/login'} replace />} />
 
-    <Route path="auth/*" element={<AuthView />}>
+    <Route path="/*" element={<AuthView />}>
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
 

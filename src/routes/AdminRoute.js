@@ -1,24 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { isAdmin } from '../utils/helpers';
 import { useEffect } from 'react';
 import { message } from 'antd';
-import { logout } from '../redux/slicers/auth-slicer';
 
 export const AdminRoute = ({ children }) => {
   let location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user  = useSelector((state) => (state.auth?.user));
 
   useEffect(() => {
-    if (!isAdmin(user)) {
-      message.error('You are not authorize')
-      dispatch(logout());
+    if (user && !isAdmin(user)) {
+      message.error('You are not authorize');
+      navigate(-1);
     };
-  }, [dispatch, location, user]);
+  }, [dispatch, location, navigate, user]);
 
   if (!isAdmin(user)) {
-    return <Navigate to="/auth/login" state={{ from: location }} />;
+    return <Navigate to="/" state={{ from: location }} />;
   };
 
   return children;
