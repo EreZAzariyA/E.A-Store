@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Input, Select, Space } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { EditTable } from "../components/EditTable";
+import { EditTable } from "../../components/EditTable";
 
 export const ProductsList = () => {
   const products = useSelector((state) => (state.products));

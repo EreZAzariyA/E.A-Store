@@ -5,8 +5,7 @@ import { productsServices } from "../../services/productsServices";
 import { categoriesServices } from "../../services/categoriesServices";
 import { authServices } from "../../services/auth-services";
 import AppstoreOutlined from "@ant-design/icons/AppstoreOutlined";
-import OrderedListOutlined from "@ant-design/icons/OrderedListOutlined";
-import HddOutlined from "@ant-design/icons/HddOutlined";
+import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
 import UploadOutlined from "@ant-design/icons/UploadOutlined";
 
@@ -43,28 +42,25 @@ export const AdminLayout = () => {
         icon: <AppstoreOutlined />
       },
       {
-        label: 'All-Products',
-        key: 'all-products',
-        icon: <OrderedListOutlined />
+        label: 'Tables',
+        key: 'tables',
+        icon: <DatabaseOutlined />
       },
-      {
-        label: 'All-Categories',
-        key: 'all-categories',
-        icon: <HddOutlined />
-      },
+      // {
+      //   label: 'All-Products',
+      //   key: 'all-products',
+      //   icon: <OrderedListOutlined />
+      // },
+      // {
+      //   label: 'All-Categories',
+      //   key: 'all-categories',
+      //   icon: <HddOutlined />
+      // },
       {
         label: 'Insert Doc',
         key: 'insert-doc',
         icon: <UploadOutlined />
       },
-      // {
-      //   label: 'Add-Product',
-      //   key: 'add-product'
-      // },
-      // {
-      //   label: 'Add-Category',
-      //   key: 'add-category'
-      // },
       {
         label: <Button danger type="text">Logout</Button>,
         key: '/',

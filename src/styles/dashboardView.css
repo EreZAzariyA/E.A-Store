@@ -28,6 +28,10 @@
   align-items: center;
 }
 
+.layout .ant-layout-content {
+  padding: 0 10px;
+}
+
 .layout.auth-layout * {
   z-index: 5;
 }

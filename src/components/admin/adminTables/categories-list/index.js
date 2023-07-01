@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Input, Space } from "antd";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { EditTable } from "../components/EditTable";
+import { EditTable } from "../../components/EditTable";
 
 export const CategoriesList = () => {
   const { pathname } = useLocation();
