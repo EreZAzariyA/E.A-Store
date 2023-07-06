@@ -14,7 +14,7 @@ export const Login = () => {
       message.error({
         content: getError(err),
         duration: 2
-      })
+      });
     };
   };
 

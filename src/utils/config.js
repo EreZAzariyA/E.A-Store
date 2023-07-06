@@ -6,7 +6,8 @@ class Config {
     },
     products: {
       fetchAllProducts: "",
-      fetchProductsByCategoryId: ""
+      fetchProductsByCategoryId: "",
+      fetchProductsBySubCategoryId: ""
     },
     categories: {
       fetchAllCategories: "",
@@ -22,10 +23,13 @@ class Config {
     admin: {
       addProduct: "",
       removeProduct: "",
+      updateProduct: "",
       addCategory: "",
       removeCategory: "",
+      updateCategory: "",
       addSubCategory: "",
-      removeSubCategory: ""
+      removeSubCategory: "",
+      updateSubCategory: "",
     }
   }
 
@@ -37,7 +41,8 @@ class Config {
       },
       products: {
         fetchAllProducts: baseUrl + 'products/all',
-        fetchProductsByCategoryId: baseUrl + 'products/by-category-id/'
+        fetchProductsByCategoryId: baseUrl + 'products/by-category-id/',
+        fetchProductsBySubCategoryId: baseUrl + 'products/by-sub-category-id/'
       },
       categories: {
         fetchAllCategories: baseUrl + 'categories/all',
@@ -53,10 +58,13 @@ class Config {
       admin: {
         addProduct: baseUrl + 'admin/add-product',
         removeProduct: baseUrl + 'admin/remove-product/',
+        updateProduct: baseUrl + 'admin/update-product',
         addCategory: baseUrl + 'admin/add-category',
         removeCategory: baseUrl + 'admin/remove-category/',
+        updateCategory: baseUrl + 'admin/update-category',
         addSubCategory: baseUrl + 'admin/add-sub-category',
-        removeSubCategory: baseUrl + 'admin/remove-sub-category/'
+        removeSubCategory: baseUrl + 'admin/remove-sub-category/',
+        updateSubCategory: baseUrl + 'admin/update-sub-category',
       }
     }
   }

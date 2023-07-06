@@ -7,8 +7,8 @@ import { getError } from "../../../../utils/helpers";
 
 export const AddProduct = () => {
   const [ form ] = Form.useForm();
-  const categories = useSelector((state) => state.categoriesReducer?.categories);
-  const subCategories = useSelector((state) => state.categoriesReducer?.subCategories);
+  const categories = useSelector((state) => state.categories);
+  const subCategories = useSelector((state) => state.subCategories);
   const [ filteredSubCategories, setFilteredSubCategories ] = useState([]);
   const [ initialValues, setInitialValues ] = useState({
     name: '',
@@ -18,12 +18,6 @@ export const AddProduct = () => {
     price: '',
     image_url: ''
   });
-
-  // const fetchSubCategories = async (category_id) => {
-  //   const subCategories = await productsServices.fetchSubCategoriesByCategoryId(category_id);
-  //   setSubCategories(subCategories);
-  // };
-
 
   useEffect(() => {
     if (initialValues.category_id) {

@@ -1,17 +1,25 @@
-import { useSelector } from 'react-redux';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { isAdmin } from '../utils/helpers';
+import { useEffect } from 'react';
+import { message } from 'antd';
 
-const AdminRoute = ({ children }) => {
+export const AdminRoute = ({ children }) => {
   let location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user  = useSelector((state) => (state.auth?.user));
 
-  const user  = useSelector((state) => (state.authReducer?.user));
+  useEffect(() => {
+    if (user && !isAdmin(user)) {
+      message.error('You are not authorize');
+      navigate('/');
+    };
+  }, [dispatch, location, navigate, user]);
 
   if (!isAdmin(user)) {
-    return <Navigate to="/auth/login" state={{ from: location }} />;
+    return <Navigate to="/" state={{ from: location }} />;
   };
 
   return children;
 };
-
-export default AdminRoute;

@@ -1,14 +1,17 @@
-import { applyMiddleware, crea } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./reducer";
 import { middleware } from "./middleware";
-
-
-// const store = createStore(rootReducer ,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+import authSlicer from "./slicers/auth-slicer"
+import productsSlicer from "./slicers/products-slicer";
+import categoriesSlicer from "./slicers/categories-slicer";
+import subCategoriesSlicer from "./slicers/subCategories-reducer";
 
 const store = configureStore({
-  reducer: rootReducer,
-  // devTools: window.__REDUX_DEVTOOLS_EXTENSION__(),
+  reducer: {
+    auth: authSlicer.reducer,
+    products: productsSlicer.reducer,
+    categories: categoriesSlicer.reducer,
+    subCategories: subCategoriesSlicer.reducer
+  },
   middleware: [middleware]
 })
 

@@ -13,10 +13,14 @@
 
   line-height: 5px;
   padding: 0 0 15px;
-
+  
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+.layout .ant-layout-header .top-header-text {
+  position: sticky;
 }
 
 .layout.admin-layout .ant-layout-header {
@@ -26,6 +30,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.layout .ant-layout-content {
+  padding: 0 10px;
 }
 
 .layout.auth-layout * {

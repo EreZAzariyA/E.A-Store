@@ -6,24 +6,30 @@ import { useSelector } from "react-redux";
 export const DashboardWrapper = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const categories = useSelector((state) => (state.categoriesReducer?.categories));
+  const categories = useSelector((state) => state.categories);
   const [ patchOptions, setPatchOptions] = useState([]);
   const [ current, setCurrent ] = useState('');
 
   useEffect(() => {
     let locationArray = location.pathname.split('/');
-    const patchOptions = locationArray.filter((p) =>(p !== '')).map((p) => ({
-      title: <Link to={p}>{p}</Link>, onClick: () => navigate(`/${p}`)
-    }));
-    setPatchOptions(patchOptions);
-    setCurrent([...locationArray].pop() === '' ? '/' : [...locationArray].pop());
-  }, [location.pathname]);
+    const newLocationArray = locationArray.filter((path) => path !== '' && path !== 'home');
+    const options = [];
+
+    for (let i = 0; i < newLocationArray.length; i++) {
+      const parentPath = newLocationArray[i - 1];
+      const path = newLocationArray[i];
+      options.push({ title: <Link to={`${parentPath ? '/'+parentPath : ''}/${path}`}>{path}</Link> });
+    };
+
+    setPatchOptions(options);
+    setCurrent([...newLocationArray].pop());
+  }, [location.pathname, navigate]);
 
   const defaultItems = [
     {
       label: 'Home',
-      key: '/',
-      onClick: () => navigate('/')
+      key: 'home',
+      onClick: () => navigate('/home')
     },
   ];
 
@@ -45,7 +51,7 @@ export const DashboardWrapper = () => {
       {patchOptions.length > 0 &&
         <Breadcrumb
           items={[
-            {title: <Link to={'/'}>Home</Link>, onClick: () => navigate('/')}
+            {title: <Link to={'/'}>Home</Link>}
           ].concat(patchOptions)}
         />
       }

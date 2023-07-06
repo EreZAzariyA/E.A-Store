@@ -1,15 +1,17 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { isAdmin } from "../utils/helpers";
 
-const PrivateRoute = ({ children }) => {
+export const UserRoute = ({ children }) => {
   let location = useLocation();
-  const user  = useSelector((state) => (state.authReducer?.user));
+  const user  = useSelector((state) => (state.auth?.user));
 
   if (!user) {
     return <Navigate to="/auth/login" state={{ from: location }} />;
   };
+  if (isAdmin(user)) {
+    return <Navigate to="/admin" state={{ from: location }} />;
+  };
 
   return children;
 };
-
-export default PrivateRoute;

@@ -1,13 +1,11 @@
 import { Button, Col, Dropdown, Row, Space } from "antd";
 import UserOutlined from "@ant-design/icons/UserOutlined";
-import { useDispatch } from "react-redux";
-import { AuthActions } from "../../../redux/actions";
+import { authServices } from "../../../services/auth-services";
 
 export const PersonalArea = () => {
-  const dispatch = useDispatch();
 
   const logout = () => {
-    dispatch(AuthActions.logout());
+    authServices.logout();
   };
 
   const items = [
