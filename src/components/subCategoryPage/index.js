@@ -17,7 +17,9 @@ export const SubCategoryPage = () => {
 
   return (
     <div className="sub-category-page">
-      <p>sub-category-page</p>
+      {products?.map((product) => (
+        <p key={product._id}>{product.name}</p>
+      ))}
     </div>
   )
 };

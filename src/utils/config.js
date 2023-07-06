@@ -42,7 +42,7 @@ class Config {
       products: {
         fetchAllProducts: baseUrl + 'products/all',
         fetchProductsByCategoryId: baseUrl + 'products/by-category-id/',
-        fetchProductsBySubCategoryId: baseUrl + 'products/by-subCategory-id/'
+        fetchProductsBySubCategoryId: baseUrl + 'products/by-sub-category-id/'
       },
       categories: {
         fetchAllCategories: baseUrl + 'categories/all',

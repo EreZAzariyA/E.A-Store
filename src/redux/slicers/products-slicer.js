@@ -9,7 +9,7 @@ const productsSlicer = createSlice({
       return state = action.payload;
     },
     addProduct(state, action) {
-      const addedProduct = action.payload
+      const addedProduct = action.payload;
       state.push(addedProduct);
       return state;
     },

@@ -97,6 +97,9 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
       if (isCategoriesList) {
         await adminServices.removeCategory(record._id)
         message.success('Removed');
+      } else if (isSubCategoriesList) {
+        await adminServices.removeSubCategory(record._id);
+        message.success('Removed');
       } else {
         await adminServices.removeProduct(record._id);
         message.success('Removed');

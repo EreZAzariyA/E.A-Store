@@ -1,8 +1,10 @@
 import { Col, Row } from "antd";
 import { useSelector } from "react-redux";
 import { SubCategoryCard } from "./subCategory-card";
+import { useParams } from "react-router-dom";
 
-export const SubCategoryList = ({category_id}) => {
+export const SubCategoryList = () => {
+  const { category_id } = useParams();
   const subCategories = useSelector((state) => (state.subCategories))
     ?.filter((subCategory) => (subCategory.category_id === category_id));
 

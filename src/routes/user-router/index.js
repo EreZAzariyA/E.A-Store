@@ -10,7 +10,9 @@ const UserRouter = () => (
 
     <Route path="/" element={<DashboardView />}>
       <Route path="home" element={<Dashboard />} />
-      <Route path="categories/:category_id/*" element={<CategoryPage />} />
+      <Route path="categories">
+        <Route path=":category_id/*" element={<CategoryPage />} />
+      </Route>
 
       <Route path="page-not-found" element={<PageNotFound />} />
       <Route path="*" element={<Navigate to={'/page-not-found'} />} />

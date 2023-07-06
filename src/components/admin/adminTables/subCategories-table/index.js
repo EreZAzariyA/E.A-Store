@@ -78,7 +78,7 @@ export const SubCategoriesTable = () => {
         rowKey={'_id'}
         columns={columns}
         dataSource={filteredSubCategories}
-        isCategoriesList
+        isSubCategoriesList
       />
     </Space>
   );

@@ -13,15 +13,16 @@ export const CategoryPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const fetchSubCategoriesByCategoryId = async (category_id) => {
+    try {
+      const subCategories = await categoriesServices.fetchSubCategoriesByCategoryId(category_id);
+      setSubCategories(subCategories);
+    } catch (err) {
+      message.error(err.message)
+    }
+  };
+
   useEffect(() => {
-    const fetchSubCategoriesByCategoryId = async (category_id) => {
-      try {
-        const subCategories = await categoriesServices.fetchSubCategoriesByCategoryId(category_id);
-        setSubCategories(subCategories);
-      } catch (err) {
-        message.error(err.message)
-      }
-    };
     fetchSubCategoriesByCategoryId(category_id);
     setIsLoading(false);
   }, [category_id]);
@@ -32,7 +33,6 @@ export const CategoryPage = () => {
     setCurrent(result);
   }, [location.pathname]);
 
-
   if (!isLoading) {
     return (
       <>
@@ -40,7 +40,7 @@ export const CategoryPage = () => {
           mode="horizontal"
           style={{background: 'transparent'}}
           selectedKeys={[current]}
-          items={subCategories?.map((subCategory) => {
+          items={subCategories.map((subCategory) => {
             return {
               key: 'sub-category/' + subCategory._id,
               label: subCategory.subCategory,

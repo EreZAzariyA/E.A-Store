@@ -56,7 +56,7 @@ class CategoriesServices {
       return subCategories;
     };
     const subCategories = store.getState().subCategories;
-    const subCategoriesByCategoryId = [...subCategories].filter((subC) => subC._id === categoryId);
+    const subCategoriesByCategoryId = [...subCategories].filter((subC) => subC.category_id === categoryId);
     return subCategoriesByCategoryId;
   };
 };

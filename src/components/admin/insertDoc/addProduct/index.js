@@ -19,12 +19,6 @@ export const AddProduct = () => {
     image_url: ''
   });
 
-  // const fetchSubCategories = async (category_id) => {
-  //   const subCategories = await productsServices.fetchSubCategoriesByCategoryId(category_id);
-  //   setSubCategories(subCategories);
-  // };
-
-
   useEffect(() => {
     if (initialValues.category_id) {
       const filteredSubCategories = [...subCategories]?.filter((subCategory) => (subCategory.category_id === initialValues.category_id));
