@@ -6,12 +6,13 @@ const productsSlicer = createSlice({
   initialState: [],
   reducers: {
     fetchProducts(state, action) {
-      return state = action.payload;
+      state = action.payload;
+      return state;
     },
     addProduct(state, action) {
-      const addedProduct = action.payload;
-      state.push(addedProduct);
-      return state;
+      const newState = [...state]
+      newState.push(action.payload);
+      return newState;
     },
     removeProduct(state, action) {
       const product = action.payload;
