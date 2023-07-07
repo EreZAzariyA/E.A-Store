@@ -1,13 +1,13 @@
 import { io } from "socket.io-client";
 
-const url = "http://localhost:5000";
+const local = "http://localhost:5000";
 
 class SocketServices {
 
   socketIo;
 
   constructor() {
-    this.socketIo = new io(url, { autoConnect: true });
+    this.socketIo = new io("wss://k6u7v23xwh.execute-api.eu-central-1.amazonaws.com", { autoConnect: true });
   };
 
 };
