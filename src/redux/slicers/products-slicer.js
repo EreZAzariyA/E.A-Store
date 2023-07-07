@@ -10,13 +10,11 @@ const productsSlicer = createSlice({
       return state;
     },
     addProduct(state, action) {
-      const newState = [...state]
-      newState.push(action.payload);
-      return newState;
+      state.push(action.payload);
+      return state;
     },
     updateProduct(state, action) {
-      const productId = action.payload._id;
-      const productIndex = state.findIndex((p) => p._id === productId);
+      const productIndex = state.findIndex((p) => p._id === action.payload._id);
       if (productIndex !== -1) {
         state.splice(productIndex, 1);
         state.push(action.payload);
@@ -24,8 +22,7 @@ const productsSlicer = createSlice({
       return state;
     },
     removeProduct(state, action) {
-      const productId = action.payload;
-      const productIndex = state.findIndex((p) => p._id === productId);
+      const productIndex = state.findIndex((p) => p._id === action.payload);
       if (productIndex !== -1) {
         state.splice(productIndex, 1);
       }
