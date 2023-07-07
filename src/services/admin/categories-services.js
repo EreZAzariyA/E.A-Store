@@ -15,7 +15,7 @@ class AdminCategoriesServices {
   removeCategory = async (category_id) => {
     const response = await axios.delete(config.urls.admin.removeCategory + category_id);
     const removedItem = response.data;
-    store.dispatch(removeCategory(category_id));
+    // store.dispatch(removeCategory(category_id));
     return removedItem;
   };
 

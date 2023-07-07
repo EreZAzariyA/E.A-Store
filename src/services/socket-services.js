@@ -7,7 +7,7 @@ class SocketServices {
   socketIo;
 
   constructor() {
-    this.socketIo = new io(url, {autoConnect: false});
+    this.socketIo = new io(url, { autoConnect: true });
   };
 
 };

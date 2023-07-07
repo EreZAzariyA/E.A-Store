@@ -4,26 +4,28 @@ import { categoriesServices } from "../../services/categoriesServices";
 import { SubCategoryPage } from "../subCategoryPage";
 import { SubCategoryList } from "./subCategories-list";
 import { Menu, Spin, message } from "antd";
+import { useSelector } from "react-redux";
 
 export const CategoryPage = () => {
   const { category_id } = useParams();
-  const [ subCategories, setSubCategories ] = useState([]);
+  const stateSubCategories = useSelector((state) => state.subCategories);
+  const subCategories = [...stateSubCategories].filter((subC) => subC.category_id === category_id);
   const [ isLoading, setIsLoading ] = useState(true);
   const [current, setCurrent] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
-  const fetchSubCategoriesByCategoryId = async (category_id) => {
-    try {
-      const subCategories = await categoriesServices.fetchSubCategoriesByCategoryId(category_id);
-      setSubCategories(subCategories);
-    } catch (err) {
-      message.error(err.message)
-    }
-  };
+  // const fetchSubCategoriesByCategoryId = async (category_id) => {
+  //   try {
+  //     const subCategories = await categoriesServices.fetchSubCategoriesByCategoryId(category_id);
+  //     setSubCategories(subCategories);
+  //   } catch (err) {
+  //     message.error(err.message)
+  //   }
+  // };
 
   useEffect(() => {
-    fetchSubCategoriesByCategoryId(category_id);
+    // fetchSubCategoriesByCategoryId(category_id);
     setIsLoading(false);
   }, [category_id]);
 

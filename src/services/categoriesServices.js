@@ -2,8 +2,7 @@ import axios from "axios";
 import store from "../redux/store";
 import config from "../utils/config";
 import { fetchCategories } from "../redux/slicers/categories-slicer";
-import { fetchSubCategories } from "../redux/slicers/subCategories-reducer";
-
+import { fetchSubCategories } from "../redux/slicers/subCategories-slicer";
 
 class CategoriesServices {
 
