@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { adminCategoriesServices } from "../../../services/admin/categories-services";
+import { adminProductsServices } from "../../../services/admin/products-services";
 import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider } from "antd";
-import { adminServices } from "../../../services/admin-services";
 
 export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategoriesList, ...rest}) => {
   const [ form ] = Form.useForm();
@@ -29,11 +30,11 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
       const row = await form.validateFields();
       let updatedValue;
       if (isCategoriesList) {
-        updatedValue = await adminServices.updateCategory({...row, _id: record._id });
+        updatedValue = await adminCategoriesServices.updateCategory({...row, _id: record._id });
       } else if (isSubCategoriesList) {
-        console.log('not ready !');
+        updatedValue = await adminCategoriesServices.updateSubCategory({...row, _id: record._id });
       } else {
-        updatedValue = await adminServices.updateProduct({...row, _id: record._id});
+        updatedValue = await adminProductsServices.updateProduct({...row, _id: record._id});
       }
       const newData = [...dataSource];
       const index = newData.findIndex((item) => record._id === item._id);
@@ -95,13 +96,13 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
   const remove = async (record) => {
     try {
       if (isCategoriesList) {
-        await adminServices.removeCategory(record._id)
+        await adminCategoriesServices.removeCategory(record._id)
         message.success('Removed');
       } else if (isSubCategoriesList) {
-        await adminServices.removeSubCategory(record._id);
+        await adminCategoriesServices.removeSubCategory(record._id);
         message.success('Removed');
       } else {
-        await adminServices.removeProduct(record._id);
+        await adminProductsServices.removeProduct(record._id);
         message.success('Removed');
       }
     } catch (err) {

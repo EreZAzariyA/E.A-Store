@@ -1,29 +1,21 @@
-import { useEffect, useState } from "react"
-import { adminServices } from "../../../../services/admin-services";
-import { categoriesServices } from "../../../../services/categoriesServices";
-import { getError } from "../../../../utils/helpers";
+import { useState } from "react"
+import { useSelector } from "react-redux";
+import { adminCategoriesServices } from "../../../../services/admin/categories-services";
 import { Button, Form, Input, Select, message } from "antd"
+import { getError } from "../../../../utils/helpers";
 
 export const AddSubCategory = () => {
   const [ form ] = Form.useForm();
-  const [ categories, setCategories ] = useState([]);
+  const categories = useSelector((state) => state.categories);
   const [ initialValues, setInitialValues] = useState({
     category_id: '',
     subCategory: '',
     image_url: '',
   });
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const categories = await categoriesServices.fetchAllCategories();
-      setCategories(categories);
-    };
-    fetchCategories();
-  }, []);
-
   const onFinish = async (values) => {
     try {
-      await adminServices.addSubCategory(values);
+      await adminCategoriesServices.addSubCategory(values);
       message.success('added');
       form.resetFields();
     } catch (error) {
