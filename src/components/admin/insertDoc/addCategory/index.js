@@ -1,11 +1,10 @@
-import { Button, Form, Input, message } from "antd"
 import { useState } from "react"
-import { adminServices } from "../../../../services/admin-services";
+import { adminCategoriesServices } from "../../../../services/admin/categories-services";
+import { Button, Form, Input, message } from "antd"
 import { getError } from "../../../../utils/helpers";
 
 export const AddCategory = () => {
   const [ form ] = Form.useForm();
-  // const [ withSubCategory, setWithSubCategory ] = useState(false);
   const [initialValues, setInitialValues] = useState({
     category: '',
     subCategory: '',
@@ -15,7 +14,7 @@ export const AddCategory = () => {
 
   const onFinish = async (values) => {
     try {
-      await adminServices.addCategory(values);
+      await adminCategoriesServices.addCategory(values);
       message.success('added');
       form.resetFields();
     } catch (err) {

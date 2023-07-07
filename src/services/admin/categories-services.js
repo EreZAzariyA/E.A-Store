@@ -1,26 +1,11 @@
 import axios from "axios";
-import config from "../utils/config";
+import config from "../../utils/config";
+import store from "../../redux/store";
+import { removeCategory } from "../../redux/slicers/categories-slicer";
 
-class AdminServices {
+class AdminCategoriesServices {
 
-  addProduct = async (productToUpload) => {
-    const response = await axios.post(config.urls.admin.addProduct, productToUpload);
-    const uploadedProduct = response.data;
-    return uploadedProduct;
-  };
-
-  removeProduct = async (product_id) => {
-    const response = await axios.delete(config.urls.admin.removeProduct + product_id);
-    const removedItem = response.data;
-    return removedItem;
-  };
-
-  updateProduct = async (productToUpdate) => {
-    const response = await axios.put(config.urls.admin.updateProduct, productToUpdate);
-    const updatedProduct = response.data;
-    return updatedProduct;
-  };
-
+  // Categories:
   addCategory = async (categoryToAdd) => {
     const response = await axios.post(config.urls.admin.addCategory, categoryToAdd);
     const uploadedCategory = response.data;
@@ -30,6 +15,7 @@ class AdminServices {
   removeCategory = async (category_id) => {
     const response = await axios.delete(config.urls.admin.removeCategory + category_id);
     const removedItem = response.data;
+    store.dispatch(removeCategory(category_id));
     return removedItem;
   };
 
@@ -38,7 +24,8 @@ class AdminServices {
     const updatedCategory = response.data;
     return updatedCategory;
   };
-  
+
+  // Sub-Categories:
   addSubCategory = async (subCategoryToAdd) => {
     const response = await axios.post(config.urls.admin.addSubCategory, subCategoryToAdd);
     const uploadedCategory = response.data;
@@ -58,4 +45,4 @@ class AdminServices {
   };
 };
 
-export const adminServices = new AdminServices();
+export const adminCategoriesServices = new AdminCategoriesServices();

@@ -3,6 +3,7 @@ import config from "../utils/config";
 import store from "../redux/store";
 import { fetchProducts } from "../redux/slicers/products-slicer";
 
+
 class ProductsServices {
 
   fetchAllProducts = async () => {

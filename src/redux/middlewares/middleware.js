@@ -1,10 +1,5 @@
 
-export const middleware = (socket) => (store) => (next) => (action) => {
-  const { dispatch, getState } = store;
-
-  socket.on('admin.add.product', (product) => {
-    console.log(product);
-  })
+export const middleware = (store) => (next) => (action) => {
 
   switch (action.type) {
     case 'auth/login':
@@ -16,7 +11,6 @@ export const middleware = (socket) => (store) => (next) => (action) => {
     break;
 
     default:
-      console.log(action.type);
     break;
   };
 

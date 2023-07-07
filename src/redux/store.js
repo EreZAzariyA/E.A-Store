@@ -6,6 +6,7 @@ import subCategoriesSlicer from "./slicers/subCategories-reducer";
 import socketServices from "../services/socket-services";
 // import { socketMiddleware } from "./middlewares/socketMiddleware";
 import { middleware } from "./middlewares/middleware";
+import { socketMiddleware } from "./middlewares/socketMiddleware";
 
 const store = configureStore({
   reducer: {
@@ -14,7 +15,7 @@ const store = configureStore({
     categories: categoriesSlicer.reducer,
     subCategories: subCategoriesSlicer.reducer
   },
-  middleware: [middleware(socketServices.socketIo)]
+  middleware: [middleware, socketMiddleware(socketServices.socketIo)]
 
   // middleware: (getDefaultMiddleware) => (
   //   getDefaultMiddleware().concat(socketMiddleware(socketServices.socketIo), middleware)
