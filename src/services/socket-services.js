@@ -7,7 +7,7 @@ class SocketServices {
   socketIo;
 
   constructor() {
-    this.socketIo = new io("https://k6u7v23xwh.execute-api.eu-central-1.amazonaws.com", { autoConnect: true });
+    this.socketIo = new io("https://k6u7v23xwh.execute-api.eu-central-1.amazonaws.com/socket.io", { autoConnect: true });
   };
 
 };
