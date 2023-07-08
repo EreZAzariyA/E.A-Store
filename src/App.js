@@ -6,7 +6,6 @@ import { UserRoute } from "./routes/UserRoute";
 import { AdminRoute } from "./routes/AdminRoute";
 import { PublicRoute } from "./routes/PublicRoute";
 
-console.log(process.env);
 export const App = () => {
   return (
     <Routes>
