@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "../redux/store";
+import { logout, refreshToken } from "../redux/slicers/auth-slicer";
 
 class InterceptorsService {
 
@@ -14,6 +15,19 @@ class InterceptorsService {
     }, ((err) => {
       console.log(err);
     }));
+
+    axios.interceptors.response.use((response) => {
+      const token = response.headers.get('authorization');
+      if (token) {
+        store.dispatch(refreshToken(token));
+      };
+      return response;
+    }, (err) => {
+      if (err.response.status === 401) {
+        store.dispatch(logout());
+      };
+      return;
+    });
   };
 };
 
