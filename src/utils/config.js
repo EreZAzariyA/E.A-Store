@@ -30,6 +30,10 @@ class Config {
       addSubCategory: "",
       removeSubCategory: "",
       updateSubCategory: "",
+    },
+    socket: {
+      connect: "",
+      disconnect: "",
     }
   }
 
@@ -65,7 +69,11 @@ class Config {
         addSubCategory: baseUrl + 'admin/add-sub-category',
         removeSubCategory: baseUrl + 'admin/remove-sub-category/',
         updateSubCategory: baseUrl + 'admin/update-sub-category',
-      }
+      },
+      socket: {
+        connect: baseUrl + 'socket/connect',
+        disconnect: baseUrl + 'socket/disconnect'
+      },
     }
   }
 }

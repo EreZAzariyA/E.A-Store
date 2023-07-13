@@ -12,7 +12,7 @@ import './styles/dashboardView.css';
 import socketServices from './services/socket-services';
 
 interceptorsService.createInterceptors();
-socketServices.socketIo.connect();
+socketServices.connect();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

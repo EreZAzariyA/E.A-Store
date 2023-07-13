@@ -1,4 +1,6 @@
+import axios from "axios";
 import { io } from "socket.io-client";
+import config from "../utils/config";
 
 const URL = "http://127.0.0.1:5000";
 
@@ -9,7 +11,6 @@ const options = {
 }
 
 class SocketServices {
-
   socketIo;
 
   constructor() {
@@ -24,6 +25,12 @@ class SocketServices {
       });
 
     });
+  };
+
+  connect = async () => {
+    const response = await axios.post(config.urls.socket.connect);
+    const connected = response.data;
+    console.log(connected);
   };
 
 };
