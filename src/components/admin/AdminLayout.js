@@ -1,33 +1,19 @@
-import { Button, Layout, Menu, message } from "antd";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { productsServices } from "../../services/productsServices";
-import { categoriesServices } from "../../services/categoriesServices";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { DashboardHeader } from "../../layout/DashboardView/DashboardHeader";
 import { authServices } from "../../services/auth-services";
+import { Button, Layout, Menu } from "antd";
 import AppstoreOutlined from "@ant-design/icons/AppstoreOutlined";
 import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
 import UploadOutlined from "@ant-design/icons/UploadOutlined";
 
-const { Content, Sider, Header } = Layout;
+const { Content, Sider } = Layout;
 
 export const AdminLayout = () => {
   const { pathname } = useLocation();
   const [current,setCurrent] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        await productsServices.fetchAllProducts();
-        await categoriesServices.fetchAllCategories();
-        await categoriesServices.fetchAllSubCategories();
-      } catch (err) {
-        message.error(err.message);
-      }
-    };
-    fetchAllData();
-  }, []);
 
   useEffect(() => {
     const locationArray = pathname.split('/');
@@ -46,16 +32,6 @@ export const AdminLayout = () => {
         key: 'tables',
         icon: <DatabaseOutlined />
       },
-      // {
-      //   label: 'All-Products',
-      //   key: 'all-products',
-      //   icon: <OrderedListOutlined />
-      // },
-      // {
-      //   label: 'All-Categories',
-      //   key: 'all-categories',
-      //   icon: <HddOutlined />
-      // },
       {
         label: 'Insert Doc',
         key: 'insert-doc',
@@ -81,9 +57,7 @@ export const AdminLayout = () => {
 
   return (
     <Layout className="layout admin-layout">
-      <Header>
-        header
-      </Header>
+      <DashboardHeader />
       <Layout>
         <Sider theme="light" collapsible>
           {menu()}

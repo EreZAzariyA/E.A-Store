@@ -18,15 +18,15 @@ class InterceptorsService {
 
     axios.interceptors.response.use((response) => {
       const token = response.headers.get('authorization');
-      if (token) {
+      if (token && typeof token === 'string') {
         store.dispatch(refreshToken(token));
       };
       return response;
-    }, (err) => {
+    },
+    (err) => {
       if (err.response.status === 401) {
         store.dispatch(logout());
       };
-      return;
     });
   };
 };
