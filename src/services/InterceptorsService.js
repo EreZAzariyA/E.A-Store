@@ -27,8 +27,8 @@ class InterceptorsService {
     }, (err) => {
       if (err.response.status === 401) {
         store.dispatch(logout());
-        return message.error(getError(err));
       };
+      return message.error(getError(err));
     });
   };
 };
