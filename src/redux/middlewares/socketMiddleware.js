@@ -5,11 +5,7 @@ import { addSubCategory, removeSubCategory, updateSubCategory } from "../slicers
 export const socketMiddleware = (socket) => (store) => (next) => (action) => {
   const { dispatch, getState } = store;
 
-  socket.on('connect', () => {
-    if (getState().auth?.user) {
-      socket.emit('user.connect', getState().auth.user);
-    }
-
+  if (socket.connected) {
     socket.on('admin.add.product', (product) => {
       dispatch(addProduct(product));
     });
@@ -19,8 +15,8 @@ export const socketMiddleware = (socket) => (store) => (next) => (action) => {
     socket.on('admin.remove.product', (product_id) => {
       dispatch(removeProduct(product_id));
     });
-
-
+  
+  
     socket.on('admin.add.category', (category) => {
       dispatch(addCategory(category));
     });
@@ -30,8 +26,8 @@ export const socketMiddleware = (socket) => (store) => (next) => (action) => {
     socket.on('admin.update.category', (updatedCategory) => {
       dispatch(updateCategory(updatedCategory));
     });
-
-
+  
+  
     socket.on('admin.add.subCategory', (subCategory) => {
       dispatch(addSubCategory(subCategory));
     });
@@ -41,7 +37,7 @@ export const socketMiddleware = (socket) => (store) => (next) => (action) => {
     socket.on('admin.update.subCategory', (updatedSubCategory) => {
       dispatch(updateSubCategory(updatedSubCategory));
     });
-  });
+  }
 
   next(action);
 };

@@ -7,7 +7,6 @@ const URL = "http://127.0.0.1:5000";
 const options = {
   reconnectionAttempts: 3,
   autoConnect: true,
-  reconnection: true,
 }
 
 class SocketServices {
