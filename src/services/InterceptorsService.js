@@ -1,6 +1,8 @@
 import axios from "axios";
 import store from "../redux/store";
 import { logout, refreshToken } from "../redux/slicers/auth-slicer";
+import { getError } from "../utils/helpers";
+import { message } from "antd";
 
 class InterceptorsService {
 
@@ -22,10 +24,10 @@ class InterceptorsService {
         store.dispatch(refreshToken(token));
       };
       return response;
-    },
-    (err) => {
+    }, (err) => {
       if (err.response.status === 401) {
         store.dispatch(logout());
+        return message.error(getError(err));
       };
     });
   };
