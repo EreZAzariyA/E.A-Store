@@ -40,6 +40,12 @@
   z-index: 5;
 }
 
+.layout .ant-layout-footer {
+  padding: 10px 50px;
+  background: lightblue;
+}
+
+
 @media (max-width: 765px) {
   .layout .ant-layout-header p {
     line-height: normal;
