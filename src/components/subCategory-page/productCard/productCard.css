@@ -19,6 +19,9 @@
   height: 200px;
   object-fit: contain;
 }
+.card.product-card .ant-card-cover img:hover {
+  cursor: pointer;
+}
 
 .card.product-card .logo img {
   width: 80px;

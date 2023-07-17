@@ -3,6 +3,8 @@ import { CategoryPage } from "../../components/category-page";
 import { Dashboard } from "../../components/home-page";
 import { DashboardView } from "../../layout/DashboardView";
 import { PageNotFound } from "../../components/PageNotFound";
+import { ProductPage } from "../../components/product-page";
+import { SubCategoryPage } from "../../components/subCategory-page";
 
 const UserRouter = () => (
   <Routes>
@@ -10,9 +12,10 @@ const UserRouter = () => (
 
     <Route path="/" element={<DashboardView />}>
       <Route path="home" element={<Dashboard />} />
-      <Route path="categories">
-        <Route path=":category_id/*" element={<CategoryPage />} />
-      </Route>
+      <Route path="categories" element={<p>categories</p>} />
+      <Route path="categories/:category_id" element={<CategoryPage />} />
+      <Route path="categories/:category_id/sub-category/:subCategoryId" element={<SubCategoryPage /> } />
+      <Route path="categories/:category_id/sub-category/:subCategoryId/product/:product_id" element={<ProductPage /> } />
 
       <Route path="page-not-found" element={<PageNotFound />} />
       <Route path="*" element={<Navigate to={'/page-not-found'} />} />

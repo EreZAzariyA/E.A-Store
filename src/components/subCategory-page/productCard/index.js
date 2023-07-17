@@ -5,22 +5,23 @@ import { Button, Card, Col, Row, Tooltip } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
 import "./productCard.css";
+import { useNavigate } from "react-router-dom";
 
 
 export const ProductCard = (props) => {
   const { product } = props;
-  // const categories = useSelector((state) => state.categories);
-  // const [category, setCategory] = useState(null);
-
-  // useEffect(() => {
-  //   const category = [...categories].find((category) => category._id === product.category_id);
-  //   setCategory(category);
-  // }, [categories]);
+  const navigate = useNavigate();
 
   return (
     <Card
       className="card product-card"
-      cover={<img alt={''} src={product.image_url} />}
+      cover={
+        <img
+          alt={''}
+          src={product.image_url}
+          onClick={() => navigate(`product/${product._id}`)}
+        />
+      }
     >
       <Row justify={'space-between'} align={'middle'}>
         <Col>
