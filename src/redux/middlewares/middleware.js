@@ -1,5 +1,7 @@
+import { removeUserCart } from "../slicers/cart-slicer";
 
 export const middleware = (store) => (next) => (action) => {
+  const { dispatch, getState} = store;
 
   switch (action.type) {
     case 'auth/login':
@@ -8,6 +10,7 @@ export const middleware = (store) => (next) => (action) => {
 
     case 'auth/logout':
       console.log('logout');
+      dispatch(removeUserCart());
     break;
 
     default:

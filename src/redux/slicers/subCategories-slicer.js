@@ -5,7 +5,8 @@ const subCategoriesSlicer = createSlice({
   initialState: [],
   reducers: {
     fetchSubCategories(state, action) {
-      return state = action.payload;
+      state = action.payload;
+      return state;
     },
     addSubCategory(state, action) {
       state.push(action.payload);

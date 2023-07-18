@@ -14,6 +14,7 @@ const UserRouter = () => (
       <Route path="home" element={<Dashboard />} />
       <Route path="categories" element={<p>categories</p>} />
       <Route path="categories/:category_id" element={<CategoryPage />} />
+      <Route path="categories/:category_id/sub-category" element={<p>SubCategoryPage</p>} />
       <Route path="categories/:category_id/sub-category/:subCategoryId" element={<SubCategoryPage /> } />
       <Route path="categories/:category_id/sub-category/:subCategoryId/product/:product_id" element={<ProductPage /> } />
 

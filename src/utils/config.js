@@ -31,6 +31,9 @@ class Config {
       removeSubCategory: "",
       updateSubCategory: "",
     },
+    cart: {
+      fetchUserCart: "",
+    },
     socket: {
       connect: "",
       disconnect: "",
@@ -58,6 +61,9 @@ class Config {
         fetchOneSubCategory: baseUrl + 'categories/sub-category/',
         fetchSubCategoriesByCategoryId: baseUrl + 'categories/sub-categories/',
         fetchProductsByCategoryId: baseUrl + 'categories/products/all',
+      },
+      cart: {
+        fetchUserCart: baseUrl + 'cart/fetch-user-cart/'
       },
       admin: {
         addProduct: baseUrl + 'admin/add-product',
