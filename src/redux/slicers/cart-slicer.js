@@ -11,12 +11,22 @@ const cartSlicer = createSlice({
     removeUserCart(state) {
       state = null;
       return state;
+    },
+    addProductToCart(state, action) {
+      state.products = action.payload;
+      return state;
+    },
+    removeProductFromCart(state, action) {
+      state.products.filter((product) => product._id !== action.payload);
+      return state;
     }
   }
 });
 
 export const {
   fetchUserCart,
-  removeUserCart
+  removeUserCart,
+  addProductToCart,
+  removeProductFromCart
 } = cartSlicer.actions;
 export default cartSlicer;

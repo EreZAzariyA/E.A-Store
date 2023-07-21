@@ -1,16 +1,52 @@
-// import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { shoppingCartServices } from "../../../services/shoppingCart-services";
 import { CustomDivider } from "../../components/Divider";
 import { HeartIcon, brands } from "../../../utils/helpers";
-import { Button, Card, Col, Row, Tooltip } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
+import { Button, Card, Col, Row, Tooltip } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import "./productCard.css";
-import { useNavigate } from "react-router-dom";
-
 
 export const ProductCard = (props) => {
   const { product } = props;
   const navigate = useNavigate();
+  const shoppingCart = useSelector((state) => state.shoppingCart);
+  const [inCart, setInCart] = useState(false);
+  const [stock, setStock] = useState(1);
+
+  useEffect(() => {
+    if (shoppingCart && shoppingCart.products) {
+      const isInCart = shoppingCart.products.find((pro) => {
+        return pro.product_id === product._id;
+      });
+      setInCart(isInCart ? true : false);
+    } 
+  }, [shoppingCart, product]);
+
+  const addProductHandle = async () => {
+    setStock(stock + 1 );
+    setInCart(true);
+
+    try {
+      const addedProduct = await shoppingCartServices.addProductToCart(product._id, shoppingCart._id, stock);
+      console.log(addedProduct,stock);
+    } catch (err) {
+      console.log(err);
+    };
+  };
+
+  const removeProductHandle = async () =>{
+    setInCart(false);
+
+    try {
+      await shoppingCartServices.removeProductFromCart(shoppingCart._id, product._id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Card
@@ -74,11 +110,19 @@ export const ProductCard = (props) => {
 
       <Row justify={'start'} gutter={[10, 10]} className="mt-10">
         <Col>
-          <Tooltip title='Add to cart'>
-            <Button type="primary" style={{ background: 'orange' }}>
-              <ShoppingCartOutlined style={{ fontSize: '16px' }} />
-            </Button>
-          </Tooltip>
+          {inCart ? (
+            <Tooltip title='Remove from cart'>
+              <Button type="primary" style={{ background: 'red' }} onClick={removeProductHandle}>
+                <DeleteOutlined style={{ fontSize: '16px' }} />
+              </Button>
+            </Tooltip>
+          ) : (
+            <Tooltip title='Add to cart'>
+              <Button type="primary" style={{ background: 'orange' }} onClick={addProductHandle}>
+                <ShoppingCartOutlined style={{ fontSize: '16px' }} />
+              </Button>
+            </Tooltip>
+          )}
         </Col>
         <Col>
           <Tooltip title='Buy now'>

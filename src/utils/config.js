@@ -33,6 +33,9 @@ class Config {
     },
     cart: {
       fetchUserCart: "",
+      fetchItemsFromUserCart: "",
+      addProductToCart: "",
+      removeProductFromCart: "",
     },
     socket: {
       connect: "",
@@ -63,7 +66,10 @@ class Config {
         fetchProductsByCategoryId: baseUrl + 'categories/products/all',
       },
       cart: {
-        fetchUserCart: baseUrl + 'cart/fetch-user-cart/'
+        fetchUserCart: baseUrl + 'cart/fetch-user-cart/',
+        fetchItemsFromUserCart: baseUrl + 'cart/fetch-items-from-cart/',
+        addProductToCart: baseUrl + 'cart/add-product-to-cart/',
+        removeProductFromCart: baseUrl + 'cart/remove-product-from-cart/'
       },
       admin: {
         addProduct: baseUrl + 'admin/add-product',
