@@ -1,13 +1,21 @@
 import { useSelector } from "react-redux";
-import { Input, Space } from "antd";
+import { Input, Space, message } from "antd";
 import { useEffect, useState } from "react";
-import { EditTable } from "../../components/EditTable";
+import { EditTable } from "../components/EditTable";
+import { adminCategoriesServices } from "../../../services/admin/categories-services";
+import { getError } from "../../../utils/helpers";
+import { AdminInsert } from "../admin-insert";
+
+const Steps = {
+  NEW_ROW: "NEW ROW",
+};
 
 export const CategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const categories = useSelector((state) => (state.categories));
   const subCategories = useSelector((state) => (state.subCategories));
   const [ filteredCategories, setFilteredCategories ] = useState([]);
+  const [step, setStep] = useState(null);
 
   const [filterState, setFilterState] = useState({
     category: ''
@@ -23,12 +31,27 @@ export const CategoriesTable = () => {
     };
   }, [filterState.category, categories]);
 
+  const handleAdd = () => {
+    setStep(Steps.NEW_ROW);
+  };
+
+  const onFinish = async (values) => {
+    try {
+      const addedCategory = await adminCategoriesServices.addCategory(values);
+      message.success(`Category '${addedCategory.category}' with id: '${addedCategory._id}' added successfully`);
+      setStep(null);
+    } catch (err) {
+      message.error(getError(err.message));
+    }
+  };
+  
   const columns = [
     {
       key: '_id',
       title: 'ID',
       dataIndex: '_id',
       editable: true,
+      width: 220,
     },
     {
       key: 'category',
@@ -36,6 +59,7 @@ export const CategoriesTable = () => {
       dataIndex: 'category',
       sorter: (a, b) => (a.category.localeCompare(b.category)),
       editable: true,
+      width: 220,
     },
     {
       key: 'subCategories',
@@ -55,7 +79,8 @@ export const CategoriesTable = () => {
         } else {
           return 0;
         }
-      }
+      },
+      width: 160,
     },
     {
       key: 'products',
@@ -76,27 +101,42 @@ export const CategoriesTable = () => {
         } else {
           return 0;
         }
-      }
+      },
+      width: 100,
     },
   ];
 
   return (
     <Space direction="vertical" style={{width: '99%'}}>
-      <Space align="center" wrap>
-        <Input
-          type="text"
-          placeholder='Search category'
-          onChange={(val) => setFilterState({...filterState, category: val.target.value})}
-        />
-      </Space>
+    {!step && (
+      <>
+        <Space align="center" wrap>
+          <Input
+            type="text"
+            placeholder='Search category'
+            onChange={(val) => setFilterState({...filterState, category: val.target.value})}
+          />
+        </Space>
 
-      <EditTable
-        loading={!categories}
-        rowKey={'_id'}
-        columns={columns}
-        dataSource={filteredCategories}
-        isCategoriesList
+        <EditTable
+          loading={!categories}
+          rowKey={'_id'}
+          columns={columns}
+          dataSource={filteredCategories}
+          isCategoriesList
+          handleAdd={handleAdd}
+        />
+      </>
+    )}
+
+    {(step && step === Steps.NEW_ROW) && (
+      <AdminInsert
+        component={'categories'}
+        onBack={() => setStep(null)}
+        onFinish={onFinish}
       />
+    )}
+      
     </Space>
   );
 };

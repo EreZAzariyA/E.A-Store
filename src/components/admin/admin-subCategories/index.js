@@ -1,12 +1,20 @@
 import { useSelector } from "react-redux";
-import { Input, Space } from "antd";
+import { Input, Space, message } from "antd";
 import { useEffect, useState } from "react";
-import { EditTable } from "../../components/EditTable";
+import { EditTable } from "../components/EditTable";
+import { AdminInsert } from "../admin-insert";
+import { adminCategoriesServices } from "../../../services/admin/categories-services";
+import { getError } from "../../../utils/helpers";
+
+const Steps = {
+  NEW_ROW: "NEW ROW",
+};
 
 export const SubCategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const subCategories = useSelector((state) => (state.subCategories));
   const [ filteredSubCategories, setFilteredSubCategories ] = useState([]);
+  const [step, setStep] = useState(null);
 
   const [ filterState, setFilterState ] = useState({
     subCategory: '',
@@ -24,13 +32,27 @@ export const SubCategoriesTable = () => {
     }
   }, [filterState.subCategory, subCategories]);
 
+  const onFinish = async (values) => {
+    try {
+      const addedSubCategory = await adminCategoriesServices.addSubCategory(values);
+      message.success(`Sub-Category '${addedSubCategory.subCategory}' with id: '${addedSubCategory._id}' added successfully`);
+      setStep(null);
+    } catch (error) {
+      message.error(getError(error.message));
+    }
+  };
 
+  const handleAdd = () => {
+    setStep(Steps.NEW_ROW);
+  };
+  
   const columns = [
     {
       key: '_id',
       title: 'ID',
       dataIndex: '_id',
       editable: true,
+      width: 220,
     },
     {
       key: 'subCategory',
@@ -38,11 +60,13 @@ export const SubCategoriesTable = () => {
       dataIndex: 'subCategory',
       sorter: (a, b) => (a.subCategory.localeCompare(b.subCategory)),
       editable: true,
+      width: 220,
     },
     {
       key: 'products',
       title: 'Products',
       shouldUpdate: false,
+      width: 100,
       render: (_,record) => {
         const productsLength = [...products].filter((p) => (p.subCategory_id === record._id)).length;
         return <p>{ productsLength ?? 0}</p>
@@ -58,28 +82,42 @@ export const SubCategoriesTable = () => {
         } else {
           return 0;
         }
-      }
+      },
     },
   ];
 
   return (
     <Space direction="vertical" style={{width: '99%'}}>
-      <Space align="center" wrap>
-        <Input
-          allowClear
-          type="text"
-          placeholder='Search sub-category'
-          onChange={(val) => setFilterState({...filterState, subCategory: val.target.value})}
-        />
-      </Space>
+      {!step && (
+        <>
+          <Space align="center" wrap>
+            <Input
+              allowClear
+              type="text"
+              placeholder='Search sub-category'
+              onChange={(val) => setFilterState({...filterState, subCategory: val.target.value})}
+            />
+          </Space>
 
-      <EditTable
-        loading={!subCategories}
-        rowKey={'_id'}
-        columns={columns}
-        dataSource={filteredSubCategories}
-        isSubCategoriesList
-      />
+          <EditTable
+            loading={!subCategories}
+            rowKey={'_id'}
+            columns={columns}
+            dataSource={filteredSubCategories}
+            isSubCategoriesList
+            handleAdd={handleAdd}
+          />
+        </>
+      )}
+
+      {(step && step === Steps.NEW_ROW) && (
+        <AdminInsert
+          component={'sub-categories'}
+          onBack={() => setStep(null)}
+          onFinish={onFinish}
+        />
+      )}
+
     </Space>
   );
 };

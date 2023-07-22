@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { adminCategoriesServices } from "../../../services/admin/categories-services";
 import { adminProductsServices } from "../../../services/admin/products-services";
-import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider, Button } from "antd";
+import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider } from "antd";
 
-export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategoriesList, handleAdd, ...rest}) => {
+export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategoriesList, ...rest}) => {
   const [ form ] = Form.useForm();
   const [ editingKey, setEditingKey ] = useState('');
   const [ selectedRows, setSelectedRows ] = useState([]);
@@ -110,7 +110,7 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
     }
   };
 
-  columns = columns.map((col) => {
+  const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -120,7 +120,7 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
       onCell: (record) => {
         return {
           record,
-          inputType: col?.inputType ? col.inputType : col.dataIndex === 'price' ? 'number' : 'text',
+          inputType: col.dataIndex === 'price' ? 'number' : 'text',
           dataIndex: col.dataIndex,
           title: col.title,
           editing: isEditing(record),
@@ -128,10 +128,11 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
       },
     };
   });
-  columns.push({
+
+  mergedColumns.push({
     title: 'Actions',
     key: 'action',
-    width: 120,
+    width: '250',
     fixed: 'right',
     render: (_, record) => {
       const editable = isEditing(record);
@@ -179,9 +180,9 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
       <Table
         {...rest}
         bordered
-        columns={columns}
+        columns={mergedColumns}
         dataSource={data}
-        rootClassName="editable-row"
+        rowClassName="editable-row"
         components={{
           body: {
             cell: EditableCell,
@@ -195,11 +196,7 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
             setSelectedRows(selectedRows)
           }
         }}
-        scroll={{ x: 1200 }}
       />
-      <Form.Item>
-        <Button onClick={handleAdd}>Add Row</Button>
-      </Form.Item>
     </Form>
   );
 };

@@ -3,10 +3,11 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { DashboardHeader } from "../../layout/DashboardView/DashboardHeader";
 import { authServices } from "../../services/auth-services";
 import { Button, Layout, Menu } from "antd";
-import AppstoreOutlined from "@ant-design/icons/AppstoreOutlined";
+import PieChartOutlined from "@ant-design/icons/PieChartOutlined";
+import AppstoreAddOutlined from "@ant-design/icons/AppstoreAddOutlined";
+import TableOutlined from "@ant-design/icons/TableOutlined";
 import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
-import UploadOutlined from "@ant-design/icons/UploadOutlined";
 
 const { Content, Sider } = Layout;
 
@@ -25,17 +26,22 @@ export const AdminLayout = () => {
       {
         label: 'Dashboard',
         key: 'dashboard',
-        icon: <AppstoreOutlined />
+        icon: <PieChartOutlined />
       },
       {
-        label: 'Tables',
-        key: 'tables',
+        label: 'Products',
+        key: 'products',
+        icon: <AppstoreAddOutlined />
+      },
+      {
+        label: 'Categories',
+        key: 'categories',
         icon: <DatabaseOutlined />
       },
       {
-        label: 'Insert Doc',
-        key: 'insert-doc',
-        icon: <UploadOutlined />
+        label: 'Sub-Categories',
+        key: 'sub-categories',
+        icon: <TableOutlined />
       },
       {
         label: <Button danger type="text">Logout</Button>,
@@ -44,7 +50,32 @@ export const AdminLayout = () => {
         style: {'position': 'absolute', 'bottom': 0 },
         onClick: () => authServices.logout()
       }
-    ]
+    ];
+    // const items = [
+    //   {
+    //     label: 'Dashboard',
+    //     key: 'dashboard',
+    //     icon: <AppstoreOutlined />
+    //   },
+    //   {
+    //     label: 'Tables',
+    //     key: 'tables',
+    //     icon: <DatabaseOutlined />
+    //   },
+    //   {
+    //     label: 'Insert Doc',
+    //     key: 'insert-doc',
+    //     icon: <UploadOutlined />
+    //   },
+    //   {
+    //     label: <Button danger type="text">Logout</Button>,
+    //     key: '/',
+    //     icon: <LogoutOutlined />,
+    //     style: {'position': 'absolute', 'bottom': 0 },
+    //     onClick: () => authServices.logout()
+    //   }
+    // ];
+
     return (
       <Menu
         items={items}
@@ -62,7 +93,7 @@ export const AdminLayout = () => {
         <Sider theme="light" collapsible>
           {menu()}
         </Sider>
-        <Content style={{overflow: 'auto'}}>
+        <Content style={{ overflow: 'auto' }}>
           <Outlet />
         </Content>
       </Layout>

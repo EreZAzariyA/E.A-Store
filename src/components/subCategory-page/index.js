@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import socketServices from "../../services/socket-services";
 import { addProduct, removeProduct, updateProduct } from "../../redux/slicers/products-slicer";
-import { ProductCard } from "./productCard";
+import { ProductCard } from "../product-card";
 import "./subCategoryPage.css";
 
 export const SubCategoryPage = () => {
