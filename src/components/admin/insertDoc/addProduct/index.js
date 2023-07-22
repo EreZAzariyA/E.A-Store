@@ -9,27 +9,23 @@ export const AddProduct = () => {
   const [ form ] = Form.useForm();
   const categories = useSelector((state) => state.categories);
   const subCategories = useSelector((state) => state.subCategories);
-  const [ filteredSubCategories, setFilteredSubCategories ] = useState([]);
-  const [ initialValues, setInitialValues ] = useState({
-    name: '',
-    category_id: '',
-    subCategory_id: '',
-    description: '',
-    price: '',
-    image_url: ''
-  });
+  const [filteredSubCategories, setFilteredSubCategories ] = useState([]);
+  const [category_id, setCategory_id] = useState(null);
+  const [subCategory_id, setSubCategory_id] = useState('');
 
   useEffect(() => {
     const filteredSubCategories = [...subCategories].filter((subCategory) => {
-      return subCategory.category_id === initialValues.category_id;
+      return subCategory.category_id === category_id;
     });
     setFilteredSubCategories(filteredSubCategories);
-  }, [initialValues, subCategories]);
+  }, [category_id, subCategories]);
 
   const onFinish = async (values) => {
     try {
-      await adminProductsServices.addProduct(values);
-      message.success('Added');
+      const addedProduct = await adminProductsServices.addProduct(values);
+      message.success(`Sub-Category '${addedProduct.name}' with id: '${addedProduct._id}' added successfully`);
+      console.log(addedProduct);
+      form.resetFields();
     } catch (err) {
       message.error(getError(err));
     }
@@ -37,7 +33,6 @@ export const AddProduct = () => {
 
   const formProps = {
     form: form,
-    initialValues,
     onFinish: onFinish,
     className: "insert-form add-product",
     layout: "horizontal",
@@ -61,22 +56,17 @@ export const AddProduct = () => {
       >
         <Input
           type="text"
-          onChange={(val) => {
-            setInitialValues({...initialValues, name: val.target.value});
-          }}
+          placeholder="Product name"
         />
       </Form.Item>
 
       <Form.Item
         label={'Category'}
         name={'category_id'}
+        initialValue={''}
         rules={[{ required: true, message: 'Category id is missing' }]}
       >
-        <Select
-          onSelect={(val) => {
-            setInitialValues({...initialValues, category_id: val, subCategory_id: ''});
-          }}
-        >
+        <Select onSelect={(val) => {setCategory_id(val); setSubCategory_id('');}}>
           <Select.Option key={''} disabled>Select category</Select.Option>
           {categories.map((category) => (
             <Select.Option key={category._id}>{category.category}</Select.Option>
@@ -87,14 +77,12 @@ export const AddProduct = () => {
       <Form.Item
         label={'Sub-category'}
         name={'subCategory_id'}
+        initialValue={subCategory_id}
         rules={[{ required: true, message: 'Sub-Category id is missing' }]}
       >
         <Select
-          value={initialValues.subCategory_id}
-          disabled={!initialValues.category_id}
-          onSelect={(val) => {
-            setInitialValues({...initialValues, subCategory_id: val });
-          }}
+          disabled={!category_id}
+          onChange={(val) => setSubCategory_id(val)}
         >
           <Select.Option key={''} disabled>Select sub category</Select.Option>
           {filteredSubCategories?.map((subC) => (
@@ -108,9 +96,7 @@ export const AddProduct = () => {
         name={'description'}
         rules={[{ required: true, message: 'Description is missing' }]}
       >
-        <TextArea onChange={(val) => {
-          setInitialValues({...initialValues, description: val.target.value});
-        }}/>
+        <TextArea placeholder="Describe the product"/>
       </Form.Item>
       
       <Form.Item
@@ -118,19 +104,28 @@ export const AddProduct = () => {
         name={'image_url'}
         rules={[{ required: true, message: 'Image url is missing' }]}
       >
-        <Input onChange={(val) => {
-          setInitialValues({...initialValues, image_url: val.target.value})
-        }}/>
+        <Input placeholder="https://www.image_url"/>
       </Form.Item>
 
+      <Form.Item
+        label={'Stock'}
+        name={'stock'}
+        rules={[{ required: true, message: 'Stock is missing' }]}
+      >
+        <InputNumber placeholder="0" min={0} />
+      </Form.Item>
+      
       <Form.Item
         label={'Price'}
         name={'price'}
         rules={[{ required: true, message: 'Price is missing' }]}
       >
-        <InputNumber min={0} onChange={(val) => {
-          setInitialValues({ ...initialValues, price: val });
-        }}/>
+        <InputNumber
+          style={{ width: 'auto' }}
+          placeholder="0.00"
+          min={0}
+          formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        />
       </Form.Item>
 
       <Button type="primary" htmlType="submit">

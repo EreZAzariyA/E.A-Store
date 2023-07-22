@@ -139,19 +139,17 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
       return editable ? (
         <Row align={'middle'}>
           <Col>
-            <Typography.Link
-              onClick={() => save(record)}
-            >
-              Save
-            </Typography.Link>
+            <Popconfirm title="Are you sure?" onCancel={cancel} onConfirm={() => save(record)}>
+              <Typography.Link>
+                Save
+              </Typography.Link>
+            </Popconfirm>
           </Col>
           <Divider type="vertical" />
           <Col>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <Typography.Link>
-                Cancel
-              </Typography.Link>
-            </Popconfirm>
+            <Typography.Link onClick={cancel}>
+              Cancel
+            </Typography.Link>
           </Col>
         </Row>
       ) : (
