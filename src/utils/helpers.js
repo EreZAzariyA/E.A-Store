@@ -4,6 +4,11 @@ export const isAdmin = (user) => {
   return user?.admin || false;
 };
 
+export const MessagesTypes = {
+  REGISTER_SUCCESSFULLY: 'User register successfully',
+  LOGGED_IN_SUCCESSFULLY: 'User logged-in success',
+};
+
 export const getError = (err)=> {
   if(typeof err === "string") return err;
   if(typeof err.response?.data === "string") return err.response.data; // axios: 401, 403, 500

@@ -13,6 +13,7 @@ const authSlicer = createSlice({
   initialState,
   reducers: {
     login(state, action) {
+      if (!action.payload) return;
       const token = action.payload;
       localStorage.setItem('token', token);
       state = {
