@@ -20,7 +20,9 @@ export const DashboardHeader = () => {
       await categoriesServices.fetchAllSubCategories();
       await shoppingCartServices.fetchUserCart(user._id);
     };
-    fetchAllData();
+    if (user) {
+      fetchAllData();
+    }
   }, [user]);
 
   return (

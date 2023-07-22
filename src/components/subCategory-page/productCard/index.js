@@ -31,7 +31,7 @@ export const ProductCard = (props) => {
     setInCart(true);
 
     try {
-      const addedProduct = await shoppingCartServices.addProductToCart(product._id, shoppingCart._id, stock);
+      const addedProduct = await shoppingCartServices.addProductToCart(product?._id, shoppingCart?._id, stock);
       console.log(addedProduct,stock);
     } catch (err) {
       console.log(err);
@@ -42,7 +42,7 @@ export const ProductCard = (props) => {
     setInCart(false);
 
     try {
-      await shoppingCartServices.removeProductFromCart(shoppingCart._id, product._id);
+      await shoppingCartServices.removeProductFromCart(shoppingCart?._id, product?._id);
     } catch (err) {
       console.log(err);
     }
