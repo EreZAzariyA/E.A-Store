@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 export const PersonalArea = () => {
   const navigate = useNavigate();
-  const shoppingCart = useSelector((state) => state.shoppingCart);
+  const products = useSelector((state) => state.shoppingCart?.products);
 
   const items = [
     {
@@ -21,7 +21,7 @@ export const PersonalArea = () => {
     <Row align={'middle'} justify={'space-evenly'}>
       <Col>
         <Tooltip title="My Cart">
-          <Badge count={shoppingCart.products?.length}>
+          <Badge count={products?.length}>
             <Button type="link" onClick={() => navigate('/my-cart')}>
               <ShoppingCartOutlined style={{ fontSize: '26px', color: '#08c' }} />
             </Button>
