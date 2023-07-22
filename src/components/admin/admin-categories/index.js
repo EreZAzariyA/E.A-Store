@@ -123,7 +123,7 @@ export const CategoriesTable = () => {
           rowKey={'_id'}
           columns={columns}
           dataSource={filteredCategories}
-          isCategoriesList
+          component={'categories'}
           handleAdd={handleAdd}
         />
       </>

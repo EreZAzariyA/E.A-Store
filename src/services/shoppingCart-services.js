@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../utils/config";
 import store from "../redux/store";
-import { addProductToCart, fetchUserCart, removeProductFromCart } from "../redux/slicers/cart-slicer";
+import { addProductToCartAction, addProductToFavorites, fetchUserCart, removeProductFromCart, removeProductFromFavorites } from "../redux/slicers/cart-slicer";
 
 const validateDetails = (details) => {
   if (!details.product_id) throw new Error('Product _id is not define');
@@ -31,14 +31,29 @@ class ShoppingCartServices {
     validateDetails(details);
     const response = await axios.post(config.urls.cart.addProductToCart, details);
     const updatedSoppingCart = response.data;
-    store.dispatch(addProductToCart(updatedSoppingCart.products));
+    store.dispatch(addProductToCartAction(updatedSoppingCart.products));
     return updatedSoppingCart.products;
+  };
+
+  addProductToFavorites = async (product_id, shoppingCart_id) => {
+    const details = {product_id, shoppingCart_id};
+    const response = await axios.post(config.urls.cart.addProductToFavorites, details);
+    const updatedSoppingCart = response.data;
+    store.dispatch(addProductToFavorites(updatedSoppingCart.favorites));
+    return updatedSoppingCart.favorites;
   };
 
   removeProductFromCart = async (shoppingCart_id, product_id) => {
     const response = await axios.delete(config.urls.cart.removeProductFromCart, {data: {shoppingCart_id, product_id}});
     const removedProduct = response.data;
     store.dispatch(removeProductFromCart(product_id));
+    return removedProduct;
+  };
+  
+  removeProductFromFavorites = async (shoppingCart_id, product_id) => {
+    const response = await axios.delete(config.urls.cart.removeProductFromFavorites, {data: {shoppingCart_id, product_id}});
+    const removedProduct = response.data;
+    store.dispatch(removeProductFromFavorites(product_id));
     return removedProduct;
   };
 };

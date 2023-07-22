@@ -104,7 +104,7 @@ export const SubCategoriesTable = () => {
             rowKey={'_id'}
             columns={columns}
             dataSource={filteredSubCategories}
-            isSubCategoriesList
+            component={'sub-categories'}
             handleAdd={handleAdd}
           />
         </>

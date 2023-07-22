@@ -35,7 +35,9 @@ class Config {
       fetchUserCart: "",
       fetchItemsFromUserCart: "",
       addProductToCart: "",
+      addProductToFavorites: "",
       removeProductFromCart: "",
+      removeProductFromFavorites: "",
     },
     socket: {
       connect: "",
@@ -69,7 +71,9 @@ class Config {
         fetchUserCart: baseUrl + 'cart/fetch-user-cart/',
         fetchItemsFromUserCart: baseUrl + 'cart/fetch-items-from-cart/',
         addProductToCart: baseUrl + 'cart/add-product-to-cart/',
-        removeProductFromCart: baseUrl + 'cart/remove-product-from-cart/'
+        addProductToFavorites: baseUrl + 'cart/add-product-to-favorites/',
+        removeProductFromCart: baseUrl + 'cart/remove-product-from-cart/',
+        removeProductFromFavorites: baseUrl + 'cart/remove-product-from-favorites/'
       },
       admin: {
         addProduct: baseUrl + 'admin/add-product',

@@ -3,12 +3,16 @@ import { adminCategoriesServices } from "../../../services/admin/categories-serv
 import { adminProductsServices } from "../../../services/admin/products-services";
 import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider, Button } from "antd";
 
-export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategoriesList, handleAdd, ...rest}) => {
+export const EditTable = ({columns, dataSource, component, handleAdd, ...rest}) => {
   const [ form ] = Form.useForm();
   const [ editingKey, setEditingKey ] = useState('');
   const [ selectedRows, setSelectedRows ] = useState([]);
   const [ data, setData ] = useState([]);
   const isEditing = (record) => record._id === editingKey;
+  // const isProductsList = component === 'products';
+  const isCategoriesList = component === 'categories';
+  const isSubCategoriesList = component === 'sub-categories';
+  const componentName = isCategoriesList ? 'category' : isSubCategoriesList ? 'sub-category' : 'product';
 
   useEffect(() => {
     setData(dataSource);
@@ -198,7 +202,7 @@ export const EditTable = ({columns, dataSource, isCategoriesList, isSubCategorie
         scroll={{ x: 1200 }}
       />
       <Form.Item>
-        <Button onClick={handleAdd}>Add Row</Button>
+        <Button onClick={handleAdd}>Add {componentName}</Button>
       </Form.Item>
     </Form>
   );

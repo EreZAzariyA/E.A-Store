@@ -161,6 +161,7 @@ export const ProductsTable = () => {
             rowKey={'_id'}
             dataSource={filteredProducts}
             columns={columns}
+            component={'products'}
             handleAdd={handleAdd}
           />
         </>

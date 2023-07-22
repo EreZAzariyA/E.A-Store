@@ -2,7 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlicer = createSlice({
   name: 'shopping_cart',
-  initialState: null,
+  initialState: {
+    products: [],
+    favorites: [],
+  },
   reducers: {
     fetchUserCart(state, action) {
       state = action.payload;
@@ -12,21 +15,33 @@ const cartSlicer = createSlice({
       state = null;
       return state;
     },
-    addProductToCart(state, action) {
+    addProductToCartAction(state, action) {
       state.products = action.payload;
       return state;
     },
-    removeProductFromCart(state, action) {
-      state.products.filter((product) => product._id !== action.payload);
+    addProductToFavorites(state, action) {
+      state.favorites = action.payload;
       return state;
-    }
+    },
+    removeProductFromCart(state, action) {
+      const index = state.products.findIndex((product) => product.product_id === action.payload);
+      state.products.splice(index, 1);
+      return state;
+    },
+    removeProductFromFavorites(state, action) {
+      const index = state.favorites.findIndex((productId) => productId === action.payload);
+      state.favorites.splice(index, 1);
+      return state;
+    },
   }
 });
 
 export const {
   fetchUserCart,
   removeUserCart,
-  addProductToCart,
-  removeProductFromCart
+  addProductToCartAction,
+  addProductToFavorites,
+  removeProductFromCart,
+  removeProductFromFavorites,
 } = cartSlicer.actions;
 export default cartSlicer;

@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { CategoryPage } from "../../components/category-page";
 import { Dashboard } from "../../components/home-page";
+import { Favorites } from "../../components/favorites";
 import { DashboardView } from "../../layout/DashboardView";
 import { PageNotFound } from "../../components/PageNotFound";
 import { ProductPage } from "../../components/product-page";
@@ -12,6 +13,7 @@ const UserRouter = () => (
 
     <Route path="/" element={<DashboardView />}>
       <Route path="home" element={<Dashboard />} />
+      <Route path="my-favorites" element={<Favorites />} />
       <Route path="categories" element={<p>categories</p>} />
       <Route path="categories/:category_id" element={<CategoryPage />} />
       <Route path="categories/:category_id/sub-category" element={<p>SubCategoryPage</p>} />
