@@ -1,0 +1,28 @@
+.cart-product-card {
+  background: transparent;
+  height: auto;
+}
+
+.cart-product-card .cart-product-card-image {
+  height: fit-content;
+}
+
+/* .cart-product-card .product-details {
+  line-height: 30px;
+} */
+
+.cart-product-card .product-details .col-label {
+  text-align: justify;
+  font-weight: 500;
+}
+
+.cart-product-card .product-details .stock .stock-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.cart-product-card .product-details .stock .stock-wrapper .ant-input {
+  width: 20%;
+  text-align: center;
+  font-weight: bold;
+}

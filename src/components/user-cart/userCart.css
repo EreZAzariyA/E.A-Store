@@ -1,0 +1,7 @@
+.main-cart-product {
+  background: transparent;
+  border: 1px solid darkgrey;
+}
+.main-cart-product .ant-card-head {
+  background: gainsboro;
+}

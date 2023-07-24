@@ -33,7 +33,7 @@ export const ProductCard = (props) => {
   }, [shoppingCart, product]);
 
   const addProductHandle = async () => {
-    setStock(stock + 1);
+    setStock(1);
     setInCart(true);
     try {
       await shoppingCartServices.addProductToCart(product?._id, shoppingCart?._id, stock);
