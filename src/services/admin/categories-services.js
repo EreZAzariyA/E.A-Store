@@ -1,5 +1,7 @@
 import axios from "axios";
 import config from "../../utils/config";
+import store from "../../redux/store";
+import { removeCategory } from "../../redux/slicers/categories-slicer";
 
 class AdminCategoriesServices {
 
@@ -12,6 +14,7 @@ class AdminCategoriesServices {
 
   removeCategory = async (category_id) => {
     const response = await axios.delete(config.urls.admin.removeCategory + category_id);
+    store.dispatch(removeCategory(category_id));
     const removedItem = response.data;
     return removedItem;
   };

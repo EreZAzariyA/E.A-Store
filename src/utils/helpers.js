@@ -1,7 +1,8 @@
 import Icon from '@ant-design/icons';
 
-export const numberWithCommas = (x) => {
-  return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const numberWithCommas = (x, number = 2) => {
+  const formattedNumber = parseFloat(x).toFixed(number);
+  return formattedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const isAdmin = (user) => {
@@ -13,7 +14,7 @@ export const MessagesTypes = {
   LOGGED_IN_SUCCESSFULLY: 'User logged-in success',
 };
 
-export const getError = (err)=> {
+export const getError = (err) => {
   if(typeof err === "string") return err;
   if(typeof err.response?.data === "string") return err.response.data; // axios: 401, 403, 500
   if(Array.isArray(err.response?.data)) return err.response.data[0]; // axios: 400 - array of errors

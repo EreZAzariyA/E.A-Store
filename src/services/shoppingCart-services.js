@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../utils/config";
 import store from "../redux/store";
-import { addProductToCartAction, addProductToFavorites, fetchUserCart, removeProductFromCart, removeProductFromFavorites } from "../redux/slicers/cart-slicer";
+import { addProductToCartAction, addProductToFavorites, fetchUserCart, removeProductFromCart, removeProductFromFavorites, resetCartAction, updateCartAction } from "../redux/slicers/cart-slicer";
 
 const validateDetails = (details) => {
   if (!details.product_id) throw new Error('Product _id is not define');
@@ -30,17 +30,25 @@ class ShoppingCartServices {
     const details = {product_id, shoppingCart_id, stock};
     validateDetails(details);
     const response = await axios.post(config.urls.cart.addProductToCart, details);
-    const updatedSoppingCart = response.data;
-    store.dispatch(addProductToCartAction(updatedSoppingCart.products));
-    return updatedSoppingCart.products;
+    const updatedShoppingCart = response.data;
+    store.dispatch(addProductToCartAction(updatedShoppingCart.products));
+    return updatedShoppingCart.products;
+  };
+
+  updateStockInCart = async (shoppingCart_id, product_id, stock, totalPrice) => {
+    const details = {shoppingCart_id, product_id, stock, totalPrice};
+    const response = await axios.patch(config.urls.cart.updateStockInCart, details);
+    const updatedShoppingCart = response.data;
+    store.dispatch(updateCartAction(updatedShoppingCart.products));
+    return updatedShoppingCart.products;
   };
 
   addProductToFavorites = async (product_id, shoppingCart_id) => {
     const details = {product_id, shoppingCart_id};
     const response = await axios.post(config.urls.cart.addProductToFavorites, details);
-    const updatedSoppingCart = response.data;
-    store.dispatch(addProductToFavorites(updatedSoppingCart.favorites));
-    return updatedSoppingCart.favorites;
+    const updatedShoppingCart = response.data;
+    store.dispatch(addProductToFavorites(updatedShoppingCart.favorites));
+    return updatedShoppingCart.favorites;
   };
 
   removeProductFromCart = async (shoppingCart_id, product_id) => {
@@ -49,12 +57,17 @@ class ShoppingCartServices {
     store.dispatch(removeProductFromCart(product_id));
     return removedProduct;
   };
-  
+
   removeProductFromFavorites = async (shoppingCart_id, product_id) => {
     const response = await axios.delete(config.urls.cart.removeProductFromFavorites, {data: {shoppingCart_id, product_id}});
     const removedProduct = response.data;
     store.dispatch(removeProductFromFavorites(product_id));
     return removedProduct;
+  };
+
+  resetCart = async (shoppingCart_id) => {
+    await axios.post(config.urls.cart.resetCart + shoppingCart_id);
+    store.dispatch(resetCartAction());
   };
 };
 

@@ -16,24 +16,23 @@ export const ProductCard = (props) => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [stock, setStock] = useState(1);
 
   useEffect(() => {
-    if (shoppingCart && shoppingCart.products) {
-      const isInCart = shoppingCart.products.find((pro) => (
+    if (shoppingCart?.products) {
+      const isInCart = shoppingCart.products.some((pro) => (
         pro.product_id === product._id
       ));
-      setInCart(isInCart ? true : false);
+      setInCart(isInCart);
 
-      const isInFavorites = shoppingCart.favorites.find((pro) => (
+      const isInFavorites = shoppingCart.favorites.some((pro) => (
         pro === product._id
       ));
-      setIsFavorite(isInFavorites ? true : false);
+      setIsFavorite(isInFavorites);
     }
   }, [shoppingCart, product]);
 
   const addProductHandle = async () => {
-    setStock(1);
+    const stock = 1
     setInCart(true);
     try {
       await shoppingCartServices.addProductToCart(product?._id, shoppingCart?._id, stock);
@@ -42,9 +41,8 @@ export const ProductCard = (props) => {
     };
   };
 
-  const removeProductHandle = async () =>{
+  const removeProductHandle = async () => {
     setInCart(false);
-
     try {
       await shoppingCartServices.removeProductFromCart(shoppingCart?._id, product?._id);
     } catch (err) {
@@ -102,7 +100,7 @@ export const ProductCard = (props) => {
               </Tooltip>
             )}
             </Col>
-            
+
             <Col>
             <Tooltip title='Compare to other brands'>
               <Button shape="circle" size="small">

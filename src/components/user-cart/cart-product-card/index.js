@@ -1,23 +1,39 @@
-import { Avatar, Button, Card, Col, Form, Image, Input, Row } from "antd";
-import { useSelector } from "react-redux";
-import "./cartProductCard.css";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { numberWithCommas } from "../../../utils/helpers";
+import { Button, Card, Image, Input, Popconfirm } from "antd";
+import "./cartProductCard.css";
+import { shoppingCartServices } from "../../../services/shoppingCart-services";
 
-
-export const CartProductCard = ({productInCart}) => {
+export const CartProductCard = ({ productInCart, onStockUpdate }) => {
   const { product_id, shoppingCart_id, stock, totalPrice } = productInCart;
-  const [amount, setAmount] = useState(stock);
   const product = useSelector((state) => state.products.find((p) => (p._id === product_id)));
 
+  const [amount, setAmount] = useState(stock);
+  const [newTotalPrice, setNewTotalPrice] = useState(totalPrice);
+
   const handleAmountClick = (name) => {
-    if (name === 'plus') {
-      setAmount(amount + 1);
-      return
-    } else {
-      if (amount === 1) return;
-      setAmount(amount - 1);
-    };
+    let newAmount = 0;
+
+    switch (name) {
+      case 'plus':
+        newAmount = amount + 1;
+        break;
+      case 'minus':
+        newAmount = amount - 1;
+        break;
+    }
+    setAmount(newAmount);
+    setNewTotalPrice(product.price * newAmount);
+    onStockUpdate(product_id, newAmount, product.price * newAmount);
+  };
+
+  const removeProductFromCart = async () => {
+    try {
+      await shoppingCartServices.removeProductFromCart(shoppingCart_id, product_id);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -26,74 +42,63 @@ export const CartProductCard = ({productInCart}) => {
       bordered={false}
       className="cart-product-card"
       headStyle={{ background: 'transparent' }}
-      extra={<Button danger>X</Button>}
     >
-      <Row align={'middle'} justify={'start'}>
-        <Col span={4}>
+      <div className="remove-btn">
+        <Popconfirm
+          title="Are you sure?"
+          onConfirm={removeProductFromCart}
+        >
+          <Button type="text" danger>X</Button>
+        </Popconfirm>
+      </div>
+      <div className="left">
+        <div className="card-image">
           <Image
             preview={false}
             src={product.image_url}
             alt={`${product.name}-image`}
-            className="cart-product-card-image"
           />
-        </Col>
-
-        <Col xs={{ span: 16 }} sm={{ span: 20 }} push={3} className="product-details">
-    
-          <Row align={'middle'}>
-            <Col xs={{ span: 4 }} className="col-label">
-              <p>SKU:</p>
-            </Col>
-            <Col xs={{ span: 20 }}>
-              <p>{product_id.slice(0, product_id.length / 3)}</p>
-            </Col>
-          </Row>
-
-          <Row align={'middle'}>
-            <Col xs={{ span: 4 }} className="col-label">
-              <p>Description:</p>
-            </Col>
-            <Col xs={{ span: 20 }}>
-              <p>{product.description}</p>
-
-            </Col>
-          </Row>
-
-          <Row align={'middle'}>
-            <Col xs={{ span: 24 }} sm={{ span: 12 }}>
-              <Row align={'middle'}>
-                <Col xs={{ span: 4 }} className="col-label">
-                  <p>Amount: </p>
-                </Col>
-                <Col xs={{ span: 20, push: 2 }}>
-                  <div className="stock">
-                    <div className="stock-wrapper">
-                      <Button size="small" type="primary" onClick={() => handleAmountClick('plus')}>+</Button>
-                      <Input size="small" disabled value={amount} />
-                      <Button size="small" danger disabled={amount === 1} onClick={() => handleAmountClick('minus')}>-</Button>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </Col>
-            <Col xs={{ span: 24 }} sm={{ span: 12 }}>
-              <Row>
-                <Col xs={{ span: 10 }} sm={{ span: 14 }} className="col-label">
-                  <p>Price per one:</p>
-                </Col>
-                <Col xs={{ span: 14 }} sm={{ span: 10, pull: 3 }}>
-                  <p>${numberWithCommas(product.price)}</p>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-
-          <Row align={'middle'} justify={'center'}>
-            <Col className="col-label" span={4}>Total price</Col>
-            <Col span={20}>${(product.price * amount) || 0}</Col>
-          </Row>
-        </Col>
-      </Row>
+        </div>
+      </div>
+      <div className="right">
+        <div className="details">
+          <div className="field sku-field">
+            <p>
+              <span className="label">SKU: </span>
+              <span>{product_id.slice(0, product_id.length / 3)}</span>
+            </p>
+          </div>
+          <div className="field description-field">
+            <p>
+              <span>{product.description} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam numquam nesciunt animi, exercitationem consequuntur quasi ullam, nisi, incidunt culpa similique expedita temporibus alias. Repellendus velit nobis deleniti! Ipsa, fugit tenetur!</span>
+            </p>
+          </div>
+          <div className="field prices-fields">
+            <div className="prices-left">
+              <div className="label">
+                <span>Amount: </span>
+              </div>
+              <div className="stock-wrapper">
+                <Button size="small" type="primary" onClick={() => handleAmountClick('plus')}>+</Button>
+                <Input size="small" disabled value={amount} />
+                <Button size="small" danger disabled={amount === 1} onClick={() => handleAmountClick('minus')}>-</Button>
+              </div>
+            </div>
+            <div className="prices-center">
+              <p>
+                <span className="label">Price per unit: </span>
+                <span>${numberWithCommas(product.price)}</span>
+              </p>
+            </div>
+            <div className="prices-right">
+              <p>
+                <span className="label">Total price: </span>
+                <span>${numberWithCommas(newTotalPrice)}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </Card>
   );
 };

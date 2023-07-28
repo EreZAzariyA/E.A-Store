@@ -19,6 +19,10 @@ const cartSlicer = createSlice({
       state.products = action.payload;
       return state;
     },
+    updateCartAction(state, action) {
+      state.products = action.payload;
+      return state;
+    },
     addProductToFavorites(state, action) {
       state.favorites = action.payload;
       return state;
@@ -33,6 +37,10 @@ const cartSlicer = createSlice({
       state.favorites.splice(index, 1);
       return state;
     },
+    resetCartAction(state) {
+      state.products = [];
+      return state;
+    },
   }
 });
 
@@ -40,8 +48,10 @@ export const {
   fetchUserCart,
   removeUserCart,
   addProductToCartAction,
+  updateCartAction,
   addProductToFavorites,
   removeProductFromCart,
   removeProductFromFavorites,
+  resetCartAction
 } = cartSlicer.actions;
 export default cartSlicer;

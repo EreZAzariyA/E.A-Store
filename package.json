@@ -33,7 +33,15 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-trailing-spaces": "error",
+      "arrow-spacing":"error",
+      "space-infix-ops": "error",
+      "default-case":"off",
+      "template-curly-spacing": "error",
+      "comma-spacing": "error"
+    }
   },
   "browserslist": {
     "production": [
