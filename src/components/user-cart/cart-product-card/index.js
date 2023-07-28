@@ -24,8 +24,8 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
         break;
     }
     setAmount(newAmount);
-    setNewTotalPrice(product.price * newAmount);
-    onStockUpdate(product_id, newAmount, product.price * newAmount);
+    setNewTotalPrice(product?.price * newAmount);
+    onStockUpdate(product_id, newAmount, product?.price * newAmount);
   };
 
   const removeProductFromCart = async () => {
@@ -55,8 +55,8 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
         <div className="card-image">
           <Image
             preview={false}
-            src={product.image_url}
-            alt={`${product.name}-image`}
+            src={product?.image_url}
+            alt={`${product?.name}-image`}
           />
         </div>
       </div>
@@ -70,7 +70,7 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
           </div>
           <div className="field description-field">
             <p>
-              <span>{product.description} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam numquam nesciunt animi, exercitationem consequuntur quasi ullam, nisi, incidunt culpa similique expedita temporibus alias. Repellendus velit nobis deleniti! Ipsa, fugit tenetur!</span>
+              <span>{product?.description} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam numquam nesciunt animi, exercitationem consequuntur quasi ullam, nisi, incidunt culpa similique expedita temporibus alias. Repellendus velit nobis deleniti! Ipsa, fugit tenetur!</span>
             </p>
           </div>
           <div className="field prices-fields">
@@ -87,7 +87,7 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
             <div className="prices-center">
               <p>
                 <span className="label">Price per unit: </span>
-                <span>${numberWithCommas(product.price)}</span>
+                <span>${numberWithCommas(product?.price)}</span>
               </p>
             </div>
             <div className="prices-right">
