@@ -15,7 +15,7 @@ export const CategoryCard = (props) => {
         borderRadius: '50%'
       }}
     >
-      <img alt="example" style={{width: '150px',height: '120px', objectFit: 'contain'}} src={category?.image_url} />
+      <img alt="example" style={{width: '150px', height: '120px', objectFit: 'contain'}} src={category?.image_url} />
       <Card.Meta description={category.category}/>
     </Card>
   );

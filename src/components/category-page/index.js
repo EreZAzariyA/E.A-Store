@@ -14,7 +14,7 @@ export const CategoryPage = () => {
 
   useEffect(() => {
     let locationArray =  location.pathname.split('/');
-    let result = locationArray[3]+'/'+locationArray[4];
+    let result = locationArray[3] + '/' + locationArray[4];
     setCurrent(result);
   }, [location.pathname]);
 

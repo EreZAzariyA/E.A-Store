@@ -15,7 +15,7 @@ export const SubCategoryCard = (props) => {
         borderRadius: '50%'
       }}
     >
-      <img alt="example" style={{width: '150px',height: '120px', objectFit: 'contain'}} src={subCategory?.image_url} />
+      <img alt="example" style={{width: '150px', height: '120px', objectFit: 'contain'}} src={subCategory?.image_url} />
       <Card.Meta description={subCategory.subCategory}/>
     </Card>
   );

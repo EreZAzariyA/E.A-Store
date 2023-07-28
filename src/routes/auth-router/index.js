@@ -15,7 +15,7 @@ const AuthRouter = () => (
       <Route path="page-not-found" element={<PageNotFound />} />
       <Route path="*" element={<Navigate to={'page-not-found'} />} />
     </Route>
-  
+
     <Route path="*" element={<Navigate to={'auth/login'} />} />
   </Routes>
 );

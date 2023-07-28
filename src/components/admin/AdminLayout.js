@@ -13,7 +13,7 @@ const { Content, Sider } = Layout;
 
 export const AdminLayout = () => {
   const { pathname } = useLocation();
-  const [current,setCurrent] = useState('');
+  const [current, setCurrent] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {

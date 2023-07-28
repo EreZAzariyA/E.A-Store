@@ -18,7 +18,7 @@ export const DashboardWrapper = () => {
     for (let i = 0; i < newLocationArray.length; i++) {
       const parentPath = newLocationArray[i - 1];
       const path = newLocationArray[i];
-      options.push({ title: <Link to={`${parentPath ? '/'+parentPath : ''}/${path}`}>{path}</Link> });
+      options.push({ title: <Link to={`${parentPath ? '/' + parentPath : ''}/${path}`}>{path}</Link> });
     };
 
     setPatchOptions(options);

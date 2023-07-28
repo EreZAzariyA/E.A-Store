@@ -38,7 +38,7 @@ export const DashboardFirst = () => {
           <Col span={18}>
             <Row>
               <Col span={24}>Today’s Sales</Col>
-              
+
               <Col span={24}>
                 <div className="total total-purchases">
                   <p className="bold-text">${todaySales}</p>
@@ -61,7 +61,7 @@ export const DashboardFirst = () => {
           <Col span={18}>
             <Row>
               <Col span={24}>Total users</Col>
-              
+
               <Col span={24}>
                 <div className="total total-users">
                   <p className="bold-text">${todaySales}</p>
@@ -84,7 +84,7 @@ export const DashboardFirst = () => {
           <Col span={18}>
             <Row>
               <Col span={24}>New users</Col>
-              
+
               <Col span={24}>
                 <div className="total new-clients">
                   <p className="bold-text">${todaySales}</p>
@@ -107,7 +107,7 @@ export const DashboardFirst = () => {
           <Col span={18}>
             <Row>
               <Col span={24}>Orders</Col>
-              
+
               <Col span={24}>
                 <div className="total orders">
                   <p className="bold-text">${todaySales}</p>

@@ -54,7 +54,7 @@ export const ProductsTable = () => {
       message.error(getError(err));
     }
   };
-  
+
   const handleAdd = () => {
     setStep(Steps.NEW_ROW);
   };
@@ -142,7 +142,7 @@ export const ProductsTable = () => {
                 <Select.Option key={category._id}>{category.category}</Select.Option>
               ))}
             </Select>
-      
+
             <Select
               allowClear
               onClear={() => setFilterState({...filterState, subCategory_id: ''})}

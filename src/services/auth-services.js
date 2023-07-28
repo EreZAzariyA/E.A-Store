@@ -19,7 +19,7 @@ class AuthServices {
     return token;
   };
 
-  logout = () =>{
+  logout = () => {
     store.dispatch(logout());
   }
 };

@@ -23,7 +23,7 @@ export const SubCategoriesTable = () => {
   useEffect(() => {
     if (filterState.subCategory) {
       const subCategoryToSearch = filterState.subCategory.toLowerCase();
-      const filteredSubCategories = [...subCategories].filter((subC) => { 
+      const filteredSubCategories = [...subCategories].filter((subC) => {
         return subC.subCategory.toLowerCase().startsWith(subCategoryToSearch)
       });
       setFilteredSubCategories(filteredSubCategories);
@@ -45,7 +45,7 @@ export const SubCategoriesTable = () => {
   const handleAdd = () => {
     setStep(Steps.NEW_ROW);
   };
-  
+
   const columns = [
     {
       key: '_id',
@@ -67,14 +67,14 @@ export const SubCategoriesTable = () => {
       title: 'Products',
       shouldUpdate: false,
       width: 100,
-      render: (_,record) => {
+      render: (_, record) => {
         const productsLength = [...products].filter((p) => (p.subCategory_id === record._id)).length;
         return <p>{ productsLength ?? 0}</p>
       },
       sorter: (a, b) => {
         const aLength = [...products].filter((p) => (p.subCategory_id === a._id)).length;
         const bLength = [...products].filter((p) => (p.subCategory_id === b._id)).length;
-        
+
         if (aLength < bLength) {
           return -1;
         } else if (aLength > bLength) {

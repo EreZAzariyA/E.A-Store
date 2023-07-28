@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { numberWithCommas } from "../../../utils/helpers";
+import { shoppingCartServices } from "../../../services/shoppingCart-services";
 import { Button, Card, Image, Input, Popconfirm } from "antd";
 import "./cartProductCard.css";
-import { shoppingCartServices } from "../../../services/shoppingCart-services";
 
 export const CartProductCard = ({ productInCart, onStockUpdate }) => {
   const { product_id, shoppingCart_id, stock, totalPrice } = productInCart;

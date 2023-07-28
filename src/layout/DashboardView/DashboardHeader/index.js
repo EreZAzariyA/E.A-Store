@@ -39,11 +39,11 @@ export const DashboardHeader = () => {
             <Col span={6} className="promotions">
               <PromotionsArea />
             </Col>
-            
+
             <Col span={12} className="search">
               <Input placeholder="Search products by name or id" />
             </Col>
-          
+
             <Col span={6} className="personal">
               <PersonalArea />
             </Col>

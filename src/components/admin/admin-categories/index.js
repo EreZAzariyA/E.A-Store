@@ -44,7 +44,7 @@ export const CategoriesTable = () => {
       message.error(getError(err.message));
     }
   };
-  
+
   const columns = [
     {
       key: '_id',
@@ -64,14 +64,14 @@ export const CategoriesTable = () => {
     {
       key: 'subCategories',
       title: 'Sub-Categories',
-      render: (_,record) => {
+      render: (_, record) => {
         const subCategoriesLength = [...subCategories].filter((subC) => (subC.category_id === record._id)).length;
         return <p>{ subCategoriesLength ?? 0}</p>
       },
       sorter: (a, b) => {
         const aLength = [...subCategories].filter((subC) => (subC.category_id === a._id)).length;
         const bLength = [...subCategories].filter((subC) => (subC.category_id === b._id)).length;
-        
+
         if (aLength < bLength) {
           return -1;
         } else if (aLength > bLength) {
@@ -86,14 +86,14 @@ export const CategoriesTable = () => {
       key: 'products',
       title: 'Products',
       shouldUpdate: false,
-      render: (_,record) => {
+      render: (_, record) => {
         const productsLength = [...products].filter((p) => (p.category_id === record._id)).length;
         return <p>{ productsLength ?? 0}</p>
       },
       sorter: (a, b) => {
         const aLength = [...products].filter((p) => (p.category_id === a._id)).length;
         const bLength = [...products].filter((p) => (p.category_id === b._id)).length;
-        
+
         if (aLength < bLength) {
           return -1;
         } else if (aLength > bLength) {
@@ -117,7 +117,6 @@ export const CategoriesTable = () => {
             onChange={(val) => setFilterState({...filterState, category: val.target.value})}
           />
         </Space>
-
         <EditTable
           loading={!categories}
           rowKey={'_id'}
@@ -136,7 +135,6 @@ export const CategoriesTable = () => {
         onFinish={onFinish}
       />
     )}
-      
     </Space>
   );
 };

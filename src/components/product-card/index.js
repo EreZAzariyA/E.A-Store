@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
 import { CustomDivider } from "../components/Divider";
-import { DislikeHeartIcon, HeartIcon, brands } from "../../utils/helpers";
+import { RedHeartIcon, HeartIcon, brands } from "../../utils/helpers";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
 import { Button, Card, Col, Row, Tooltip } from "antd";
@@ -89,7 +89,7 @@ export const ProductCard = (props) => {
             {isFavorite ? (
               <Tooltip title='Remove from favourites'>
                 <Button shape="circle" size="small" onClick={() => favoritesHandler('remove')}>
-                  <DislikeHeartIcon />
+                  <RedHeartIcon />
                 </Button>
               </Tooltip>
             ) : (

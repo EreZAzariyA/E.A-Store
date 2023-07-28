@@ -13,7 +13,7 @@ export const AdminInsert = ({ component, onBack, onFinish }) => {
   const isProducts = component === 'products';
   const isCategories = component === 'categories';
   const isSubCategories = component === 'sub-categories';
-  
+
   const componentName = isCategories ? 'category' : isSubCategories ? 'sub-category' : 'product';
 
   useEffect(() => {
@@ -100,7 +100,7 @@ export const AdminInsert = ({ component, onBack, onFinish }) => {
           >
             <TextArea placeholder="Describe the product"/>
           </Form.Item>
-          
+
           <Form.Item
             label={'Image url'}
             name={'image_url'}
@@ -116,7 +116,7 @@ export const AdminInsert = ({ component, onBack, onFinish }) => {
           >
             <InputNumber placeholder="0" min={0} />
           </Form.Item>
-          
+
           <Form.Item
             label={'Price'}
             name={'price'}

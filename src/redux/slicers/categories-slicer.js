@@ -30,7 +30,7 @@ const categoriesSlicer = createSlice({
   }
 });
 
-export const { 
+export const {
   fetchCategories,
   addCategory,
   updateCategory,
