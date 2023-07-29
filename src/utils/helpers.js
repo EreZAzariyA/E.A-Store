@@ -1,5 +1,20 @@
 import Icon from '@ant-design/icons';
 
+export const MAX_FILE_SIZE = 2 * 1024 * 1024;  // 2 MB in bytes
+export const acceptedImageFile = '.png, .jpeg, .jpg, .webp';
+export const ALLOWED_TYPES = {
+  PNG: 'image/png',
+  JPEG: 'image/jpeg',
+  JPG: 'image/jpg',
+  WEBP: 'image/webp'
+};
+
+export const getBase64 = (img, callback) => {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+};
+
 export const numberWithCommas = (x, number = 2) => {
   const formattedNumber = parseFloat(x).toFixed(number);
   return formattedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

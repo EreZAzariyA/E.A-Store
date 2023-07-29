@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const productsSlicer = createSlice({
   name: 'products',
   initialState: [],

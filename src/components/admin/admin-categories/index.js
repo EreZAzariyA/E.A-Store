@@ -62,6 +62,16 @@ export const CategoriesTable = () => {
       width: 220,
     },
     {
+      title: 'Image URL',
+      key: 'image_url',
+      dataIndex: 'image_url',
+      editable: true,
+      width: 200,
+      render: (text) => (
+        <p className="long-text-field">{text}</p>
+      ),
+    },
+    {
       key: 'subCategories',
       title: 'Sub-Categories',
       render: (_, record) => {

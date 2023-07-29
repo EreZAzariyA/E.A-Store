@@ -100,6 +100,19 @@ export const ProductsTable = () => {
       key: 'description',
       dataIndex: 'description',
       editable: true,
+      render: (text) => (
+        <p className="long-text-field">{text}</p>
+      ),
+    },
+    {
+      title: 'Image URL',
+      key: 'image_url',
+      dataIndex: 'image_url',
+      editable: true,
+      width: 200,
+      render: (text) => (
+        <p className="long-text-field">{text}</p>
+      ),
     },
     {
       title: 'Stock',
@@ -107,6 +120,7 @@ export const ProductsTable = () => {
       dataIndex: 'stock',
       editable: true,
       width: 100,
+      inputType: 'number'
     },
     {
       title: 'Price',
@@ -114,6 +128,7 @@ export const ProductsTable = () => {
       dataIndex: 'price',
       editable: true,
       width: 120,
+      inputType: 'number',
       sorter: (a, b) => (a.price > b.price),
     },
   ];

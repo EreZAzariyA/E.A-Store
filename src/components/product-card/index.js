@@ -122,7 +122,7 @@ export const ProductCard = (props) => {
 
       <Row style={{ height: '70px' }}>
         <Col>
-          <p>{product.description}</p>
+          <p className="description-field">{product.description}</p>
         </Col>
       </Row>
 

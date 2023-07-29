@@ -26,3 +26,10 @@
 .card.product-card .logo img {
   width: 80px;
 }
+
+.card.product-card .description-field {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}

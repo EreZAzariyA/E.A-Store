@@ -124,7 +124,7 @@ export const EditTable = ({columns, dataSource, component, handleAdd, ...rest}) 
       onCell: (record) => {
         return {
           record,
-          inputType: col?.inputType ? col.inputType : col.dataIndex === 'price' ? 'number' : 'text',
+          inputType: col.inputType || 'text',
           dataIndex: col.dataIndex,
           title: col.title,
           editing: isEditing(record),

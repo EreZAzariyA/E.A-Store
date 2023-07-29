@@ -1,3 +1,6 @@
-.editable-row .ant-table-content {
-  min-height: 450px;
+.editable-row .long-text-field {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
