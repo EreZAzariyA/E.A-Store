@@ -3,12 +3,12 @@ import { Input, Select, Space, message } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
-import { AdminInsert } from "../admin-insert";
+import { AdminInsert } from "../components/AdminInsert";
 import { adminProductsServices } from "../../../services/admin/products-services";
 import { getError } from "../../../utils/helpers";
 
 const Steps = {
-  NEW_ROW: "NEW ROW",
+  ADD_PRODUCT: "ADD_PRODUCT",
 };
 
 export const ProductsTable = () => {
@@ -47,8 +47,8 @@ export const ProductsTable = () => {
 
   const onFinish = async (values) => {
     try {
-      const addedProduct = await adminProductsServices.addProduct(values);
-      message.success(`Sub-Category '${addedProduct.name}' with id: '${addedProduct._id}' added successfully`);
+      const uploadedProduct = await adminProductsServices.addProduct(values);
+      message.success(`Product '${uploadedProduct.name}' with id: '${uploadedProduct._id}' added successfully`);
       setStep(null);
     } catch (err) {
       message.error(getError(err));
@@ -56,7 +56,7 @@ export const ProductsTable = () => {
   };
 
   const handleAdd = () => {
-    setStep(Steps.NEW_ROW);
+    setStep(Steps.ADD_PRODUCT);
   };
 
   const columns = [
@@ -66,6 +66,7 @@ export const ProductsTable = () => {
       dataIndex: 'name',
       editable: true,
       width: 150,
+      fixed: 'left',
       sorter: (a, b) => (a.name.localeCompare(b.name))
     },
     {
@@ -73,6 +74,7 @@ export const ProductsTable = () => {
       key: 'category_id',
       dataIndex: 'category_id',
       editable: true,
+      width: 200,
       render: (value, record) => {
         const category = categories?.find((c) => (c._id === value));
         return (
@@ -109,7 +111,6 @@ export const ProductsTable = () => {
       key: 'image_url',
       dataIndex: 'image_url',
       editable: true,
-      width: 200,
       render: (text) => (
         <p className="long-text-field">{text}</p>
       ),
@@ -182,7 +183,7 @@ export const ProductsTable = () => {
         </>
       )}
 
-      {(step && step === Steps.NEW_ROW) && (
+      {(step && step === Steps.ADD_PRODUCT) && (
         <AdminInsert
           component={'products'}
           onBack={() => setStep(null)}

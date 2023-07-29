@@ -1,16 +1,15 @@
 import axios from "axios";
 import config from "../../utils/config";
 import store from "../../redux/store";
-import { addCategory, removeCategory, updateCategory } from "../../redux/slicers/categories-slicer";
+import { addCategoryAction, removeCategory, updateCategoryAction } from "../../redux/slicers/categories-slicer";
 import { addSubCategory, removeSubCategory, updateSubCategory } from "../../redux/slicers/subCategories-slicer";
 
 class AdminCategoriesServices {
-
   // Categories:
   addCategory = async (categoryToAdd) => {
     const response = await axios.post(config.urls.admin.addCategory, categoryToAdd);
     const uploadedCategory = response.data;
-    store.dispatch(addCategory(uploadedCategory));
+    store.dispatch(addCategoryAction(uploadedCategory));
     return uploadedCategory;
   };
 
@@ -24,7 +23,7 @@ class AdminCategoriesServices {
   updateCategory = async (categoryToUpdate) => {
     const response = await axios.put(config.urls.admin.updateCategory, categoryToUpdate);
     const updatedCategory = response.data;
-    store.dispatch(updateCategory(updateCategory));
+    store.dispatch(updateCategoryAction(updatedCategory));
     return updatedCategory;
   };
 

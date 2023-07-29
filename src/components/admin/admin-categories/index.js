@@ -1,19 +1,20 @@
-import { useSelector } from "react-redux";
-import { Input, Space, message } from "antd";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
+import { AdminInsert } from "../components/AdminInsert";
 import { adminCategoriesServices } from "../../../services/admin/categories-services";
 import { getError } from "../../../utils/helpers";
-import { AdminInsert } from "../admin-insert";
+import { Input, Space, message } from "antd";
 
 const Steps = {
-  NEW_ROW: "NEW ROW",
+  ADD_CATEGORY: "ADD_CATEGORY",
+  UPDATE_CATEGORY: "UPDATE_CATEGORY",
 };
 
 export const CategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const categories = useSelector((state) => (state.categories));
-  const subCategories = useSelector((state) => (state.subCategories));
+  const [category, setCategory] = useState(null);
   const [ filteredCategories, setFilteredCategories ] = useState([]);
   const [step, setStep] = useState(null);
 
@@ -31,15 +32,26 @@ export const CategoriesTable = () => {
     };
   }, [filterState.category, categories]);
 
-  const handleAdd = () => {
-    setStep(Steps.NEW_ROW);
-  };
+  const handleEditMode = (record) => {
+    setStep(Steps.UPDATE_CATEGORY);
+    setCategory(record);
+  }
 
   const onFinish = async (values) => {
+    let newValue;
+    let successMessage;
     try {
-      const addedCategory = await adminCategoriesServices.addCategory(values);
-      message.success(`Category '${addedCategory.category}' with id: '${addedCategory._id}' added successfully`);
-      setStep(null);
+      if (category) {
+        newValue = await adminCategoriesServices.updateCategory({...values, _id: category?._id});
+        successMessage = `Category '${newValue.category}' with id: '${newValue._id}' updated successfully`;
+      } else {
+        newValue = await adminCategoriesServices.addCategory(values);
+        successMessage = `Category '${newValue.category}' with id: '${newValue._id}' added successfully`;
+      };
+      if (newValue) {
+        message.success(successMessage);
+        setStep(null);
+      };
     } catch (err) {
       message.error(getError(err.message));
     }
@@ -47,19 +59,13 @@ export const CategoriesTable = () => {
 
   const columns = [
     {
-      key: '_id',
-      title: 'ID',
-      dataIndex: '_id',
-      editable: true,
-      width: 220,
-    },
-    {
       key: 'category',
       title: 'Category',
       dataIndex: 'category',
       sorter: (a, b) => (a.category.localeCompare(b.category)),
       editable: true,
-      width: 220,
+      width: 120,
+      fixed: 'left',
     },
     {
       title: 'Image URL',
@@ -74,21 +80,9 @@ export const CategoriesTable = () => {
     {
       key: 'subCategories',
       title: 'Sub-Categories',
-      render: (_, record) => {
-        const subCategoriesLength = [...subCategories].filter((subC) => (subC.category_id === record._id)).length;
-        return <p>{ subCategoriesLength ?? 0}</p>
-      },
-      sorter: (a, b) => {
-        const aLength = [...subCategories].filter((subC) => (subC.category_id === a._id)).length;
-        const bLength = [...subCategories].filter((subC) => (subC.category_id === b._id)).length;
-
-        if (aLength < bLength) {
-          return -1;
-        } else if (aLength > bLength) {
-          return 1;
-        } else {
-          return 0;
-        }
+      dataIndex: 'subCategories',
+      render: (subCategories) => {
+        return <p>{ subCategories.length ?? 0}</p>
       },
       width: 160,
     },
@@ -117,7 +111,7 @@ export const CategoriesTable = () => {
   ];
 
   return (
-    <Space direction="vertical" style={{width: '99%'}}>
+    <Space direction="vertical" style={{ width: '99%' }}>
     {!step && (
       <>
         <Space align="center" wrap>
@@ -133,16 +127,25 @@ export const CategoriesTable = () => {
           columns={columns}
           dataSource={filteredCategories}
           component={'categories'}
-          handleAdd={handleAdd}
+          handleAdd={() => setStep(Steps.ADD_CATEGORY)}
+          onEditMode={handleEditMode}
         />
       </>
     )}
 
-    {(step && step === Steps.NEW_ROW) && (
+    {(step && step === Steps.ADD_CATEGORY) && (
       <AdminInsert
         component={'categories'}
         onBack={() => setStep(null)}
         onFinish={onFinish}
+      />
+    )}
+    {(step && step === Steps.UPDATE_CATEGORY) && (
+      <AdminInsert
+        component={'categories'}
+        onBack={() => setStep(null)}
+        onFinish={onFinish}
+        record={category}
       />
     )}
     </Space>

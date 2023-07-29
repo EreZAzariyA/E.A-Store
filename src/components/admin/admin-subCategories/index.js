@@ -2,18 +2,20 @@ import { useSelector } from "react-redux";
 import { Input, Space, message } from "antd";
 import { useEffect, useState } from "react";
 import { EditTable } from "../components/EditTable";
-import { AdminInsert } from "../admin-insert";
+import { AdminInsert } from "../components/AdminInsert";
 import { adminCategoriesServices } from "../../../services/admin/categories-services";
 import { getError } from "../../../utils/helpers";
 
 const Steps = {
-  NEW_ROW: "NEW ROW",
+  ADD_SUBCATEGORY: "ADD_SUBCATEGORY",
+  UPDATE_SUBCATEGORY: "UPDATE_SUBCATEGORY",
 };
 
 export const SubCategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const subCategories = useSelector((state) => (state.subCategories));
-  const [ filteredSubCategories, setFilteredSubCategories ] = useState([]);
+  const [subCategory, setSubCategory] = useState(null);
+  const [filteredSubCategories, setFilteredSubCategories] = useState([]);
   const [step, setStep] = useState(null);
 
   const [ filterState, setFilterState ] = useState({
@@ -33,34 +35,39 @@ export const SubCategoriesTable = () => {
   }, [filterState.subCategory, subCategories]);
 
   const onFinish = async (values) => {
+    let newValue;
+    let successMessage;
     try {
-      const addedSubCategory = await adminCategoriesServices.addSubCategory(values);
-      message.success(`Sub-Category '${addedSubCategory.subCategory}' with id: '${addedSubCategory._id}' added successfully`);
-      setStep(null);
+      if (subCategory) {
+        newValue = await adminCategoriesServices.updateSubCategory({...values, _id: subCategory._id });
+        successMessage = `Sub-Category '${newValue.subCategory}' with id: '${newValue._id}' updated successfully`;
+      } else {
+        newValue = await adminCategoriesServices.addSubCategory(values);
+        successMessage = `Sub-Category '${newValue.subCategory}' with id: '${newValue._id}' added successfully`;
+      };
+      if (newValue) {
+        message.success(successMessage);
+        setStep(null);
+      };
     } catch (error) {
       message.error(getError(error.message));
     }
   };
 
-  const handleAdd = () => {
-    setStep(Steps.NEW_ROW);
-  };
+  const handleEditMode = (record) => {
+    setStep(Steps.UPDATE_SUBCATEGORY);
+    setSubCategory(record);
+  }
 
   const columns = [
-    {
-      key: '_id',
-      title: 'ID',
-      dataIndex: '_id',
-      editable: true,
-      width: 220,
-    },
     {
       key: 'subCategory',
       title: 'Sub-Category',
       dataIndex: 'subCategory',
       sorter: (a, b) => (a.subCategory.localeCompare(b.subCategory)),
       editable: true,
-      width: 220,
+      width: 100,
+      fixed: 'left',
     },
     {
       title: 'Image URL',
@@ -115,16 +122,25 @@ export const SubCategoriesTable = () => {
             columns={columns}
             dataSource={filteredSubCategories}
             component={'sub-categories'}
-            handleAdd={handleAdd}
+            handleAdd={() => setStep(Steps.ADD_SUBCATEGORY)}
+            onEditMode={handleEditMode}
           />
         </>
       )}
 
-      {(step && step === Steps.NEW_ROW) && (
+      {(step && step === Steps.ADD_SUBCATEGORY) && (
         <AdminInsert
           component={'sub-categories'}
           onBack={() => setStep(null)}
           onFinish={onFinish}
+        />
+      )}
+      {(step && step === Steps.UPDATE_SUBCATEGORY) && (
+        <AdminInsert
+          component={'sub-categories'}
+          onBack={() => setStep(null)}
+          onFinish={onFinish}
+          record={subCategory}
         />
       )}
 

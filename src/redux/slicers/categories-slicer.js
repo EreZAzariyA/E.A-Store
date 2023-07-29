@@ -8,11 +8,11 @@ const categoriesSlicer = createSlice({
       state = action.payload;
       return state;
     },
-    addCategory(state, action) {
+    addCategoryAction(state, action) {
       state.push(action.payload);
       return state;
     },
-    updateCategory(state, action) {
+    updateCategoryAction(state, action) {
       const categoryIndex = state.findIndex((c) => c._id === action.payload._id);
       if (categoryIndex !== -1) {
         state.splice(categoryIndex, 1);
@@ -32,8 +32,8 @@ const categoriesSlicer = createSlice({
 
 export const {
   fetchCategories,
-  addCategory,
-  updateCategory,
+  addCategoryAction,
+  updateCategoryAction,
   removeCategory
 } = categoriesSlicer.actions;
 export default categoriesSlicer;

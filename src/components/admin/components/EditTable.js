@@ -3,7 +3,7 @@ import { adminCategoriesServices } from "../../../services/admin/categories-serv
 import { adminProductsServices } from "../../../services/admin/products-services";
 import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider, Button } from "antd";
 
-export const EditTable = ({columns, dataSource, component, handleAdd, ...rest}) => {
+export const EditTable = ({columns, dataSource, component, handleAdd, onEditMode, ...rest}) => {
   const [ form ] = Form.useForm();
   const [ editingKey, setEditingKey ] = useState('');
   const [ selectedRows, setSelectedRows ] = useState([]);
@@ -19,6 +19,10 @@ export const EditTable = ({columns, dataSource, component, handleAdd, ...rest}) 
   }, [dataSource]);
 
   const edit = (record) => {
+    if (onEditMode) {
+      onEditMode(record);
+      return
+    }
     form.setFieldsValue({
       ...record,
     });
@@ -136,7 +140,6 @@ export const EditTable = ({columns, dataSource, component, handleAdd, ...rest}) 
     title: 'Actions',
     key: 'action',
     width: 120,
-    fixed: 'right',
     render: (_, record) => {
       const editable = isEditing(record);
       return editable ? (
@@ -194,11 +197,11 @@ export const EditTable = ({columns, dataSource, component, handleAdd, ...rest}) 
         pagination={{
           onChange: cancel,
         }}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows)
-          }
-        }}
+        // rowSelection={{
+        //   onChange: (_, selectedRows) => {
+        //     setSelectedRows(selectedRows)
+        //   }
+        // }}
         scroll={{ x: 1200 }}
       />
       <Form.Item>

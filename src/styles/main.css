@@ -1,6 +1,12 @@
 .editable-row .long-text-field {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   overflow: hidden;
+  width: 100%;
 }
+/* 
+.insert-form {
+  width: 80%;
+  margin: auto;
+} */

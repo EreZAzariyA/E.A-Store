@@ -6,11 +6,26 @@ import { SubCategoryCard } from "./subCategory-card";
 
 export const CategoryPage = () => {
   const { category_id } = useParams();
-  const stateSubCategories = useSelector((state) => state.subCategories);
-  const subCategories = [...stateSubCategories].filter((subC) => subC.category_id === category_id);
+  const categories = useSelector((state) => state.categories);
+  const allSubCategories = useSelector((state) => state.subCategories);
+  const [subCategories, setSubCategories] = useState([]);
   const [current, setCurrent] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (category_id) {
+      const category = categories.find((c) => c._id === category_id);
+      if (category && category.subCategories) {
+        const newSubCategoriesList = [];
+        for (const subCategoryId of category.subCategories) {
+          const fullSubCategory = allSubCategories.find((subC) => subC._id === subCategoryId);
+          newSubCategoriesList.push(fullSubCategory);
+        };
+        setSubCategories(newSubCategoriesList);
+      };
+    };
+  }, [allSubCategories, categories, category_id]);
 
   useEffect(() => {
     let locationArray =  location.pathname.split('/');
