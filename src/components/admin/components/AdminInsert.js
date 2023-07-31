@@ -28,6 +28,7 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
   useEffect(() => {
     if (initialValue.category_id) {
       const category = categories.find((c) => c._id === initialValue.category_id);
+
       if (category && category.subCategories) {
         const newSubCategoriesList = [];
         for (const subCategoryId of category.subCategories) {
@@ -57,7 +58,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
     });
     return newList;
   };
-
 
   const formProps = {
     form: form,
@@ -184,7 +184,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
             label={'Sub-categories'}
             name={'subCategories'}
             initialValue={getDefaultValueList(initialValue.subCategories)}
-            rules={[{ required: true, message: 'You need at least one sub-category' }]}
           >
             <Select
               mode="multiple"
@@ -230,6 +229,7 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           </Form.Item>
         </>
       )}
+
       <Button htmlType="submit">{record ? 'Update' : 'Add'} {componentName}</Button>
     </Form>
   );

@@ -3,7 +3,7 @@ import { Input, Space, message } from "antd";
 import { useEffect, useState } from "react";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
-import { adminCategoriesServices } from "../../../services/admin/categories-services";
+import { adminSubCategoriesServices } from "../../../services/admin/subCategories-services";
 import { getError } from "../../../utils/helpers";
 
 const Steps = {
@@ -34,16 +34,23 @@ export const SubCategoriesTable = () => {
     }
   }, [filterState.subCategory, subCategories]);
 
+  useEffect(() => {
+    if (step && step === Steps.ADD_SUBCATEGORY) {
+      setSubCategory(null);
+    };
+  }, [step]);
+
   const onFinish = async (values) => {
     let newValue;
     let successMessage;
+
     try {
       if (subCategory) {
-        newValue = await adminCategoriesServices.updateSubCategory({...values, _id: subCategory._id });
-        successMessage = `Sub-Category '${newValue.subCategory}' with id: '${newValue._id}' updated successfully`;
+        newValue = await adminSubCategoriesServices.updateSubCategory({...values, _id: subCategory._id });
+        successMessage = `Sub-Category '${newValue?.subCategory}' with id: '${newValue?._id}' updated successfully`;
       } else {
-        newValue = await adminCategoriesServices.addSubCategory(values);
-        successMessage = `Sub-Category '${newValue.subCategory}' with id: '${newValue._id}' added successfully`;
+        newValue = await adminSubCategoriesServices.addSubCategory(values);
+        successMessage = `Sub-Category '${newValue?.subCategory}' with id: '${newValue?._id}' added successfully`;
       };
       if (newValue) {
         message.success(successMessage);
@@ -57,7 +64,7 @@ export const SubCategoriesTable = () => {
   const handleEditMode = (record) => {
     setStep(Steps.UPDATE_SUBCATEGORY);
     setSubCategory(record);
-  }
+  };
 
   const columns = [
     {
@@ -117,9 +124,9 @@ export const SubCategoriesTable = () => {
           </Space>
 
           <EditTable
+            columns={columns}
             loading={!subCategories}
             rowKey={'_id'}
-            columns={columns}
             dataSource={filteredSubCategories}
             component={'sub-categories'}
             handleAdd={() => setStep(Steps.ADD_SUBCATEGORY)}

@@ -21,6 +21,8 @@ class Config {
       fetchProductsBySubCategoryId: ""
     },
     admin: {
+      insert: "",
+      update: "",
       uploadImage: "",
       addProduct: "",
       removeProduct: "",
@@ -81,6 +83,8 @@ class Config {
         resetCart: baseUrl + 'cart/reset/'
       },
       admin: {
+        insert: baseUrl + 'admin/insert',
+        update: baseUrl + 'admin/update',
         uploadImage: baseUrl + 'admin/image-upload',
         addProduct: baseUrl + 'admin/add-product',
         removeProduct: baseUrl + 'admin/remove-product/',

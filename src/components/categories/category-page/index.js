@@ -16,11 +16,13 @@ export const CategoryPage = () => {
   useEffect(() => {
     if (category_id) {
       const category = categories.find((c) => c._id === category_id);
-      if (category && category.subCategories) {
+      if (category && category?.subCategories) {
         const newSubCategoriesList = [];
         for (const subCategoryId of category.subCategories) {
           const fullSubCategory = allSubCategories.find((subC) => subC._id === subCategoryId);
-          newSubCategoriesList.push(fullSubCategory);
+          if (fullSubCategory && fullSubCategory._id) {
+            newSubCategoriesList.push(fullSubCategory);
+          };
         };
         setSubCategories(newSubCategoriesList);
       };

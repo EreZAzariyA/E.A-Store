@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import { PersonalArea } from "./PersonalArea";
 import { PromotionsArea } from "./PromotionsArea";
 import { useSelector } from "react-redux";
-import { productsServices } from "../../../services/productsServices";
-import { categoriesServices } from "../../../services/categoriesServices";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
 import { Col, Input, Layout, Row } from "antd";
+import { storeServices } from "../../../services/store-services";
 
 const { Header } = Layout;
 
@@ -15,9 +14,9 @@ export const DashboardHeader = () => {
 
   useEffect(() => {
     const fetchAllData = async () => {
-      await productsServices.fetchAllProducts();
-      await categoriesServices.fetchAllCategories();
-      await categoriesServices.fetchAllSubCategories();
+      await storeServices.fetchAllProducts();
+      await storeServices.fetchAllCategories();
+      await storeServices.fetchAllSubCategories();
       await shoppingCartServices.fetchUserCart(user._id);
     };
     if (user) {

@@ -1,7 +1,15 @@
 import axios from "axios";
-import config from "../utils/config";
 import store from "../redux/store";
-import { addProductToCartAction, addProductToFavorites, fetchUserCart, removeProductFromCart, removeProductFromFavorites, resetCartAction, updateCartAction } from "../redux/slicers/cart-slicer";
+import {
+  addProductToCartAction,
+  addProductToFavoritesAction,
+  fetchUserCartAction,
+  removeProductFromCartAction,
+  removeProductFromFavoritesAction,
+  resetCartAction,
+  updateCartAction
+} from "../redux/slicers/cart-slicer";
+import config from "../utils/config";
 
 const validateDetails = (details) => {
   if (!details.product_id) throw new Error('Product _id is not define');
@@ -15,7 +23,7 @@ class ShoppingCartServices {
     if (!user_id) throw new Error('User _id is not found');
     const response = await axios.get(config.urls.cart.fetchUserCart + user_id);
     const shoppingCart = response.data;
-    store.dispatch(fetchUserCart(shoppingCart))
+    store.dispatch(fetchUserCartAction(shoppingCart));
     return shoppingCart;
   };
 
@@ -47,21 +55,21 @@ class ShoppingCartServices {
     const details = {product_id, shoppingCart_id};
     const response = await axios.post(config.urls.cart.addProductToFavorites, details);
     const updatedShoppingCart = response.data;
-    store.dispatch(addProductToFavorites(updatedShoppingCart.favorites));
+    store.dispatch(addProductToFavoritesAction(updatedShoppingCart.favorites));
     return updatedShoppingCart.favorites;
   };
 
   removeProductFromCart = async (shoppingCart_id, product_id) => {
     const response = await axios.delete(config.urls.cart.removeProductFromCart, {data: {shoppingCart_id, product_id}});
     const removedProduct = response.data;
-    store.dispatch(removeProductFromCart(product_id));
+    store.dispatch(removeProductFromCartAction(product_id));
     return removedProduct;
   };
 
   removeProductFromFavorites = async (shoppingCart_id, product_id) => {
     const response = await axios.delete(config.urls.cart.removeProductFromFavorites, {data: {shoppingCart_id, product_id}});
     const removedProduct = response.data;
-    store.dispatch(removeProductFromFavorites(product_id));
+    store.dispatch(removeProductFromFavoritesAction(product_id));
     return removedProduct;
   };
 

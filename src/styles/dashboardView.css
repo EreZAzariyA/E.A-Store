@@ -45,6 +45,17 @@
   background: lightblue;
 }
 
+.ant-menu-item {
+  position: relative;
+}
+
+.ant-menu-item .ant-menu-item-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 
 @media (max-width: 765px) {
   .layout .ant-layout-header p {

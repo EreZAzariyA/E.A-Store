@@ -61,7 +61,7 @@ export const ProductsTable = () => {
 
   const columns = [
     {
-      title: 'name',
+      title: 'Name',
       key: 'name',
       dataIndex: 'name',
       editable: true,
@@ -128,7 +128,7 @@ export const ProductsTable = () => {
       key: 'price',
       dataIndex: 'price',
       editable: true,
-      width: 120,
+      width: 100,
       inputType: 'number',
       sorter: (a, b) => (a.price > b.price),
     },

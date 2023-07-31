@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { adminCategoriesServices } from "../../../services/admin/categories-services";
 import { adminProductsServices } from "../../../services/admin/products-services";
+import { adminCategoriesServices } from "../../../services/admin/categories-services";
+import { adminSubCategoriesServices } from "../../../services/admin/subCategories-services";
 import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider, Button } from "antd";
 
 export const EditTable = ({columns, dataSource, component, handleAdd, onEditMode, ...rest}) => {
   const [ form ] = Form.useForm();
   const [ editingKey, setEditingKey ] = useState('');
-  const [ selectedRows, setSelectedRows ] = useState([]);
   const [ data, setData ] = useState([]);
-  const isEditing = (record) => record._id === editingKey;
+  const isEditing = (record) => record?._id === editingKey;
   // const isProductsList = component === 'products';
   const isCategoriesList = component === 'categories';
   const isSubCategoriesList = component === 'sub-categories';
@@ -40,9 +40,9 @@ export const EditTable = ({columns, dataSource, component, handleAdd, onEditMode
       if (isCategoriesList) {
         updatedValue = await adminCategoriesServices.updateCategory({...row, _id: record._id });
       } else if (isSubCategoriesList) {
-        updatedValue = await adminCategoriesServices.updateSubCategory({...row, _id: record._id });
+        updatedValue = await adminSubCategoriesServices.updateSubCategory({...row, _id: record._id });
       } else {
-        updatedValue = await adminProductsServices.updateProduct({...row, _id: record._id});
+        updatedValue = await adminProductsServices({...row, _id: record._id});
       }
       const newData = [...dataSource];
       const index = newData.findIndex((item) => record._id === item._id);
@@ -107,7 +107,7 @@ export const EditTable = ({columns, dataSource, component, handleAdd, onEditMode
         await adminCategoriesServices.removeCategory(record._id)
         message.success('Removed');
       } else if (isSubCategoriesList) {
-        await adminCategoriesServices.removeSubCategory(record._id);
+        await adminSubCategoriesServices.removeSubCategory(record._id);
         message.success('Removed');
       } else {
         await adminProductsServices.removeProduct(record._id);
@@ -139,7 +139,7 @@ export const EditTable = ({columns, dataSource, component, handleAdd, onEditMode
   columns.push({
     title: 'Actions',
     key: 'action',
-    width: 120,
+    width: 100,
     render: (_, record) => {
       const editable = isEditing(record);
       return editable ? (
@@ -197,11 +197,6 @@ export const EditTable = ({columns, dataSource, component, handleAdd, onEditMode
         pagination={{
           onChange: cancel,
         }}
-        // rowSelection={{
-        //   onChange: (_, selectedRows) => {
-        //     setSelectedRows(selectedRows)
-        //   }
-        // }}
         scroll={{ x: 1200 }}
       />
       <Form.Item>

@@ -7,11 +7,11 @@ const cartSlicer = createSlice({
     favorites: [],
   },
   reducers: {
-    fetchUserCart(state, action) {
+    fetchUserCartAction(state, action) {
       state = action.payload;
       return state;
     },
-    removeUserCart(state) {
+    removeUserCartAction(state) {
       state = null;
       return state;
     },
@@ -23,16 +23,16 @@ const cartSlicer = createSlice({
       state.products = action.payload;
       return state;
     },
-    addProductToFavorites(state, action) {
+    addProductToFavoritesAction(state, action) {
       state.favorites = action.payload;
       return state;
     },
-    removeProductFromCart(state, action) {
+    removeProductFromCartAction(state, action) {
       const index = state.products.findIndex((product) => product.product_id === action.payload);
       state.products.splice(index, 1);
       return state;
     },
-    removeProductFromFavorites(state, action) {
+    removeProductFromFavoritesAction(state, action) {
       const index = state.favorites.findIndex((productId) => productId === action.payload);
       state.favorites.splice(index, 1);
       return state;
@@ -45,13 +45,13 @@ const cartSlicer = createSlice({
 });
 
 export const {
-  fetchUserCart,
-  removeUserCart,
+  fetchUserCartAction,
+  removeUserCartAction,
   addProductToCartAction,
   updateCartAction,
-  addProductToFavorites,
-  removeProductFromCart,
-  removeProductFromFavorites,
-  resetCartAction
+  addProductToFavoritesAction,
+  removeProductFromCartAction,
+  removeProductFromFavoritesAction,
+  resetCartAction,
 } = cartSlicer.actions;
 export default cartSlicer;

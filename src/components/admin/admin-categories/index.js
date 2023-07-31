@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
-import { adminCategoriesServices } from "../../../services/admin/categories-services";
-import { getError } from "../../../utils/helpers";
 import { Input, Space, message } from "antd";
+import { adminCategoriesServices } from "../../../services/admin/categories-services";
 
 const Steps = {
   ADD_CATEGORY: "ADD_CATEGORY",
@@ -15,9 +14,8 @@ export const CategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const categories = useSelector((state) => (state.categories));
   const [category, setCategory] = useState(null);
-  const [ filteredCategories, setFilteredCategories ] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
   const [step, setStep] = useState(null);
-
   const [filterState, setFilterState] = useState({
     category: ''
   });
@@ -32,28 +30,34 @@ export const CategoriesTable = () => {
     };
   }, [filterState.category, categories]);
 
+  useEffect(() => {
+    if (step && step === Steps.ADD_CATEGORY) {
+      setCategory(null);
+    };
+  }, [step]);
+
   const handleEditMode = (record) => {
     setStep(Steps.UPDATE_CATEGORY);
     setCategory(record);
-  }
+  };
 
   const onFinish = async (values) => {
-    let newValue;
-    let successMessage;
+    let newValue = '';
+    let successMessage = '';
     try {
       if (category) {
         newValue = await adminCategoriesServices.updateCategory({...values, _id: category?._id});
-        successMessage = `Category '${newValue.category}' with id: '${newValue._id}' updated successfully`;
+        successMessage = `Category '${newValue?.category}' with id: '${newValue?._id}' updated successfully`;
       } else {
         newValue = await adminCategoriesServices.addCategory(values);
-        successMessage = `Category '${newValue.category}' with id: '${newValue._id}' added successfully`;
+        successMessage = `Category '${newValue?.category}' with id: '${newValue?._id}' added successfully`;
       };
       if (newValue) {
         message.success(successMessage);
         setStep(null);
       };
     } catch (err) {
-      message.error(getError(err.message));
+      console.log(err);
     }
   };
 
@@ -82,7 +86,7 @@ export const CategoriesTable = () => {
       title: 'Sub-Categories',
       dataIndex: 'subCategories',
       render: (subCategories) => {
-        return <p>{ subCategories.length ?? 0}</p>
+        return <p>{ subCategories?.length || 0}</p>
       },
       width: 160,
     },
@@ -111,7 +115,7 @@ export const CategoriesTable = () => {
   ];
 
   return (
-    <Space direction="vertical" style={{ width: '99%' }}>
+    <Space direction="vertical" style={{ width: '100%' }}>
     {!step && (
       <>
         <Space align="center" wrap>

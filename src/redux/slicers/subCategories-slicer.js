@@ -4,36 +4,38 @@ const subCategoriesSlicer = createSlice({
   name: 'subCategories',
   initialState: [],
   reducers: {
-    fetchSubCategories(state, action) {
+    fetchSubCategoriesAction(state, action) {
       state = action.payload;
       return state;
     },
-    addSubCategory(state, action) {
-      state.push(action.payload);
+    addSubCategoryAction(state, action) {
+      if (action.payload) {
+        state.push(action.payload);
+      };
       return state;
     },
-    updateSubCategory(state, action) {
-      const subCategoryIndex = state.findIndex((subC) => subC._id === action.payload._id);
+    updateSubCategoryAction(state, action) {
+      const subCategoryIndex = state.findIndex((subC) => subC._id === action.payload?._id);
       if (subCategoryIndex !== -1) {
         state.splice(subCategoryIndex, 1);
         state.push(action.payload);
       };
       return state;
     },
-    removeSubCategory(state, action) {
+    removeSubCategoryAction(state, action) {
       const subCategoryIndex = state.findIndex((subC) => subC._id === action.payload);
       if (subCategoryIndex !== -1) {
         state.splice(subCategoryIndex, 1);
-      }
+      };
       return state;
-    }
+    },
   }
 });
 
 export const {
-  fetchSubCategories,
-  addSubCategory,
-  updateSubCategory,
-  removeSubCategory
+  fetchSubCategoriesAction,
+  addSubCategoryAction,
+  updateSubCategoryAction,
+  removeSubCategoryAction,
 } = subCategoriesSlicer.actions;
 export default subCategoriesSlicer;

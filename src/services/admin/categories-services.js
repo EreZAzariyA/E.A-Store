@@ -1,11 +1,13 @@
 import axios from "axios";
-import config from "../../utils/config";
 import store from "../../redux/store";
-import { addCategoryAction, removeCategory, updateCategoryAction } from "../../redux/slicers/categories-slicer";
-import { addSubCategory, removeSubCategory, updateSubCategory } from "../../redux/slicers/subCategories-slicer";
+import {
+  addCategoryAction,
+  removeCategoryAction,
+  updateCategoryAction
+} from "../../redux/slicers/categories-slicer";
+import config from "../../utils/config";
 
 class AdminCategoriesServices {
-  // Categories:
   addCategory = async (categoryToAdd) => {
     const response = await axios.post(config.urls.admin.addCategory, categoryToAdd);
     const uploadedCategory = response.data;
@@ -16,7 +18,7 @@ class AdminCategoriesServices {
   removeCategory = async (category_id) => {
     const response = await axios.delete(config.urls.admin.removeCategory + category_id);
     const removedItem = response.data;
-    store.dispatch(removeCategory(category_id));
+    store.dispatch(removeCategoryAction(category_id));
     return removedItem;
   };
 
@@ -25,28 +27,6 @@ class AdminCategoriesServices {
     const updatedCategory = response.data;
     store.dispatch(updateCategoryAction(updatedCategory));
     return updatedCategory;
-  };
-
-  // Sub-Categories:
-  addSubCategory = async (subCategoryToAdd) => {
-    const response = await axios.post(config.urls.admin.addSubCategory, subCategoryToAdd);
-    const uploadedSubCategory = response.data;
-    store.dispatch(addSubCategory(uploadedSubCategory))
-    return uploadedSubCategory;
-  };
-
-  removeSubCategory = async (subCategory_id) => {
-    const response = await axios.delete(config.urls.admin.removeSubCategory + subCategory_id);
-    const removedItem = response.data;
-    store.dispatch(removeSubCategory(subCategory_id));
-    return removedItem;
-  };
-
-  updateSubCategory = async (subCategoryToUpdate) => {
-    const response = await axios.put(config.urls.admin.updateSubCategory, subCategoryToUpdate);
-    const updatedSubCategory = response.data;
-    store.dispatch(updateSubCategory(updatedSubCategory));
-    return updatedSubCategory;
   };
 };
 

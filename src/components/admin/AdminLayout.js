@@ -7,6 +7,7 @@ import PieChartOutlined from "@ant-design/icons/PieChartOutlined";
 import AppstoreAddOutlined from "@ant-design/icons/AppstoreAddOutlined";
 import TableOutlined from "@ant-design/icons/TableOutlined";
 import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
+import UploadOutlined from "@ant-design/icons/UploadOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
 
 const { Content, Sider } = Layout;
@@ -44,6 +45,11 @@ export const AdminLayout = () => {
         icon: <TableOutlined />
       },
       {
+        label: 'Upload-Image',
+        key: 'upload-image',
+        icon: <UploadOutlined />
+      },
+      {
         label: <Button danger type="text">Logout</Button>,
         key: '/',
         icon: <LogoutOutlined />,
@@ -51,30 +57,6 @@ export const AdminLayout = () => {
         onClick: () => authServices.logout()
       }
     ];
-    // const items = [
-    //   {
-    //     label: 'Dashboard',
-    //     key: 'dashboard',
-    //     icon: <AppstoreOutlined />
-    //   },
-    //   {
-    //     label: 'Tables',
-    //     key: 'tables',
-    //     icon: <DatabaseOutlined />
-    //   },
-    //   {
-    //     label: 'Insert Doc',
-    //     key: 'insert-doc',
-    //     icon: <UploadOutlined />
-    //   },
-    //   {
-    //     label: <Button danger type="text">Logout</Button>,
-    //     key: '/',
-    //     icon: <LogoutOutlined />,
-    //     style: {'position': 'absolute', 'bottom': 0 },
-    //     onClick: () => authServices.logout()
-    //   }
-    // ];
 
     return (
       <Menu

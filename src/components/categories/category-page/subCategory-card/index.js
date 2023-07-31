@@ -1,5 +1,5 @@
-import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
+import { Card } from "antd";
 import "./subCategoryCard.css";
 
 export const SubCategoryCard = (props) => {
@@ -8,7 +8,7 @@ export const SubCategoryCard = (props) => {
 
   return (
     <Card
-      onClick={() => navigate(`/categories/${subCategory.category_id}/sub-category/${subCategory._id}`)}
+      onClick={() => navigate(`sub-category/${subCategory._id}`)}
       hoverable
       style={{
         width: 240,

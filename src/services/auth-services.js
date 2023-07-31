@@ -1,27 +1,27 @@
 import axios from "axios";
-import config from "../utils/config";
 import store from "../redux/store";
-import { login, logout, register } from "../redux/slicers/auth-slicer";
+import { loginAction, logoutAction, registerAction } from "../redux/slicers/auth-slicer";
+import config from "../utils/config";
 
 class AuthServices {
 
   register = async (user) => {
     const response = await axios.post(config.urls.auth.register, user);
     const token = response.data;
-    store.dispatch(register(token));
+    store.dispatch(registerAction(token));
     return token;
   };
 
   login = async (credentials) => {
     const response = await axios.post(config.urls.auth.login, credentials);
     const token = response.data;
-    store.dispatch(login(token));
+    store.dispatch(loginAction(token));
     return token;
   };
 
   logout = () => {
-    store.dispatch(logout());
-  }
+    store.dispatch(logoutAction());
+  };
 };
 
 export const authServices = new AuthServices();

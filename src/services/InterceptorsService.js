@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../redux/store";
-import { logout } from "../redux/slicers/auth-slicer";
+import { logoutAction } from "../redux/slicers/auth-slicer";
 import { getError } from "../utils/helpers";
 import { message } from "antd";
 
@@ -22,12 +22,11 @@ class InterceptorsService {
       return response;
     }, (err) => {
       if (err.response.status === 401) {
-        store.dispatch(logout());
+        store.dispatch(logoutAction());
       };
       return message.error(getError(err));
     });
   };
 };
 
-const interceptorsService = new InterceptorsService();
-export default interceptorsService;
+export const interceptorsService = new InterceptorsService();
