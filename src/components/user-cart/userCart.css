@@ -1,3 +1,7 @@
+.user-cart-container {
+  padding-bottom: 150px;
+}
+
 .user-cart-container .main-cart-product {
   background: transparent;
   border: 1px solid darkgrey;
@@ -37,4 +41,21 @@
   font-weight: 600;
   font-size: 22px;
   padding: 10px 10px;
+}
+
+.user-cart-footer {
+  z-index: 2;
+  background-color: white;
+
+  text-align: center;
+  padding: 1rem;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: min(100% - 15px);
+}
+
+.user-cart-footer button {
+  width: 100%;
 }

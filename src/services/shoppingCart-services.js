@@ -12,31 +12,29 @@ import {
 import config from "../utils/config";
 
 const validateDetails = (details) => {
-  if (!details.product_id) throw new Error('Product _id is not define');
-  if (!details.shoppingCart_id) throw new Error('Shopping-cart _id is not found');
-  if (!details.stock) throw new Error('Stock to order is not define');
+  if (details) {
+    Object.entries(details).forEach(([key, value]) => {
+      if (!value || value === null || value === 0 || value === undefined) {
+        throw new Error(`${key} is missing`);
+      };
+    });
+  };
 };
 
 class ShoppingCartServices {
 
-  fetchUserCart = async (user_id) => {
-    if (!user_id) throw new Error('User _id is not found');
-    const response = await axios.get(config.urls.cart.fetchUserCart + user_id);
+  fetchUserShoppingCart = async (user_id) => {
+    if (!user_id) throw new Error('User _id is not define');
+    const response = await axios.get(config.urls.cart.fetchUserShoppingCart + user_id);
     const shoppingCart = response.data;
     store.dispatch(fetchUserCartAction(shoppingCart));
     return shoppingCart;
   };
 
-  fetchItemsFromCart = async (shoppingCart_id) => {
-    if (!shoppingCart_id) throw new Error('Shopping cart _id is not define');
-    const response = await axios.get(config.urls.cart.fetchItemsFromUserCart + shoppingCart_id);
-    const itemsInCart = response.data;
-    return itemsInCart;
-  }
-
   addProductToCart = async (product_id, shoppingCart_id, stock) => {
     const details = {product_id, shoppingCart_id, stock};
     validateDetails(details);
+
     const response = await axios.post(config.urls.cart.addProductToCart, details);
     const updatedShoppingCart = response.data;
     store.dispatch(addProductToCartAction(updatedShoppingCart.products));
@@ -51,6 +49,15 @@ class ShoppingCartServices {
     return updatedShoppingCart.products;
   };
 
+  removeProductFromCart = async (shoppingCart_id, product_id) => {
+    if (!(shoppingCart_id || product_id)) throw new Error('Some fields are missing');
+
+    const response = await axios.delete(config.urls.cart.removeProductFromCart, {data: {shoppingCart_id, product_id}});
+    const removedProduct = response.data;
+    store.dispatch(removeProductFromCartAction(product_id));
+    return removedProduct;
+  };
+
   addProductToFavorites = async (product_id, shoppingCart_id) => {
     const details = {product_id, shoppingCart_id};
     const response = await axios.post(config.urls.cart.addProductToFavorites, details);
@@ -59,19 +66,13 @@ class ShoppingCartServices {
     return updatedShoppingCart.favorites;
   };
 
-  removeProductFromCart = async (shoppingCart_id, product_id) => {
-    const response = await axios.delete(config.urls.cart.removeProductFromCart, {data: {shoppingCart_id, product_id}});
-    const removedProduct = response.data;
-    store.dispatch(removeProductFromCartAction(product_id));
-    return removedProduct;
-  };
-
   removeProductFromFavorites = async (shoppingCart_id, product_id) => {
     const response = await axios.delete(config.urls.cart.removeProductFromFavorites, {data: {shoppingCart_id, product_id}});
     const removedProduct = response.data;
     store.dispatch(removeProductFromFavoritesAction(product_id));
     return removedProduct;
   };
+
 
   resetCart = async (shoppingCart_id) => {
     await axios.post(config.urls.cart.resetCart + shoppingCart_id);

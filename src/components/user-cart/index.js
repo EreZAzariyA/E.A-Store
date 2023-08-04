@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { shoppingCartServices } from "../../services/shoppingCart-services";
+import { UserCartFooter } from "./cart-footer";
+import { Order } from "./order";
 import { CartProductCard } from "./cart-product-card";
+import { shoppingCartServices } from "../../services/shoppingCart-services";
 import { numberWithCommas } from "../../utils/helpers";
 import { Button, Card, Modal, message } from "antd";
 import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled'
@@ -10,10 +12,17 @@ import "./userCart.css";
 
 const { confirm } = Modal;
 
+const Steps = {
+  CREATE_ORDER: "CREATE_ORDER",
+  UPDATE_ORDER: "UPDATE_ORDER",
+};
+
 export const UserCart = () => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const [cartProducts, setCartProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [step, setStep] = useState(null);
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
     if (shoppingCart && shoppingCart?.products) {
@@ -87,28 +96,59 @@ export const UserCart = () => {
     </div>
   );
 
+  const onCreateOrder = () => {
+    setStep(Steps.CREATE_ORDER);
+  };
+
+  const onBack = () => {
+    setStep(null);
+  };
+
   return (
     <div className="user-cart-container mt-10">
-      <Card title={mainCardTitle()} className="main-cart-product">
-        {(cartProducts && cartProducts.length > 0) && (
-          <div className="cart-products-list">
-            {cartProducts.map((productInCart) => (
-              <CartProductCard
-                key={productInCart.product_id}
-                productInCart={productInCart}
-                onStockUpdate={onStockUpdate}
-              />
-            ))}
-          </div>
-        )}
+      {!step && (
+        <>
+          <Card title={mainCardTitle()} className="main-cart-product">
+            {(cartProducts && cartProducts.length > 0) && (
+              <div className="cart-products-list">
+                {cartProducts.map((productInCart) => (
+                  <CartProductCard
+                    key={productInCart.product_id}
+                    productInCart={productInCart}
+                    onStockUpdate={onStockUpdate}
+                  />
+                ))}
+              </div>
+            )}
 
-        <div className="footer">
-          <div className="subtotal-container">
-            <span>Subtotal</span>
-            <span>${numberWithCommas(totalPrice)}</span>
-          </div>
-        </div>
-      </Card>
+            <div className="footer">
+              <div className="subtotal-container">
+                <span>Subtotal</span>
+                <span>${numberWithCommas(totalPrice)}</span>
+              </div>
+            </div>
+          </Card>
+          {(cartProducts && cartProducts.length > 0) && (
+            <div className="user-cart-footer">
+              <UserCartFooter onCreateOrder={onCreateOrder} />
+            </div>
+          )}
+        </>
+      )}
+
+      {(step === Steps.CREATE_ORDER) && (
+        <Order
+          products={cartProducts}
+          onBack={onBack}
+        />
+      )}
+      {(step === Steps.UPDATE_ORDER) && (
+        <Order
+          order={order}
+          products={cartProducts}
+          onBack={onBack}
+        />
+      )}
     </div>
   );
 };

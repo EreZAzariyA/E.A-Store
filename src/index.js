@@ -13,7 +13,7 @@ import './styles/main.css';
 import './styles/dashboardView.css';
 
 interceptorsService.createInterceptors();
-socketServices.connect();
+await socketServices.connect();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

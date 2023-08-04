@@ -3,7 +3,7 @@
 }
 
 .layout.main-layout .site-layout {
-  padding: 0 20px 50px;
+  padding: 0 20px;
   overflow: auto;
 }
 
@@ -32,29 +32,11 @@
   align-items: center;
 }
 
-.layout .ant-layout-content {
-  padding: 10px 10px;
-}
 
 .layout.auth-layout * {
   z-index: 5;
 }
 
-.layout .ant-layout-footer {
-  padding: 10px 50px;
-  background: lightblue;
-}
-
-.ant-menu-item {
-  position: relative;
-}
-
-.ant-menu-item .ant-menu-item-icon {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-}
 
 
 @media (max-width: 765px) {

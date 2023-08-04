@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminSubCategoriesServices } from "../../../services/admin/subCategories-services";
-import { getError } from "../../../utils/helpers";
+import { ComponentsTypes, getError } from "../../../utils/helpers";
 
 const Steps = {
   ADD_SUBCATEGORY: "ADD_SUBCATEGORY",
@@ -128,7 +128,7 @@ export const SubCategoriesTable = () => {
             loading={!subCategories}
             rowKey={'_id'}
             dataSource={filteredSubCategories}
-            component={'sub-categories'}
+            type={ComponentsTypes.SUB_CATEGORIES}
             handleAdd={() => setStep(Steps.ADD_SUBCATEGORY)}
             onEditMode={handleEditMode}
           />
@@ -137,20 +137,19 @@ export const SubCategoriesTable = () => {
 
       {(step && step === Steps.ADD_SUBCATEGORY) && (
         <AdminInsert
-          component={'sub-categories'}
+          type={ComponentsTypes.SUB_CATEGORIES}
           onBack={() => setStep(null)}
           onFinish={onFinish}
         />
       )}
       {(step && step === Steps.UPDATE_SUBCATEGORY) && (
         <AdminInsert
-          component={'sub-categories'}
+          type={ComponentsTypes.SUB_CATEGORIES}
           onBack={() => setStep(null)}
           onFinish={onFinish}
           record={subCategory}
         />
       )}
-
     </Space>
   );
 };

@@ -11,8 +11,10 @@ class AdminCategoriesServices {
   addCategory = async (categoryToAdd) => {
     const response = await axios.post(config.urls.admin.addCategory, categoryToAdd);
     const uploadedCategory = response.data;
-    store.dispatch(addCategoryAction(uploadedCategory));
-    return uploadedCategory;
+    if (uploadedCategory) {
+      store.dispatch(addCategoryAction(uploadedCategory));
+      return uploadedCategory;
+    };
   };
 
   removeCategory = async (category_id) => {

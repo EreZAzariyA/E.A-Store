@@ -7,35 +7,23 @@ import config from "../utils/config";
 
 class StoreServices {
   fetchAllProducts = async () => {
-    if (!store.getState().products.length) {
-      const response = await axios.get(config.urls.products.fetchAllProducts);
-      const products = response.data;
-      store.dispatch(fetchProductsAction(products));
-      return products;
-    };
-    const products = store.getState().products;
+    const response = await axios.get(config.urls.store.products);
+    const products = response.data;
+    store.dispatch(fetchProductsAction(products));
     return products;
   };
 
   fetchAllCategories = async () => {
-    if (!store.getState().categories.length) {
-      const response = await axios.get(config.urls.categories.fetchAllCategories);
-      const categories = response.data;
-      store.dispatch(fetchCategoriesAction(categories));
-      return categories;
-    };
-    const categories = store.getState().categories;
+    const response = await axios.get(config.urls.store.categories);
+    const categories = response.data;
+    store.dispatch(fetchCategoriesAction(categories));
     return categories;
   };
 
   fetchAllSubCategories = async () => {
-    if (!store.getState().subCategories.length) {
-      const response = await axios.get(config.urls.subCategories.fetchAllSubCategories);
-      const subCategories = response.data;
-      store.dispatch(fetchSubCategoriesAction(subCategories));
-      return subCategories;
-    };
-    const subCategories = store.getState().subCategories;
+    const response = await axios.get(config.urls.store.subCategories);
+    const subCategories = response.data;
+    store.dispatch(fetchSubCategoriesAction(subCategories));
     return subCategories;
   };
 };

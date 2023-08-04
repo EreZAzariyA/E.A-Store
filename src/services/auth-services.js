@@ -6,6 +6,8 @@ import config from "../utils/config";
 class AuthServices {
 
   register = async (user) => {
+    if (!user) throw new Error('User details is not define');
+
     const response = await axios.post(config.urls.auth.register, user);
     const token = response.data;
     store.dispatch(registerAction(token));
@@ -13,6 +15,10 @@ class AuthServices {
   };
 
   login = async (credentials) => {
+    if (!(credentials.email || credentials.password)) {
+      throw new Error('Some fields are missing');
+    };
+
     const response = await axios.post(config.urls.auth.login, credentials);
     const token = response.data;
     store.dispatch(loginAction(token));

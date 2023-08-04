@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
-import { Input, Select, Space, message } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminProductsServices } from "../../../services/admin/products-services";
-import { getError } from "../../../utils/helpers";
+import { ComponentsTypes } from "../../../utils/helpers";
+import { Input, Select, Space, message } from "antd";
 
 const Steps = {
   ADD_PRODUCT: "ADD_PRODUCT",
+  UPDATE_PRODUCT: "UPDATE_PRODUCT",
 };
 
 export const ProductsTable = () => {
   const products = useSelector((state) => (state.products));
   const categories = useSelector((state) => (state.categories));
   const subCategories = useSelector((state) => (state.subCategories));
-  const [ filteredProducts, setFilteredProducts ] = useState([]);
+
+  const [product, setProduct] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [step, setStep] = useState(null);
 
   const [ filterState, setFilterState ] = useState({
@@ -24,8 +27,19 @@ export const ProductsTable = () => {
     subCategory_id: ''
   });
 
+  useEffect(() => {
+    const f = filtering();
+    setFilteredProducts(f);
+  }, [filterState, products]);
+
+  useEffect(() => {
+    if (step && step === Steps.ADD_PRODUCT) {
+      setProduct(null);
+    };
+  }, [step]);
+
   const filtering = () => {
-    let filteredProducts = products;
+    let filteredProducts = [...products];
 
     if (filterState.name) {
       filteredProducts = filteredProducts?.filter((p) => p.name.startsWith(filterState.name))
@@ -40,23 +54,29 @@ export const ProductsTable = () => {
     return filteredProducts;
   };
 
-  useEffect(() => {
-    const f = filtering();
-    setFilteredProducts(f);
-  }, [filterState, products]);
-
-  const onFinish = async (values) => {
-    try {
-      const uploadedProduct = await adminProductsServices.addProduct(values);
-      message.success(`Product '${uploadedProduct.name}' with id: '${uploadedProduct._id}' added successfully`);
-      setStep(null);
-    } catch (err) {
-      message.error(getError(err));
-    }
+  const handleEditMode = (record) => {
+    setStep(Steps.UPDATE_PRODUCT);
+    setProduct(record);
   };
 
-  const handleAdd = () => {
-    setStep(Steps.ADD_PRODUCT);
+  const onFinish = async (values) => {
+    let newValue = '';
+    let successMessage = '';
+    try {
+      if (product) {
+        newValue = await adminProductsServices.updateProduct({...values, _id: product?._id});
+        successMessage = `Product '${newValue?.name}' with id: '${newValue?._id}' updated successfully`;
+      } else {
+        newValue = await adminProductsServices.addProduct(values);
+        successMessage = `Product '${newValue?.name}' with id: '${newValue?._id}' added successfully`;
+      };
+      if (newValue) {
+        message.success(successMessage);
+        setStep(null);
+      };
+    } catch (err) {
+      message.error(err.message);
+    }
   };
 
   const columns = [
@@ -64,7 +84,6 @@ export const ProductsTable = () => {
       title: 'Name',
       key: 'name',
       dataIndex: 'name',
-      editable: true,
       width: 150,
       fixed: 'left',
       sorter: (a, b) => (a.name.localeCompare(b.name))
@@ -73,9 +92,8 @@ export const ProductsTable = () => {
       title: 'Category',
       key: 'category_id',
       dataIndex: 'category_id',
-      editable: true,
       width: 200,
-      render: (value, record) => {
+      render: (value) => {
         const category = categories?.find((c) => (c._id === value));
         return (
           <Link to={`/admin/all-categories/${category?._id}`}>{category?.category}</Link>
@@ -88,8 +106,7 @@ export const ProductsTable = () => {
       key: 'subCategory_id',
       dataIndex: 'subCategory_id',
       width: 200,
-      editable: true,
-      render: (value, record) => {
+      render: (value) => {
         const subCategory = subCategories?.find((subC) => (subC._id === value));
         return (
           <p>{subCategory?.subCategory}</p>
@@ -101,7 +118,6 @@ export const ProductsTable = () => {
       title: 'Description',
       key: 'description',
       dataIndex: 'description',
-      editable: true,
       render: (text) => (
         <p className="long-text-field">{text}</p>
       ),
@@ -110,7 +126,6 @@ export const ProductsTable = () => {
       title: 'Image URL',
       key: 'image_url',
       dataIndex: 'image_url',
-      editable: true,
       render: (text) => (
         <p className="long-text-field">{text}</p>
       ),
@@ -119,7 +134,6 @@ export const ProductsTable = () => {
       title: 'Stock',
       key: 'stock',
       dataIndex: 'stock',
-      editable: true,
       width: 100,
       inputType: 'number'
     },
@@ -127,7 +141,6 @@ export const ProductsTable = () => {
       title: 'Price',
       key: 'price',
       dataIndex: 'price',
-      editable: true,
       width: 100,
       inputType: 'number',
       sorter: (a, b) => (a.price > b.price),
@@ -177,17 +190,26 @@ export const ProductsTable = () => {
             rowKey={'_id'}
             dataSource={filteredProducts}
             columns={columns}
-            component={'products'}
-            handleAdd={handleAdd}
+            handleAdd={() => setStep(Steps.ADD_PRODUCT)}
+            type={ComponentsTypes.PRODUCTS}
+            onEditMode={handleEditMode}
           />
         </>
       )}
 
       {(step && step === Steps.ADD_PRODUCT) && (
         <AdminInsert
-          component={'products'}
+          type={ComponentsTypes.PRODUCTS}
           onBack={() => setStep(null)}
           onFinish={onFinish}
+        />
+      )}
+      {(step && step === Steps.UPDATE_PRODUCT) && (
+        <AdminInsert
+          type={ComponentsTypes.PRODUCTS}
+          onBack={() => setStep(null)}
+          onFinish={onFinish}
+          record={product}
         />
       )}
     </Space>

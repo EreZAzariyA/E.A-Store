@@ -1,44 +1,52 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Button, Divider, Form, Input, InputNumber, Select } from "antd"
+import { ComponentsTypes } from "../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
+import { Button, Divider, Form, Input, InputNumber, Select } from "antd"
 
-export const AdminInsert = ({ component, onBack, onFinish, record }) => {
-  const [ form ] = Form.useForm();
+export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const categories = useSelector((state) => state.categories);
   const allSubCategories = useSelector((state) => state.subCategories);
+  const [form] = Form.useForm();
   const [subCategories, setSubCategories] = useState([]);
 
-  const [initialValue, setInitialValue] = useState({
-    name: record?.subCategory || record?.category || '',
-    description: '',
-    category_id: record?._id || '',
-    subCategories: record?.subCategories || [],
-    subCategory_id: '',
-    image_url: record?.image_url || '',
-    price: 0.00,
-    stock: 0,
-  });
-
-  const isProducts = component === 'products';
-  const isCategories = component === 'categories';
-  const isSubCategories = component === 'sub-categories';
+  const isProducts = type === ComponentsTypes.PRODUCTS;
+  const isCategories = type === ComponentsTypes.CATEGORIES;
+  const isSubCategories = type === ComponentsTypes.SUB_CATEGORIES;
   const componentName = isCategories ? 'category' : isSubCategories ? 'sub-category' : 'product';
+
+  const [initialValue, setInitialValue] = useState(isProducts ? {
+    name: record?.name || '',
+    description: record?.description || '',
+    category_id: record?.category_id || '',
+    subCategory_id: record?.subCategory_id || '',
+    image_url: record?.image_url || '',
+    price: record?.price || '',
+    stock: record?.stock || '',
+    } : isCategories ? {
+      category: record?.category || '',
+      subCategories: record?.subCategories || [],
+      image_url: record?.image_url || '',
+    } : isSubCategories ? {
+      subCategory: record?.subCategory || '',
+      image_url: record?.image_url || ''
+    } : {}
+  );
 
   useEffect(() => {
     if (initialValue.category_id) {
-      const category = categories.find((c) => c._id === initialValue.category_id);
+      const selectedCategory = categories.find((c) => c._id === initialValue.category_id);
 
-      if (category && category.subCategories) {
+      if (selectedCategory && selectedCategory.subCategories) {
         const newSubCategoriesList = [];
-        for (const subCategoryId of category.subCategories) {
+        for (const subCategoryId of selectedCategory.subCategories) {
           const fullSubCategory = allSubCategories.find((subC) => subC._id === subCategoryId);
           newSubCategoriesList.push(fullSubCategory);
         };
         setSubCategories(newSubCategoriesList);
       };
     };
-  }, [allSubCategories, categories, initialValue]);
+  }, [allSubCategories, categories, initialValue.category_id]);
 
   const cancel = () => {
     onBack();
@@ -52,16 +60,10 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
     };
   };
 
-  const getDefaultValueList = (values = []) => {
-    const newList = [...values].map((v) => {
-      return v
-    });
-    return newList;
-  };
-
   const formProps = {
     form: form,
     onFinish: onFinish,
+    initialValues: initialValue,
     className: "insert-form add-category",
     layout: "horizontal",
     labelAlign: 'left',
@@ -86,7 +88,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Product'}
             name={'name'}
-            initialValue={initialValue.name}
             rules={[{ required: true, message: 'Product name is missing' }]}
           >
             <Input
@@ -98,7 +99,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Category'}
             name={'category_id'}
-            initialValue={initialValue.category_id}
             rules={[{ required: true, message: 'Category id is missing' }]}
           >
             <Select onChange={(val) => handleChange('category_id', val)}>
@@ -112,7 +112,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Sub-category'}
             name={'subCategory_id'}
-            initialValue={initialValue.subCategory_id}
             rules={[{ required: true, message: 'Sub-Category id is missing' }]}
           >
             <Select
@@ -130,7 +129,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Description'}
             name={'description'}
-            initialValue={initialValue.description}
             rules={[{ required: true, message: 'Description is missing' }]}
           >
             <TextArea placeholder="Describe the product"/>
@@ -139,7 +137,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Image url'}
             name={'image_url'}
-            initialValue={initialValue.image_url}
             rules={[{ required: true, message: 'Image url is missing' }]}
           >
             <Input placeholder="https://www.image_url"/>
@@ -148,7 +145,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Stock'}
             name={'stock'}
-            initialValue={initialValue.stock}
             rules={[{ required: true, message: 'Stock is missing' }]}
           >
             <InputNumber placeholder="0" min={0} />
@@ -157,7 +153,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Price'}
             name={'price'}
-            initialValue={initialValue.price}
             rules={[{ required: true, message: 'Price is missing' }]}
           >
             <InputNumber
@@ -174,7 +169,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Category'}
             name={'category'}
-            initialValue={initialValue.name}
             rules={[{ required: true, message: 'Category name is missing' }]}
           >
             <Input type="text" />
@@ -183,7 +177,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Sub-categories'}
             name={'subCategories'}
-            initialValue={getDefaultValueList(initialValue.subCategories)}
           >
             <Select
               mode="multiple"
@@ -201,7 +194,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label="Image Url"
             name={'image_url'}
-            initialValue={initialValue.image_url}
             rules={[{ required: true, message: 'Image url is missing' }]}
           >
             <Input type="text" />
@@ -213,7 +205,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label={'Sub-Category'}
             name={'subCategory'}
-            initialValue={initialValue.name}
             rules={[{ required: true, message: 'Sub-Category name is missing' }]}
           >
             <Input type="text" />
@@ -222,7 +213,6 @@ export const AdminInsert = ({ component, onBack, onFinish, record }) => {
           <Form.Item
             label="Image Url"
             name={'image_url'}
-            initialValue={initialValue.image_url}
             rules={[{ required: true, message: 'Image url is missing' }]}
           >
             <Input type="text" />

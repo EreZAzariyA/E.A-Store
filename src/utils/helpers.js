@@ -15,6 +15,12 @@ export const getBase64 = (img, callback) => {
   reader.readAsDataURL(img);
 };
 
+export const ComponentsTypes = {
+  PRODUCTS: 'products',
+  CATEGORIES: 'categories',
+  SUB_CATEGORIES: 'sub_categories',
+}
+
 export const numberWithCommas = (x, number = 2) => {
   const formattedNumber = parseFloat(x).toFixed(number);
   return formattedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -35,6 +41,14 @@ export const getError = (err) => {
   if(Array.isArray(err.response?.data)) return err.response.data[0]; // axios: 400 - array of errors
   if(typeof err.message === "string") return err.message;
   return "Some error, please try again.";
+};
+
+export const getFullName = (user) => {
+  return user.profile?.first_name + ' ' + user.profile?.last_name;
+};
+
+export const getEmail = (user) => {
+  return user.emails?.email;
 };
 
 export const brands = {

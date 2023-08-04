@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
-import { Input, Space, message } from "antd";
 import { adminCategoriesServices } from "../../../services/admin/categories-services";
+import { ComponentsTypes } from "../../../utils/helpers";
+import { Input, Space, message } from "antd";
 
 const Steps = {
   ADD_CATEGORY: "ADD_CATEGORY",
@@ -13,28 +14,36 @@ const Steps = {
 export const CategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const categories = useSelector((state) => (state.categories));
+
   const [category, setCategory] = useState(null);
-  const [filteredCategories, setFilteredCategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([...categories]);
   const [step, setStep] = useState(null);
   const [filterState, setFilterState] = useState({
     category: ''
   });
 
   useEffect(() => {
-    if (filterState.category) {
-      setFilteredCategories([...categories]?.filter((c) => {
-        return c.category.toLowerCase().startsWith(filterState.category.toLowerCase())
-      }));
-    } else {
-      setFilteredCategories(categories);
-    };
-  }, [filterState.category, categories]);
+    const f = filtering();
+    setFilteredCategories(f);
+  }, []);
 
   useEffect(() => {
     if (step && step === Steps.ADD_CATEGORY) {
       setCategory(null);
     };
   }, [step]);
+
+  const filtering = () => {
+    let filteredCategories = categories;
+
+    if (filterState.category) {
+      setFilteredCategories([...categories]?.filter((c) => {
+        return c.category.toLowerCase().startsWith(filterState.category.toLowerCase())
+      }));
+    };
+
+    return filteredCategories;
+  };
 
   const handleEditMode = (record) => {
     setStep(Steps.UPDATE_CATEGORY);
@@ -129,8 +138,8 @@ export const CategoriesTable = () => {
           loading={!categories}
           rowKey={'_id'}
           columns={columns}
-          dataSource={filteredCategories}
-          component={'categories'}
+          dataSource={categories}
+          type={ComponentsTypes.CATEGORIES}
           handleAdd={() => setStep(Steps.ADD_CATEGORY)}
           onEditMode={handleEditMode}
         />
@@ -139,14 +148,14 @@ export const CategoriesTable = () => {
 
     {(step && step === Steps.ADD_CATEGORY) && (
       <AdminInsert
-        component={'categories'}
+        type={ComponentsTypes.CATEGORIES}
         onBack={() => setStep(null)}
         onFinish={onFinish}
       />
     )}
     {(step && step === Steps.UPDATE_CATEGORY) && (
       <AdminInsert
-        component={'categories'}
+        type={ComponentsTypes.CATEGORIES}
         onBack={() => setStep(null)}
         onFinish={onFinish}
         record={category}

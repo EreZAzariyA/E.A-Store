@@ -3,15 +3,15 @@ import { adminProductsServices } from "../../../services/admin/products-services
 import { adminCategoriesServices } from "../../../services/admin/categories-services";
 import { adminSubCategoriesServices } from "../../../services/admin/subCategories-services";
 import { Form, Input, InputNumber, Select, Table, Typography, Popconfirm, message, Row, Col, Divider, Button } from "antd";
+import { ComponentsTypes } from "../../../utils/helpers";
 
-export const EditTable = ({columns, dataSource, component, handleAdd, onEditMode, ...rest}) => {
+export const EditTable = ({columns, dataSource, type, handleAdd, onEditMode, ...rest}) => {
   const [ form ] = Form.useForm();
   const [ editingKey, setEditingKey ] = useState('');
   const [ data, setData ] = useState([]);
   const isEditing = (record) => record?._id === editingKey;
-  // const isProductsList = component === 'products';
-  const isCategoriesList = component === 'categories';
-  const isSubCategoriesList = component === 'sub-categories';
+  const isCategoriesList = type === ComponentsTypes.CATEGORIES;
+  const isSubCategoriesList = type === ComponentsTypes.SUB_CATEGORIES;
   const componentName = isCategoriesList ? 'category' : isSubCategoriesList ? 'sub-category' : 'product';
 
   useEffect(() => {

@@ -11,8 +11,10 @@ class AdminProductsServices {
   addProduct = async (productToUpload) => {
     const response = await axios.post(config.urls.admin.addProduct, productToUpload);
     const uploadedProduct = response.data;
-    store.dispatch(addProductAction(uploadedProduct));
-    return uploadedProduct;
+    if (uploadedProduct) {
+      store.dispatch(addProductAction(uploadedProduct));
+      return uploadedProduct;
+    };
   };
 
   removeProduct = async (product_id) => {

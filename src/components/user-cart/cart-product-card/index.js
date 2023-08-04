@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { numberWithCommas } from "../../../utils/helpers";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
-import { Button, Card, Image, Input, Popconfirm } from "antd";
+import { Button, Card, Image, Input, Popconfirm, message } from "antd";
 import "./cartProductCard.css";
 
 export const CartProductCard = ({ productInCart, onStockUpdate }) => {
-  const { product_id, shoppingCart_id, stock, totalPrice } = productInCart;
+  const shoppingCart = useSelector((state) => state.shoppingCart);
+  const { product_id, stock, totalPrice } = productInCart;
   const product = useSelector((state) => state.products.find((p) => (p._id === product_id)));
-
   const [amount, setAmount] = useState(stock);
   const [newTotalPrice, setNewTotalPrice] = useState(totalPrice);
 
@@ -30,7 +30,10 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
 
   const removeProductFromCart = async () => {
     try {
-      await shoppingCartServices.removeProductFromCart(shoppingCart_id, product_id);
+      const res = await shoppingCartServices.removeProductFromCart(shoppingCart._id, product_id);
+      if (res) {
+        message.info(`Product ${product.name} removed from your cart`);
+      }
     } catch (err) {
       console.log(err);
     }

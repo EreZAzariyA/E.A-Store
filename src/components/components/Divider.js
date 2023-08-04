@@ -1,5 +1,5 @@
 import { Divider } from "antd";
 
-export const CustomDivider = () => {
-  return <Divider style={{ margin: '5px'}} />
+export const CustomDivider = (props) => {
+  return <Divider {...props} style={{ margin: '0' }} />
 };

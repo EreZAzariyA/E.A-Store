@@ -17,7 +17,7 @@ export const DashboardHeader = () => {
       await storeServices.fetchAllProducts();
       await storeServices.fetchAllCategories();
       await storeServices.fetchAllSubCategories();
-      await shoppingCartServices.fetchUserCart(user._id);
+      await shoppingCartServices.fetchUserShoppingCart(user._id);
     };
     if (user) {
       fetchAllData();
