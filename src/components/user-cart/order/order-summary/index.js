@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { CustomDivider } from "../../../components/Divider";
 import { Col, Row, Table } from "antd";
 import "./orderSummary.css";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { CustomDivider } from "../../../components/Divider";
 
 export const OrderSummary = ({products}) => {
   const allProducts = useSelector((state) => state.products);
@@ -16,10 +16,12 @@ export const OrderSummary = ({products}) => {
       const updatedList = [];
       for (let product of products) {
         if ([...allProducts]?.find((p) => p._id === product.product_id)) {
-          const fullPro = [...allProducts]?.find((p) => p._id === product.product_id);
-          product = {
+          const fullPro = [...allProducts]?.find((p) => p._id === product.product_id);          product = {
             ...product,
-            ...fullPro
+            name: fullPro?.name,
+            category_id: fullPro?.category_id,
+            subCategory_id: fullPro?.subCategory_id,
+            price: fullPro?.price,
           };
           updatedList.push(product);
           setSubTotalPrice((perv) => perv += product?.totalPrice || 0);
