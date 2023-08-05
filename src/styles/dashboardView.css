@@ -3,7 +3,7 @@
 }
 
 .layout.main-layout .site-layout {
-  padding: 0 20px 50px;
+  padding: 0 20px;
   overflow: auto;
 }
 
@@ -32,13 +32,12 @@
   align-items: center;
 }
 
-.layout .ant-layout-content {
-  padding: 0 10px;
-}
 
 .layout.auth-layout * {
   z-index: 5;
 }
+
+
 
 @media (max-width: 765px) {
   .layout .ant-layout-header p {

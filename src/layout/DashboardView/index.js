@@ -1,6 +1,5 @@
 import { Layout } from "antd";
 import { DashboardHeader } from "./DashboardHeader";
-import { DashboardFooter } from "./DashboardFooter";
 import { DashboardWrapper } from "./DashboardWrapper";
 import { Outlet } from "react-router-dom";
 
@@ -14,7 +13,5 @@ export const DashboardView = () => (
       <DashboardWrapper />
       <Outlet />
     </Content>
-
-    <DashboardFooter />
   </Layout>
 );

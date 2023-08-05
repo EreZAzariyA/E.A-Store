@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, Menu } from "antd";
 import { useSelector } from "react-redux";
 
@@ -7,22 +7,39 @@ export const DashboardWrapper = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const categories = useSelector((state) => state.categories);
-  const [ patchOptions, setPatchOptions] = useState([]);
+  const [ pathOptions, setPathOptions] = useState([]);
   const [ current, setCurrent ] = useState('');
+
+  const { category_id } = useParams();
+  const [activeBreadcrumb, setActiveBreadcrumb] = useState(category_id);
+
+  useEffect(() => {
+    setActiveBreadcrumb(category_id);
+  }, [category_id]);
 
   useEffect(() => {
     let locationArray = location.pathname.split('/');
-    const newLocationArray = locationArray.filter((path) => path !== '' && path !== 'home');
+    const current = [...locationArray].pop();
+    setCurrent(current);
+    const toUnIncudes = ['', 'home'];
+    locationArray = locationArray.filter((path) => !toUnIncudes.includes(path));
+
     const options = [];
+    for (let i = 0; i < locationArray.length; i++) {
+      const parentPath = locationArray[i - 1];
+      const path = locationArray[i];
 
-    for (let i = 0; i < newLocationArray.length; i++) {
-      const parentPath = newLocationArray[i - 1];
-      const path = newLocationArray[i];
-      options.push({ title: <Link to={`${parentPath ? '/'+parentPath : ''}/${path}`}>{path}</Link> });
-    };
+      options.push({
+        title: (
+          <Link to={`${parentPath ? ('/' + parentPath) : ''}/${path}`}>
+            {path}
+          </Link>
+        )
+      });
+    }
 
-    setPatchOptions(options);
-    setCurrent([...newLocationArray].pop());
+    setPathOptions(options);
+    // setCurrent([...locationArray].pop());
   }, [location.pathname, navigate]);
 
   const defaultItems = [
@@ -39,7 +56,7 @@ export const DashboardWrapper = () => {
         mode="horizontal"
         selectedKeys={[current]}
         style={{background: 'transparent', justifyContent: 'center'}}
-        items={defaultItems.concat(!categories?.length ? [] : categories?.map((category) => {
+        items={defaultItems.concat(categories?.map((category) => {
           return {
             key: category._id,
             label: category.category,
@@ -48,11 +65,11 @@ export const DashboardWrapper = () => {
         }))}
       />
 
-      {patchOptions.length > 0 &&
+      {pathOptions.length > 0 &&
         <Breadcrumb
           items={[
             {title: <Link to={'/'}>Home</Link>}
-          ].concat(patchOptions)}
+          ].concat(pathOptions)}
         />
       }
     </>

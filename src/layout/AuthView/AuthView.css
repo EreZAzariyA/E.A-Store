@@ -41,6 +41,10 @@
   border-radius: 10px;
 }
 
+.auth-form .ant-form-item-explain-error {
+  font-weight: bolder;
+}
+
 @media (max-width: 765px) {
 
   #auth-bg {

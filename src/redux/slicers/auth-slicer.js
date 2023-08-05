@@ -1,5 +1,5 @@
-import jwtDecode from "jwt-decode";
 import { createSlice } from '@reduxjs/toolkit'
+import jwtDecode from "jwt-decode";
 
 const token = localStorage.getItem('token');
 
@@ -12,7 +12,8 @@ const authSlicer = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login(state, action) {
+    loginAction(state, action) {
+      if (!action.payload) return;
       const token = action.payload;
       localStorage.setItem('token', token);
       state = {
@@ -21,14 +22,14 @@ const authSlicer = createSlice({
       };
       return state
     },
-    register(state, action) {
+    registerAction(state, action) {
     },
-    logout(state, action) {
+    logoutAction(state, action) {
       localStorage.removeItem('token');
       state = {token: null, user: null}
       return state;
     },
-    refreshToken(state, action) {
+    refreshTokenAction(state, action) {
       state = {
         token: action.payload,
         user: jwtDecode(action.payload)
@@ -38,5 +39,10 @@ const authSlicer = createSlice({
   }
 });
 
-export const { login, register, logout, refreshToken } = authSlicer.actions;
+export const {
+  loginAction,
+  registerAction,
+  logoutAction,
+  refreshTokenAction,
+  } = authSlicer.actions;
 export default authSlicer;

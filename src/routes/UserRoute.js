@@ -8,10 +8,10 @@ export const UserRoute = ({ children }) => {
 
   if (!user) {
     return <Navigate to="/auth/login" state={{ from: location }} />;
-  };
+  }
   if (isAdmin(user)) {
     return <Navigate to="/admin" state={{ from: location }} />;
-  };
+  }
 
   return children;
 };

@@ -4,23 +4,13 @@ class Config {
       register: "",
       login: ""
     },
-    products: {
-      fetchAllProducts: "",
-      fetchProductsByCategoryId: "",
-      fetchProductsBySubCategoryId: ""
-    },
-    categories: {
-      fetchAllCategories: "",
-      fetchOneCategory: "",
-      fetchProductsByCategoryId: ""
-    },
-    subCategories: {
-      fetchAllSubCategories: "",
-      fetchOneSubCategory: "",
-      fetchSubCategoriesByCategoryId: "",
-      fetchProductsBySubCategoryId: ""
+    store: {
+      products: "",
+      categories: "",
+      subCategories: "",
     },
     admin: {
+      uploadImage: "",
       addProduct: "",
       removeProduct: "",
       updateProduct: "",
@@ -30,8 +20,24 @@ class Config {
       addSubCategory: "",
       removeSubCategory: "",
       updateSubCategory: "",
+    },
+    shoppingCart: {
+      fetchUserShoppingCart: "",
+      addProductToCart: "",
+      updateStockInCart: "",
+      addProductToFavorites: "",
+      removeProductFromCart: "",
+      removeProductFromFavorites: "",
+      resetCart: "",
+    },
+    order: {
+      createOrder: "",
+    },
+    socket: {
+      connect: "",
+      disconnect: "",
     }
-  }
+  };
 
   constructor(baseUrl) {
     this.urls = {
@@ -39,48 +45,57 @@ class Config {
         register: baseUrl + 'auth/register',
         login: baseUrl + 'auth/login',
       },
-      products: {
-        fetchAllProducts: baseUrl + 'products/all',
-        fetchProductsByCategoryId: baseUrl + 'products/by-category-id/',
-        fetchProductsBySubCategoryId: baseUrl + 'products/by-sub-category-id/'
+      store: {
+        products: baseUrl + 'products/all',
+        categories: baseUrl + 'categories/all',
+        subCategories: baseUrl + 'sub-categories/all',
       },
-      categories: {
-        fetchAllCategories: baseUrl + 'categories/all',
-        fetchOneCategory: baseUrl + 'categories/',
-        fetchProductsByCategoryId: baseUrl + 'categories/products/all',
+      shoppingCart: {
+        fetchUserShoppingCart: baseUrl + 'shopping-carts/fetch-user-cart/',
+        addProductToCart: baseUrl + 'shopping-carts/add-product-to-cart/',
+        updateStockInCart: baseUrl + 'shopping-carts/update-product-stock-in-cart',
+        addProductToFavorites: baseUrl + 'shopping-carts/add-product-to-favorites/',
+        removeProductFromCart: baseUrl + 'shopping-carts/remove-product-from-cart/',
+        removeProductFromFavorites: baseUrl + 'shopping-carts/remove-product-from-favorites/',
+        resetCart: baseUrl + 'shopping-carts/reset/'
       },
-      subCategories: {
-        fetchAllSubCategories: baseUrl + 'categories/sub-categories/all',
-        fetchOneSubCategory: baseUrl + 'categories/sub-category/',
-        fetchSubCategoriesByCategoryId: baseUrl + 'categories/sub-categories/',
-        fetchProductsByCategoryId: baseUrl + 'categories/products/all',
+      order: {
+        createOrder: baseUrl + 'orders/create-order',
       },
       admin: {
+        uploadImage: baseUrl + 'admin/image-upload',
+
         addProduct: baseUrl + 'admin/add-product',
         removeProduct: baseUrl + 'admin/remove-product/',
         updateProduct: baseUrl + 'admin/update-product',
+
         addCategory: baseUrl + 'admin/add-category',
         removeCategory: baseUrl + 'admin/remove-category/',
         updateCategory: baseUrl + 'admin/update-category',
+
         addSubCategory: baseUrl + 'admin/add-sub-category',
         removeSubCategory: baseUrl + 'admin/remove-sub-category/',
         updateSubCategory: baseUrl + 'admin/update-sub-category',
-      }
+      },
+      socket: {
+        connect: baseUrl + 'socket/connect',
+        disconnect: baseUrl + 'socket/disconnect'
+      },
     }
-  }
+  };
 }
 
 class DevelopmentConfig extends Config {
   constructor() {
-    super("http://localhost:5000/api/");
-  }
+    super("http://127.0.0.1:5000/api/");
+  };
 }
 
 class ProductionConfig extends Config {
   constructor() {
     super("https://k6u7v23xwh.execute-api.eu-central-1.amazonaws.com/api/");
-  }
+  };
 }
-const config = process.env.NODE_ENV === "development" ? new DevelopmentConfig() : new ProductionConfig();
 
+const config = process.env.NODE_ENV === "development" ? new DevelopmentConfig() : new ProductionConfig();
 export default config;

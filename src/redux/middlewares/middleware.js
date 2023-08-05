@@ -1,24 +1,16 @@
+import { removeUserCartAction } from "../slicers/cart-slicer";
 
-export const middleware = (socket) => (store) => (next) => (action) => {
-  const { dispatch, getState } = store;
-
-  socket.on('admin.add.product', (product) => {
-    console.log(product);
-  })
+export const middleware = (store) => (next) => (action) => {
+  const { dispatch, getState} = store;
 
   switch (action.type) {
-    case 'auth/login':
-      console.log('login');
-    break;
-
     case 'auth/logout':
-      console.log('logout');
+      dispatch(removeUserCartAction());
     break;
 
     default:
-      console.log(action.type);
     break;
-  };
+  }
 
   next(action);
 };

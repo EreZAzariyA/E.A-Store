@@ -1,27 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const productsSlicer = createSlice({
   name: 'products',
   initialState: [],
   reducers: {
-    fetchProducts(state, action) {
+    fetchProductsAction(state, action) {
       state = action.payload;
       return state;
     },
-    addProduct(state, action) {
-      const newState = [...state]
-      newState.push(action.payload);
-      return newState;
+    addProductAction(state, action) {
+      state.push(action.payload);
+      return state;
     },
-    removeProduct(state, action) {
-      const product = action.payload;
-      const productIndex = state.findIndex((p) => p._id === product._id);
-      const newState = state.slice(productIndex, 1);
-      return state = newState;
+    updateProductAction(state, action) {
+      const productIndex = state.findIndex((p) => p._id === action.payload._id);
+      if (productIndex !== -1) {
+        state.splice(productIndex, 1);
+        state.push(action.payload);
+      }
+      return state;
+    },
+    removeProductAction(state, action) {
+      const productIndex = state.findIndex((p) => p._id === action.payload);
+      if (productIndex !== -1) {
+        state.splice(productIndex, 1);
+      }
+      return state;
     }
   }
 });
 
-export const { fetchProducts, addProduct, removeProduct } = productsSlicer.actions;
+export const {
+  fetchProductsAction,
+  addProductAction,
+  updateProductAction,
+  removeProductAction,
+} = productsSlicer.actions;
 export default productsSlicer;

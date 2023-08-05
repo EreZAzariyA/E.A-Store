@@ -1,0 +1,23 @@
+.order-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order-page .go-back {
+  align-self: flex-start;
+  padding-bottom: 5px;
+}
+
+.order-page > div:not(.go-back) {
+  margin-top: 20px;
+  width: 85%;
+  height: auto;
+  border-radius: 8px;
+  background-color: white;
+  padding: 10px 20px;
+}
+
+.order-page > div.proceed-to-payment {
+  padding: 0;
+}

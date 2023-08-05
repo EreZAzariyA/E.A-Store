@@ -1,18 +1,22 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { authServices } from "../../../services/auth-services";
 import { Link, useNavigate } from "react-router-dom";
-import { getError } from "../../../utils/helpers";
+import { MessagesTypes, getError } from "../../../utils/helpers";
+
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const Register = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
-    try {
-      await authServices.register(values);
-      navigate('/auth/login');
-    } catch (err) {
-      console.log(getError(err));
-    }
+    authServices.register(values).then((res) => {
+      if (res) {
+        message.success(MessagesTypes.REGISTER_SUCCESSFULLY);
+        navigate('/auth/login');
+      }
+    }).catch((err) => {
+      message.error(getError(err));
+    });
   };
 
   const formItemLayout = {
@@ -31,18 +35,46 @@ export const Register = () => {
     <div className="auth-form-main-container">
       <div className="auth-form-inner-container">
         <Form onFinish={onFinish} {...formItemLayout}>
-            <Form.Item label={'First-name'} name={'first_name'}>
+            <Form.Item
+              label={'First-name'}
+              name={'first_name'}
+              rules={[
+                { required: true, message: 'Please enter your first name' },
+                { min: 3, message: 'First name must be at least 3 characters long' }
+              ]}
+            >
               <Input type="text" />
             </Form.Item>
-            <Form.Item label={'Last-name'} name={'last_name'}>
+            <Form.Item
+              label={'Last-name'}
+              name={'last_name'}
+              rules={[
+                { required: true, message: 'Please enter your last name' },
+                { min: 3, message: 'Last name must be at least 3 characters long' }
+              ]}
+            >
               <Input type="text" />
             </Form.Item>
 
-            <Form.Item label={'Email'} name={'email'}>
+            <Form.Item
+              label={'Email'}
+              name={'email'}
+              rules={[
+                { required: true, message: 'Please enter your email address' },
+                { pattern: emailRegex, message: 'Please enter a valid email address' },
+              ]}
+            >
               <Input type="email" />
             </Form.Item>
 
-            <Form.Item label={'Password'} name={'password'}>
+            <Form.Item
+              label={'Password'}
+              name={'password'}
+              rules={[
+                { required: true, message: 'Please enter password' },
+                { min: 6, message: 'Password must be at least 6 characters long' },
+              ]}
+            >
               <Input.Password />
             </Form.Item>
 

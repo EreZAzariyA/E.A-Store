@@ -1,64 +1,56 @@
-import { Button, Layout, Menu, message } from "antd";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { productsServices } from "../../services/productsServices";
-import { categoriesServices } from "../../services/categoriesServices";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { DashboardHeader } from "../../layout/DashboardView/DashboardHeader";
 import { authServices } from "../../services/auth-services";
-import AppstoreOutlined from "@ant-design/icons/AppstoreOutlined";
+import { Button, Layout, Menu } from "antd";
+import PieChartOutlined from "@ant-design/icons/PieChartOutlined";
+import AppstoreAddOutlined from "@ant-design/icons/AppstoreAddOutlined";
+import TableOutlined from "@ant-design/icons/TableOutlined";
 import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
-import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
 import UploadOutlined from "@ant-design/icons/UploadOutlined";
+import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
 
-const { Content, Sider, Header } = Layout;
+const { Content, Sider } = Layout;
 
 export const AdminLayout = () => {
   const { pathname } = useLocation();
-  const [current,setCurrent] = useState('');
+  const [current, setCurrent] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        await productsServices.fetchAllProducts();
-        await categoriesServices.fetchAllCategories();
-        await categoriesServices.fetchAllSubCategories();
-      } catch (err) {
-        message.error(err.message);
-      }
-    };
-    fetchAllData();
-  }, []);
 
   useEffect(() => {
     const locationArray = pathname.split('/');
     setCurrent(locationArray[2]);
   }, [pathname]);
 
+  const logout = () => {
+    authServices.logout();
+  };
+
   const menu = () => {
     const items = [
       {
         label: 'Dashboard',
         key: 'dashboard',
-        icon: <AppstoreOutlined />
+        icon: <PieChartOutlined />
       },
       {
-        label: 'Tables',
-        key: 'tables',
+        label: 'Products',
+        key: 'products',
+        icon: <AppstoreAddOutlined />
+      },
+      {
+        label: 'Categories',
+        key: 'categories',
         icon: <DatabaseOutlined />
       },
-      // {
-      //   label: 'All-Products',
-      //   key: 'all-products',
-      //   icon: <OrderedListOutlined />
-      // },
-      // {
-      //   label: 'All-Categories',
-      //   key: 'all-categories',
-      //   icon: <HddOutlined />
-      // },
       {
-        label: 'Insert Doc',
-        key: 'insert-doc',
+        label: 'Sub-Categories',
+        key: 'sub-categories',
+        icon: <TableOutlined />
+      },
+      {
+        label: 'Upload-Image',
+        key: 'upload-image',
         icon: <UploadOutlined />
       },
       {
@@ -66,9 +58,10 @@ export const AdminLayout = () => {
         key: '/',
         icon: <LogoutOutlined />,
         style: {'position': 'absolute', 'bottom': 0 },
-        onClick: () => authServices.logout()
+        onClick: logout
       }
-    ]
+    ];
+
     return (
       <Menu
         items={items}
@@ -81,14 +74,12 @@ export const AdminLayout = () => {
 
   return (
     <Layout className="layout admin-layout">
-      <Header>
-        header
-      </Header>
+      <DashboardHeader />
       <Layout>
         <Sider theme="light" collapsible>
           {menu()}
         </Sider>
-        <Content style={{overflow: 'auto'}}>
+        <Content style={{ overflow: 'auto' }}>
           <Outlet />
         </Content>
       </Layout>

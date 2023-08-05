@@ -14,6 +14,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
+    "react-icons": "^4.10.1",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.12.1",
     "react-scripts": "5.0.1",
@@ -32,7 +33,15 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-trailing-spaces": "error",
+      "arrow-spacing":"error",
+      "space-infix-ops": "error",
+      "default-case":"off",
+      "template-curly-spacing": "error",
+      "comma-spacing": "error"
+    }
   },
   "browserslist": {
     "production": [
