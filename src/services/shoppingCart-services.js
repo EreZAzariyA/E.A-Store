@@ -7,7 +7,7 @@ import {
   removeProductFromCartAction,
   removeProductFromFavoritesAction,
   resetCartAction,
-  updateCartAction
+  updateProductInCartAction
 } from "../redux/slicers/cart-slicer";
 import { validateDetails } from "../utils/helpers";
 import config from "../utils/config";
@@ -51,15 +51,16 @@ class ShoppingCartServices {
   *
   * @param {String} product_id - The product to add to the shopping-cart.
   * @param {String} shoppingCart_id - The ID of the shopping-cart the product will insert.
-  * @param {Number} amount - the amount of stock of the product.
+  * @param {Number} amount - The amount of stock of the product.
+  * @param {Number} totalPrice - The amount of stock * product-price.
   * @returns {Promise} A Promise that return the inserted product.
   */
-  updateStockInCart = async (shoppingCart_id, product_id, stock, totalPrice) => {
-    const details = {shoppingCart_id, product_id, stock, totalPrice};
+  updateStockInCart = async (shoppingCart_id, product_id, amount, totalPrice) => {
+    const details = {shoppingCart_id, product_id, amount, totalPrice};
     const response = await axios.patch(config.urls.shoppingCart.updateStockInCart, details);
-    const updatedShoppingCart = response.data;
-    store.dispatch(updateCartAction(updatedShoppingCart.products));
-    return updatedShoppingCart.products;
+    const updatedProductInCart = response.data;
+    store.dispatch(updateProductInCartAction(updatedProductInCart));
+    return updatedProductInCart;
   };
 
   removeProductFromCart = async (shoppingCart_id, product_id) => {

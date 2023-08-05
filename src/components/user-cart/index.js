@@ -23,7 +23,7 @@ export const UserCart = () => {
   const totalPrice = calculateTotals(cartProducts);
 
   const [step, setStep] = useState(null);
-  const [order, setOrder] = useState(null);
+  const order = null;
 
   const onRest = () => {
     confirm({
@@ -124,13 +124,16 @@ export const UserCart = () => {
       {(step === Steps.CREATE_ORDER) && (
         <Order
           products={cartProducts}
+          totalPrice={totalPrice}
           onBack={onBack}
         />
       )}
+
       {(step === Steps.UPDATE_ORDER) && (
         <Order
           order={order}
           products={cartProducts}
+          totalPrice={totalPrice}
           onBack={onBack}
         />
       )}

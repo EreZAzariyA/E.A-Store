@@ -6,9 +6,7 @@ import "./orderSummary.css";
 export const OrderSummary = ({products}) => {
   const [isTableLoading, setIsTableLoading] = useState(true);
   const [subTotalPrice, setSubTotalPrice] = useState(0);
-  const [deliveryPrice, setDeliveryPrice] = useState(0);
-
-  console.log(products)
+  const deliveryPrice = 0;
 
   useEffect(() => {
     if (products && products?.length) {
@@ -32,8 +30,8 @@ export const OrderSummary = ({products}) => {
     },
     {
       title: "Amount",
-      dataIndex: 'stock',
-      key: 'stock',
+      dataIndex: 'amount',
+      key: 'amount',
     },
     {
       title: "Price per one",

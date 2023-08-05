@@ -7,7 +7,7 @@ import { getEmail, getFullName } from "../../utils/helpers";
 import { Button, Checkbox, Col, Form, Input, Row } from "antd"
 import "./order.css";
 
-export const Order = ({ order, products, onBack }) => {
+export const Order = ({ order, products, totalPrice, onBack }) => {
   const user = useSelector((state) => state.auth?.user);
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const [form] = Form.useForm();
@@ -35,7 +35,8 @@ export const Order = ({ order, products, onBack }) => {
         setIsDetailsLock(true);
         const order = {
           ...initialValues,
-          products: products,
+          products,
+          totalPrice,
           user_id: user?._id,
           shoppingCart_id: shoppingCart?._id
         };
@@ -53,7 +54,7 @@ export const Order = ({ order, products, onBack }) => {
 
   return (
     <div className="order-page">
-      <h4>New order</h4>
+      <h4>Order page</h4>
 
       <div className="go-back">
         <Button type="link" onClick={onBack}>Back to previous page</Button>

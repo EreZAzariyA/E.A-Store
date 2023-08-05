@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import {numberWithCommas, validateDetails} from "../../../utils/helpers";
+import { numberWithCommas } from "../../../utils/helpers";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
 import { Button, Card, Image, Input, Popconfirm, message } from "antd";
 import "./cartProductCard.css";
 
 export const CartProductCard = ({ productInCart, onStockUpdate }) => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
-  validateDetails({...productInCart});
-  // const { product_id, amount, totalPrice } = productInCart;
-  const product = useSelector((state) => state.products.find((p) => (p._id === productInCart.product_id)));
   const [amount, setAmount] = useState(productInCart.amount);
   const [newTotalPrice, setNewTotalPrice] = useState(productInCart.totalPrice);
 
@@ -25,15 +22,16 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
         break;
     }
     setAmount(newAmount);
-    setNewTotalPrice(product?.price * newAmount);
-    onStockUpdate(productInCart.product_id, newAmount, product?.price * newAmount);
+    const subTotalPrice = (productInCart?.price * newAmount).toFixed(2);
+    setNewTotalPrice(subTotalPrice);
+    onStockUpdate(productInCart.product_id, newAmount, subTotalPrice);
   };
 
   const removeProductFromCart = async () => {
     try {
       const res = await shoppingCartServices.removeProductFromCart(shoppingCart._id, productInCart.product_id);
       if (res) {
-        message.info(`Product ${product.name} removed from your cart`);
+        message.info(`Product ${productInCart.name} removed from your cart`);
       }
     } catch (err) {
       console.log(err);
@@ -59,8 +57,8 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
         <div className="card-image">
           <Image
             preview={false}
-            src={product?.image_url}
-            alt={`${product?.name}-image`}
+            src={productInCart?.image_url}
+            alt={`${productInCart?.name}-image`}
           />
         </div>
       </div>
@@ -74,7 +72,7 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
           </div>
           <div className="field description-field">
             <p>
-              <span>{product?.description} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam numquam nesciunt animi, exercitationem consequuntur quasi ullam, nisi, incidunt culpa similique expedita temporibus alias. Repellendus velit nobis deleniti! Ipsa, fugit tenetur!</span>
+              <span>{productInCart?.description} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam numquam nesciunt animi, exercitationem consequuntur quasi ullam, nisi, incidunt culpa similique expedita temporibus alias. Repellendus velit nobis deleniti! Ipsa, fugit tenetur!</span>
             </p>
           </div>
           <div className="field prices-fields">
@@ -91,7 +89,7 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
             <div className="prices-center">
               <p>
                 <span className="label">Price per unit: </span>
-                <span>${numberWithCommas(product?.price)}</span>
+                <span>${numberWithCommas(productInCart?.price)}</span>
               </p>
             </div>
             <div className="prices-right">

@@ -19,8 +19,9 @@ const cartSlicer = createSlice({
       state.products.push(action.payload);
       return state;
     },
-    updateCartAction(state, action) {
-      state.products = action.payload;
+    updateProductInCartAction(state, action) {
+      const productIndex = state.products.findIndex((product) => product.product_id === action.payload.product_id);
+      state.products[productIndex] = action.payload;
       return state;
     },
     addProductToFavoritesAction(state, action) {
@@ -48,7 +49,7 @@ export const {
   fetchUserCartAction,
   removeUserCartAction,
   addProductToCartAction,
-  updateCartAction,
+  updateProductInCartAction,
   addProductToFavoritesAction,
   removeProductFromCartAction,
   removeProductFromFavoritesAction,
