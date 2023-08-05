@@ -17,7 +17,7 @@ class AuthServices {
   login = async (credentials) => {
     if (!(credentials.email || credentials.password)) {
       throw new Error('Some fields are missing');
-    };
+    }
 
     const response = await axios.post(config.urls.auth.login, credentials);
     const token = response.data;
@@ -28,6 +28,6 @@ class AuthServices {
   logout = () => {
     store.dispatch(logoutAction());
   };
-};
+}
 
 export const authServices = new AuthServices();

@@ -9,41 +9,54 @@ import {
   resetCartAction,
   updateCartAction
 } from "../redux/slicers/cart-slicer";
+import { validateDetails } from "../utils/helpers";
 import config from "../utils/config";
-
-const validateDetails = (details) => {
-  if (details) {
-    Object.entries(details).forEach(([key, value]) => {
-      if (!value || value === null || value === 0 || value === undefined) {
-        throw new Error(`${key} is missing`);
-      };
-    });
-  };
-};
 
 class ShoppingCartServices {
 
+  /**
+  * Fetching shopping-cart by user_id.
+  *
+  * @param {String} user_id - The user_id to fetch shopping-cart.
+  * @returns {Promise} A Promise that return the shopping-cart.
+  */
   fetchUserShoppingCart = async (user_id) => {
     if (!user_id) throw new Error('User _id is not define');
-    const response = await axios.get(config.urls.cart.fetchUserShoppingCart + user_id);
+    const response = await axios.get(config.urls.shoppingCart.fetchUserShoppingCart + user_id);
     const shoppingCart = response.data;
     store.dispatch(fetchUserCartAction(shoppingCart));
     return shoppingCart;
   };
 
-  addProductToCart = async (product_id, shoppingCart_id, stock) => {
-    const details = {product_id, shoppingCart_id, stock};
+  /**
+  * Adds a product to the shopping cart.
+  *
+  * @param {String} product_id - The product to add to the shopping-cart.
+  * @param {String} shoppingCart_id - The ID of the shopping-cart the product will insert.
+  * @param {Number} amount - the amount of stock of the product.
+  * @returns {Promise} A Promise that return the inserted product.
+  */
+  addProductToCart = async (product_id, shoppingCart_id, amount = 1) => {
+    const details = {product_id, shoppingCart_id, amount};
     validateDetails(details);
 
-    const response = await axios.post(config.urls.cart.addProductToCart, details);
-    const updatedShoppingCart = response.data;
-    store.dispatch(addProductToCartAction(updatedShoppingCart.products));
-    return updatedShoppingCart.products;
+    const response = await axios.post(config.urls.shoppingCart.addProductToCart, details);
+    const addedProduct = response.data;
+    store.dispatch(addProductToCartAction(addedProduct));
+    return addedProduct;
   };
 
+  /**
+  * Adds a product to the shopping cart.
+  *
+  * @param {String} product_id - The product to add to the shopping-cart.
+  * @param {String} shoppingCart_id - The ID of the shopping-cart the product will insert.
+  * @param {Number} amount - the amount of stock of the product.
+  * @returns {Promise} A Promise that return the inserted product.
+  */
   updateStockInCart = async (shoppingCart_id, product_id, stock, totalPrice) => {
     const details = {shoppingCart_id, product_id, stock, totalPrice};
-    const response = await axios.patch(config.urls.cart.updateStockInCart, details);
+    const response = await axios.patch(config.urls.shoppingCart.updateStockInCart, details);
     const updatedShoppingCart = response.data;
     store.dispatch(updateCartAction(updatedShoppingCart.products));
     return updatedShoppingCart.products;
@@ -52,7 +65,7 @@ class ShoppingCartServices {
   removeProductFromCart = async (shoppingCart_id, product_id) => {
     if (!(shoppingCart_id || product_id)) throw new Error('Some fields are missing');
 
-    const response = await axios.delete(config.urls.cart.removeProductFromCart, {data: {shoppingCart_id, product_id}});
+    const response = await axios.delete(config.urls.shoppingCart.removeProductFromCart, {data: {shoppingCart_id, product_id}});
     const removedProduct = response.data;
     store.dispatch(removeProductFromCartAction(product_id));
     return removedProduct;
@@ -60,14 +73,14 @@ class ShoppingCartServices {
 
   addProductToFavorites = async (product_id, shoppingCart_id) => {
     const details = {product_id, shoppingCart_id};
-    const response = await axios.post(config.urls.cart.addProductToFavorites, details);
+    const response = await axios.post(config.urls.shoppingCart.addProductToFavorites, details);
     const updatedShoppingCart = response.data;
     store.dispatch(addProductToFavoritesAction(updatedShoppingCart.favorites));
     return updatedShoppingCart.favorites;
   };
 
   removeProductFromFavorites = async (shoppingCart_id, product_id) => {
-    const response = await axios.delete(config.urls.cart.removeProductFromFavorites, {data: {shoppingCart_id, product_id}});
+    const response = await axios.delete(config.urls.shoppingCart.removeProductFromFavorites, {data: {shoppingCart_id, product_id}});
     const removedProduct = response.data;
     store.dispatch(removeProductFromFavoritesAction(product_id));
     return removedProduct;
@@ -75,9 +88,9 @@ class ShoppingCartServices {
 
 
   resetCart = async (shoppingCart_id) => {
-    await axios.post(config.urls.cart.resetCart + shoppingCart_id);
+    await axios.post(config.urls.shoppingCart.resetCart + shoppingCart_id);
     store.dispatch(resetCartAction());
   };
-};
+}
 
 export const shoppingCartServices = new ShoppingCartServices();

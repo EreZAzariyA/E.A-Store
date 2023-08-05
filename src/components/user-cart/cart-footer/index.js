@@ -25,7 +25,7 @@ export const UserCartFooter = (props) => {
       case FooterButtons.Continue:
         onCreateOrder();
       break;
-    };
+    }
   };
 
   const handleModelOkClick = () => {

@@ -10,10 +10,9 @@ import { Button, Card, Col, Row, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import "./productCard.css";
 
-export const ProductCard = (props) => {
-  const { product } = props;
-  const navigate = useNavigate();
+export const ProductCard = ({ product }) => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
+  const navigate = useNavigate();
   const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -31,17 +30,17 @@ export const ProductCard = (props) => {
     }
   }, [shoppingCart, product]);
 
-  const addProductHandle = async () => {
-    const stock = 1
+  const addProductHandler = async () => {
+    const amount = 1;
     setInCart(true);
     try {
-      await shoppingCartServices.addProductToCart(product?._id, shoppingCart?._id, stock);
+      await shoppingCartServices.addProductToCart(product?._id, shoppingCart?._id, amount);
     } catch (err) {
       console.log(err);
-    };
+    }
   };
 
-  const removeProductHandle = async () => {
+  const removeProductHandler = async () => {
     setInCart(false);
     try {
       await shoppingCartServices.removeProductFromCart(shoppingCart?._id, product?._id);
@@ -56,7 +55,7 @@ export const ProductCard = (props) => {
         await shoppingCartServices.removeProductFromFavorites(shoppingCart?._id, product?._id);
         setIsFavorite(false);
         return;
-      };
+      }
       await shoppingCartServices.addProductToFavorites(product?._id, shoppingCart?._id);
       setIsFavorite(true);
     } catch (err) {
@@ -137,13 +136,13 @@ export const ProductCard = (props) => {
         <Col>
           {inCart ? (
             <Tooltip title='Remove from cart'>
-              <Button type="primary" style={{ background: 'red' }} onClick={removeProductHandle}>
+              <Button type="primary" style={{ background: 'red' }} onClick={removeProductHandler}>
                 <DeleteOutlined style={{ fontSize: '16px' }} />
               </Button>
             </Tooltip>
           ) : (
             <Tooltip title='Add to cart'>
-              <Button type="primary" style={{ background: 'orange' }} onClick={addProductHandle}>
+              <Button type="primary" style={{ background: 'orange' }} onClick={addProductHandler}>
                 <ShoppingCartOutlined style={{ fontSize: '16px' }} />
               </Button>
             </Tooltip>

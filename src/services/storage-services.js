@@ -8,6 +8,6 @@ class StorageServices {
     const imageUrl = response.data;
     return imageUrl;
   };
-};
+}
 
 export const storageServices = new StorageServices();

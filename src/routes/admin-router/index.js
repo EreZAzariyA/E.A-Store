@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AdminLayout } from "../../components/admin/AdminLayout";
 import { AdminDashboard } from "../../components/admin/admin-dashboard";
-import { PageNotFound } from "../../components/PageNotFound";
+import { PageNotFound } from "../../components/components/PageNotFound";
 import { ProductsTable } from "../../components/admin/admin-products";
 import { CategoriesTable } from "../../components/admin/admin-categories";
 import { SubCategoriesTable } from "../../components/admin/admin-subCategories";

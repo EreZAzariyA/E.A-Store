@@ -54,7 +54,7 @@ export const Login = () => {
           </Form.Item>
 
           <Button htmlType="submit">Sign-in</Button>
-          <p>D'ont have account? <Link to={'/auth/register'}>Register</Link></p>
+          <p>D`ont have account? <Link to={'/auth/register'}>Register</Link></p>
         </Form>
       </div>
     </div>

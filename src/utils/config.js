@@ -21,7 +21,7 @@ class Config {
       removeSubCategory: "",
       updateSubCategory: "",
     },
-    cart: {
+    shoppingCart: {
       fetchUserShoppingCart: "",
       addProductToCart: "",
       updateStockInCart: "",
@@ -29,6 +29,9 @@ class Config {
       removeProductFromCart: "",
       removeProductFromFavorites: "",
       resetCart: "",
+    },
+    order: {
+      createOrder: "",
     },
     socket: {
       connect: "",
@@ -47,14 +50,17 @@ class Config {
         categories: baseUrl + 'categories/all',
         subCategories: baseUrl + 'sub-categories/all',
       },
-      cart: {
-        fetchUserShoppingCart: baseUrl + 'cart/fetch-user-cart/',
-        addProductToCart: baseUrl + 'cart/add-product-to-cart/',
-        updateStockInCart: baseUrl + 'cart/update-product-stock-in-cart',
-        addProductToFavorites: baseUrl + 'cart/add-product-to-favorites/',
-        removeProductFromCart: baseUrl + 'cart/remove-product-from-cart/',
-        removeProductFromFavorites: baseUrl + 'cart/remove-product-from-favorites/',
-        resetCart: baseUrl + 'cart/reset/'
+      shoppingCart: {
+        fetchUserShoppingCart: baseUrl + 'shopping-carts/fetch-user-cart/',
+        addProductToCart: baseUrl + 'shopping-carts/add-product-to-cart/',
+        updateStockInCart: baseUrl + 'shopping-carts/update-product-stock-in-cart',
+        addProductToFavorites: baseUrl + 'shopping-carts/add-product-to-favorites/',
+        removeProductFromCart: baseUrl + 'shopping-carts/remove-product-from-cart/',
+        removeProductFromFavorites: baseUrl + 'shopping-carts/remove-product-from-favorites/',
+        resetCart: baseUrl + 'shopping-carts/reset/'
+      },
+      order: {
+        createOrder: baseUrl + 'orders/create-order',
       },
       admin: {
         uploadImage: baseUrl + 'admin/image-upload',
@@ -77,19 +83,19 @@ class Config {
       },
     }
   };
-};
+}
 
 class DevelopmentConfig extends Config {
   constructor() {
     super("http://127.0.0.1:5000/api/");
   };
-};
+}
 
 class ProductionConfig extends Config {
   constructor() {
     super("https://k6u7v23xwh.execute-api.eu-central-1.amazonaws.com/api/");
   };
-};
+}
 
 const config = process.env.NODE_ENV === "development" ? new DevelopmentConfig() : new ProductionConfig();
 export default config;

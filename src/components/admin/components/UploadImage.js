@@ -10,7 +10,7 @@ export const UploadImage = () => {
       maxCount={1}
       name='file'
       accept={acceptedImageFile}
-      beforeUpload={() => (false)}
+      beforeUpload={() => false}
       >
       <p className="ant-upload-drag-icon">
         <InboxOutlined />

@@ -5,9 +5,9 @@
   height: min-content;
 
   line-height: 10px;
-  
+
   background: #FFFFFF;
-  box-shadow: 0px 20px 27px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 20px 27px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
 }
 

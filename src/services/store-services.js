@@ -12,7 +12,7 @@ class StoreServices {
       const products = response.data;
       store.dispatch(fetchProductsAction(products));
       return products;
-    };
+    }
     const products = store.getState().products;
     return products;
   };
@@ -23,7 +23,7 @@ class StoreServices {
       const categories = response.data;
       store.dispatch(fetchCategoriesAction(categories));
       return categories;
-    };
+    }
     const categories = store.getState().categories;
     return categories;
   };
@@ -34,10 +34,10 @@ class StoreServices {
       const subCategories = response.data;
       store.dispatch(fetchSubCategoriesAction(subCategories));
       return subCategories;
-    };
+    }
     const subCategories = store.getState().subCategories;
     return subCategories;
   };
-};
+}
 
 export const storeServices = new StoreServices();

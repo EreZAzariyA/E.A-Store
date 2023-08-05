@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { UserCartFooter } from "./cart-footer";
-import { Order } from "./order";
+import { Order } from "../order-page";
 import { CartProductCard } from "./cart-product-card";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
-import { numberWithCommas } from "../../utils/helpers";
+import { calculateTotals, numberWithCommas } from "../../utils/helpers";
 import { Button, Card, Modal, message } from "antd";
-import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled'
 import { CiEraser } from "react-icons/ci";
+import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled'
 import "./userCart.css";
 
 const { confirm } = Modal;
@@ -19,26 +19,11 @@ const Steps = {
 
 export const UserCart = () => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
-  const [cartProducts, setCartProducts] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const cartProducts = shoppingCart?.products;
+  const totalPrice = calculateTotals(cartProducts);
+
   const [step, setStep] = useState(null);
   const [order, setOrder] = useState(null);
-
-  useEffect(() => {
-    if (shoppingCart && shoppingCart?.products) {
-      const cartProducts = shoppingCart.products;
-      calculateTotals(cartProducts);
-      setCartProducts(cartProducts);
-    };
-  }, [shoppingCart]);
-
-  const calculateTotals = (products) => {
-    let total = 0;
-    [...products].forEach((product) => {
-      total += product.totalPrice;
-    });
-    setTotalPrice(total);
-  };
 
   const onRest = () => {
     confirm({

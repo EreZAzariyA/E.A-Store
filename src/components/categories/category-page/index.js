@@ -22,11 +22,11 @@ export const CategoryPage = () => {
           const fullSubCategory = allSubCategories.find((subC) => subC._id === subCategoryId);
           if (fullSubCategory && fullSubCategory._id) {
             newSubCategoriesList.push(fullSubCategory);
-          };
-        };
+          }
+        }
         setSubCategories(newSubCategoriesList);
-      };
-    };
+      }
+    }
   }, [allSubCategories, categories, category_id]);
 
   useEffect(() => {

@@ -11,7 +11,7 @@ const subCategoriesSlicer = createSlice({
     addSubCategoryAction(state, action) {
       if (action.payload) {
         state.push(action.payload);
-      };
+      }
       return state;
     },
     updateSubCategoryAction(state, action) {
@@ -19,14 +19,14 @@ const subCategoriesSlicer = createSlice({
       if (subCategoryIndex !== -1) {
         state.splice(subCategoryIndex, 1);
         state.push(action.payload);
-      };
+      }
       return state;
     },
     removeSubCategoryAction(state, action) {
       const subCategoryIndex = state.findIndex((subC) => subC._id === action.payload);
       if (subCategoryIndex !== -1) {
         state.splice(subCategoryIndex, 1);
-      };
+      }
       return state;
     },
   }

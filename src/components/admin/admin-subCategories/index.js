@@ -37,7 +37,7 @@ export const SubCategoriesTable = () => {
   useEffect(() => {
     if (step && step === Steps.ADD_SUBCATEGORY) {
       setSubCategory(null);
-    };
+    }
   }, [step]);
 
   const onFinish = async (values) => {
@@ -51,11 +51,11 @@ export const SubCategoriesTable = () => {
       } else {
         newValue = await adminSubCategoriesServices.addSubCategory(values);
         successMessage = `Sub-Category '${newValue?.subCategory}' with id: '${newValue?._id}' added successfully`;
-      };
+      }
       if (newValue) {
         message.success(successMessage);
         setStep(null);
-      };
+      }
     } catch (error) {
       message.error(getError(error.message));
     }

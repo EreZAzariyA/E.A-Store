@@ -28,6 +28,6 @@ class AdminSubCategoriesServices {
     store.dispatch(updateSubCategoryAction(updatedSubCategory));
     return updatedSubCategory;
   };
-};
+}
 
 export const adminSubCategoriesServices = new AdminSubCategoriesServices();

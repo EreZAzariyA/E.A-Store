@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
 import { socketServices } from "../services/socket-services";
 import authSlicer from "./slicers/auth-slicer"
 import cartSlicer from "./slicers/cart-slicer";
@@ -16,7 +16,7 @@ const store = configureStore({
     categories: categoriesSlicer.reducer,
     subCategories: subCategoriesSlicer.reducer,
   },
-  middleware: [middleware, socketMiddleware(socketServices.socketIo)]
+  middleware: [...getDefaultMiddleware(), middleware, socketMiddleware(socketServices.socketIo)],
 });
 
 export default store;

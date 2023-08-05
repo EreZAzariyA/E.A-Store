@@ -14,7 +14,7 @@ class AdminCategoriesServices {
     if (uploadedCategory) {
       store.dispatch(addCategoryAction(uploadedCategory));
       return uploadedCategory;
-    };
+    }
   };
 
   removeCategory = async (category_id) => {
@@ -30,6 +30,6 @@ class AdminCategoriesServices {
     store.dispatch(updateCategoryAction(updatedCategory));
     return updatedCategory;
   };
-};
+}
 
 export const adminCategoriesServices = new AdminCategoriesServices();

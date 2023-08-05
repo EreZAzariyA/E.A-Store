@@ -12,7 +12,7 @@ class InterceptorsService {
         request.headers = {
           authorization: "Bearer " + store.getState().auth.token,
         };
-      };
+      }
       return request;
     }, ((err) => {
       console.log(err);
@@ -23,10 +23,10 @@ class InterceptorsService {
     }, (err) => {
       if (err.response.status === 401) {
         store.dispatch(logoutAction());
-      };
+      }
       return message.error(getError(err));
     });
   };
-};
+}
 
 export const interceptorsService = new InterceptorsService();

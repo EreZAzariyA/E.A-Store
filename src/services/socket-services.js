@@ -9,13 +9,6 @@ class SocketServices {
     this.socketIo = new io(process.env.SOCKET_URL || URL);
   };
 
-  connect = async () => {
-    this.socketIo.connect();
-  };
-
-  disconnect = async () => {
-    this.socketIo.disconnect();
-  };
-};
+}
 
 export const socketServices = new SocketServices();

@@ -1,36 +1,23 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { CustomDivider } from "../../../components/Divider";
+import { CustomDivider } from "../../components/Divider";
 import { Col, Row, Table } from "antd";
 import "./orderSummary.css";
 
 export const OrderSummary = ({products}) => {
-  const allProducts = useSelector((state) => state.products);
-  const [cartProducts, setCartProducts] = useState([...products]);
   const [isTableLoading, setIsTableLoading] = useState(true);
   const [subTotalPrice, setSubTotalPrice] = useState(0);
   const [deliveryPrice, setDeliveryPrice] = useState(0);
 
+  console.log(products)
+
   useEffect(() => {
     if (products && products?.length) {
-      const updatedList = [];
       for (let product of products) {
-        if ([...allProducts]?.find((p) => p._id === product.product_id)) {
-          const fullPro = [...allProducts]?.find((p) => p._id === product.product_id);          product = {
-            ...product,
-            name: fullPro?.name,
-            category_id: fullPro?.category_id,
-            subCategory_id: fullPro?.subCategory_id,
-            price: fullPro?.price,
-          };
-          updatedList.push(product);
-          setSubTotalPrice((perv) => perv += product?.totalPrice || 0);
-        };
-      };
-      setCartProducts(updatedList);
+        setSubTotalPrice((perv) => perv + product?.totalPrice || 0);
+      }
       setIsTableLoading(false);
-    };
-  }, [allProducts, products]);
+    }
+  }, [products]);
 
   const columns = [
     {
@@ -74,7 +61,7 @@ export const OrderSummary = ({products}) => {
       <Table
         rowKey={'product_id'}
         columns={columns}
-        dataSource={cartProducts}
+        dataSource={products}
         loading={isTableLoading}
         pagination={false}
       />

@@ -8,9 +8,9 @@ export const PublicRoute = ({children}) => {
 
   if (user && isAdmin(user)) {
     return <Navigate to="/admin" state={{ from: location }} />;
-  };
+  }
   if (user) {
     return <Navigate to="/" state={{ from: location }} />;
-  };
+  }
   return children;
 };

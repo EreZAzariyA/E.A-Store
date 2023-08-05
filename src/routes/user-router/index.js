@@ -4,10 +4,10 @@ import { Dashboard } from "../../components/home-page";
 import { UserCart } from "../../components/user-cart";
 import { Favorites } from "../../components/favorites";
 import { DashboardView } from "../../layout/DashboardView";
-import { PageNotFound } from "../../components/PageNotFound";
 import { ProductPage } from "../../components/product-page";
 import { SubCategoryPage } from "../../components/subCategory-page";
 import { CategoriesPage } from "../../components/categories";
+// import { PageNotFound } from "../../components/PageNotFound";
 
 const UserRouter = () => (
   <Routes>

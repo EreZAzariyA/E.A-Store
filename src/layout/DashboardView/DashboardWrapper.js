@@ -36,7 +36,7 @@ export const DashboardWrapper = () => {
           </Link>
         )
       });
-    };
+    }
 
     setPathOptions(options);
     // setCurrent([...locationArray].pop());

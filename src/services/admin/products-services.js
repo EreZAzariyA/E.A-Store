@@ -14,7 +14,7 @@ class AdminProductsServices {
     if (uploadedProduct) {
       store.dispatch(addProductAction(uploadedProduct));
       return uploadedProduct;
-    };
+    }
   };
 
   removeProduct = async (product_id) => {
@@ -30,6 +30,6 @@ class AdminProductsServices {
     store.dispatch(updateProductAction(productToUpdate));
     return updatedProduct;
   };
-};
+}
 
 export const adminProductsServices = new AdminProductsServices();

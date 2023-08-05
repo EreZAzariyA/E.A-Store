@@ -42,10 +42,10 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
         for (const subCategoryId of selectedCategory.subCategories) {
           const fullSubCategory = allSubCategories.find((subC) => subC._id === subCategoryId);
           newSubCategoriesList.push(fullSubCategory);
-        };
+        }
         setSubCategories(newSubCategoriesList);
-      };
-    };
+      }
+    }
   }, [allSubCategories, categories, initialValue.category_id]);
 
   const cancel = () => {
@@ -57,7 +57,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     setInitialValue({...initialValue, [name]: value });
     if (name === 'category_id') {
       form.setFieldValue('subCategory_id', '');
-    };
+    }
   };
 
   const formProps = {

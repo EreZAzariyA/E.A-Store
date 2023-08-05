@@ -30,7 +30,7 @@ export const CategoriesTable = () => {
   useEffect(() => {
     if (step && step === Steps.ADD_CATEGORY) {
       setCategory(null);
-    };
+    }
   }, [step]);
 
   const filtering = () => {
@@ -40,7 +40,7 @@ export const CategoriesTable = () => {
       setFilteredCategories([...categories]?.filter((c) => {
         return c.category.toLowerCase().startsWith(filterState.category.toLowerCase())
       }));
-    };
+    }
 
     return filteredCategories;
   };
@@ -60,11 +60,11 @@ export const CategoriesTable = () => {
       } else {
         newValue = await adminCategoriesServices.addCategory(values);
         successMessage = `Category '${newValue?.category}' with id: '${newValue?._id}' added successfully`;
-      };
+      }
       if (newValue) {
         message.success(successMessage);
         setStep(null);
-      };
+      }
     } catch (err) {
       console.log(err);
     }

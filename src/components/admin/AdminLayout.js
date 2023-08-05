@@ -22,6 +22,10 @@ export const AdminLayout = () => {
     setCurrent(locationArray[2]);
   }, [pathname]);
 
+  const logout = () => {
+    authServices.logout();
+  };
+
   const menu = () => {
     const items = [
       {
@@ -54,7 +58,7 @@ export const AdminLayout = () => {
         key: '/',
         icon: <LogoutOutlined />,
         style: {'position': 'absolute', 'bottom': 0 },
-        onClick: () => authServices.logout()
+        onClick: logout
       }
     ];
 

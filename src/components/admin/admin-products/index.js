@@ -35,7 +35,7 @@ export const ProductsTable = () => {
   useEffect(() => {
     if (step && step === Steps.ADD_PRODUCT) {
       setProduct(null);
-    };
+    }
   }, [step]);
 
   const filtering = () => {
@@ -43,13 +43,13 @@ export const ProductsTable = () => {
 
     if (filterState.name) {
       filteredProducts = filteredProducts?.filter((p) => p.name.startsWith(filterState.name))
-    };
+    }
     if (filterState.category_id) {
       filteredProducts = filteredProducts?.filter((p) => (p.category_id === filterState.category_id))
     }
     if (filterState.subCategory_id) {
       filteredProducts = filteredProducts?.filter((p) => (p.subCategory_id === filterState.subCategory_id))
-    };
+    }
 
     return filteredProducts;
   };
@@ -69,11 +69,11 @@ export const ProductsTable = () => {
       } else {
         newValue = await adminProductsServices.addProduct(values);
         successMessage = `Product '${newValue?.name}' with id: '${newValue?._id}' added successfully`;
-      };
+      }
       if (newValue) {
         message.success(successMessage);
         setStep(null);
-      };
+      }
     } catch (err) {
       message.error(err.message);
     }

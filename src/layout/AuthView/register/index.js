@@ -13,7 +13,7 @@ export const Register = () => {
       if (res) {
         message.success(MessagesTypes.REGISTER_SUCCESSFULLY);
         navigate('/auth/login');
-      };
+      }
     }).catch((err) => {
       message.error(getError(err));
     });

@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { numberWithCommas } from "../../../utils/helpers";
+import {numberWithCommas, validateDetails} from "../../../utils/helpers";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
 import { Button, Card, Image, Input, Popconfirm, message } from "antd";
 import "./cartProductCard.css";
 
 export const CartProductCard = ({ productInCart, onStockUpdate }) => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
-  const { product_id, stock, totalPrice } = productInCart;
-  const product = useSelector((state) => state.products.find((p) => (p._id === product_id)));
-  const [amount, setAmount] = useState(stock);
-  const [newTotalPrice, setNewTotalPrice] = useState(totalPrice);
+  validateDetails({...productInCart});
+  // const { product_id, amount, totalPrice } = productInCart;
+  const product = useSelector((state) => state.products.find((p) => (p._id === productInCart.product_id)));
+  const [amount, setAmount] = useState(productInCart.amount);
+  const [newTotalPrice, setNewTotalPrice] = useState(productInCart.totalPrice);
 
   const handleAmountClick = (name) => {
     let newAmount = 0;
@@ -25,12 +26,12 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
     }
     setAmount(newAmount);
     setNewTotalPrice(product?.price * newAmount);
-    onStockUpdate(product_id, newAmount, product?.price * newAmount);
+    onStockUpdate(productInCart.product_id, newAmount, product?.price * newAmount);
   };
 
   const removeProductFromCart = async () => {
     try {
-      const res = await shoppingCartServices.removeProductFromCart(shoppingCart._id, product_id);
+      const res = await shoppingCartServices.removeProductFromCart(shoppingCart._id, productInCart.product_id);
       if (res) {
         message.info(`Product ${product.name} removed from your cart`);
       }
@@ -68,7 +69,7 @@ export const CartProductCard = ({ productInCart, onStockUpdate }) => {
           <div className="field sku-field">
             <p>
               <span className="label">SKU: </span>
-              <span>{product_id.slice(0, product_id.length / 3)}</span>
+              <span>{productInCart.product_id.slice(0, productInCart.product_id.length / 3)}</span>
             </p>
           </div>
           <div className="field description-field">

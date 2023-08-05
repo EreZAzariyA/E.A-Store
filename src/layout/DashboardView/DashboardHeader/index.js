@@ -9,7 +9,8 @@ import { storeServices } from "../../../services/store-services";
 const { Header } = Layout;
 
 export const DashboardHeader = () => {
-  const user = useSelector((state) => state.auth?.user);
+  const userState = useSelector((state) => state.auth);
+  const { user, token } = userState;
   const isAdmin = user.admin;
 
   useEffect(() => {
@@ -19,10 +20,16 @@ export const DashboardHeader = () => {
       await storeServices.fetchAllSubCategories();
       await shoppingCartServices.fetchUserShoppingCart(user._id);
     };
-    if (user) {
-      fetchAllData();
+    if (token) {
+      fetchAllData().then((res) => {
+        if (res) {
+          console.log(res);
+        }
+      }).catch((err) => {
+        console.log({err});
+      });
     }
-  }, [user]);
+  }, [token, user._id]);
 
   return (
     <Header>

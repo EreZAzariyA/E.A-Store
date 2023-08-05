@@ -26,6 +26,24 @@ export const numberWithCommas = (x, number = 2) => {
   return formattedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+export const validateDetails = (details) => {
+  if (details) {
+    Object.entries(details).forEach(([key, value]) => {
+      if (!value || value === 0 || value === undefined) {
+        throw new Error(`${key} is missing`);
+      }
+    });
+  }
+};
+
+export const calculateTotals = (products) => {
+  let total = 0;
+  [...products]?.forEach((product) => {
+    total += product.totalPrice;
+  });
+  return total || 0;
+};
+
 export const isAdmin = (user) => {
   return user?.admin || false;
 };
