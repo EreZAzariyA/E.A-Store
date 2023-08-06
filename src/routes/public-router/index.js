@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { isAdmin } from "../utils/helpers";
+import { isAdmin } from "../../utils/helpers";
 
 export const PublicRoute = ({children}) => {
   let location = useLocation();

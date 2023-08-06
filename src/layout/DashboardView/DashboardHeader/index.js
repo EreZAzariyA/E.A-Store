@@ -9,31 +9,25 @@ import { storeServices } from "../../../services/store-services";
 const { Header } = Layout;
 
 export const DashboardHeader = () => {
-  // const userState = useSelector((state) => state.auth);
-  // const { user, token } = userState;
-  // const isAdmin = user.admin;
+  const user = useSelector((state) => state.auth?.user);
+  const isAdmin = user?.admin;
 
-  // useEffect(() => {
-  //   const fetchAllData = async () => {
-  //     await storeServices.fetchAllProducts();
-  //     await storeServices.fetchAllCategories();
-  //     await storeServices.fetchAllSubCategories();
-  //     await shoppingCartServices.fetchUserShoppingCart(user._id);
-  //   };
-  //   if (token) {
-  //     fetchAllData().then((res) => {
-  //       if (res) {
-  //         console.log(res);
-  //       }
-  //     }).catch((err) => {
-  //       console.log({err});
-  //     });
-  //   }
-  // }, [token, user._id]);
+  useEffect(() => {
+    const fetchAllData = async () => {
+      await storeServices.fetchAllProducts();
+      await storeServices.fetchAllCategories();
+      await storeServices.fetchAllSubCategories();
+      await shoppingCartServices.fetchUserShoppingCart(user?._id);
+    };
+
+    if (user) {
+      fetchAllData();
+    }
+  }, [user]);
 
   return (
     <Header>
-      {/* {!isAdmin && (
+      {!isAdmin && (
         <>
           <Row className="top-header-text">
             <Col span={24}>
@@ -55,8 +49,7 @@ export const DashboardHeader = () => {
             </Col>
           </Row>
         </>
-      )} */}
-      head
+      )}
     </Header>
   );
 };

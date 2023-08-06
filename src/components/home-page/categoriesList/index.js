@@ -4,7 +4,6 @@ import { CategoryCard } from "./categoryCard";
 
 export const CategoriesList = () => {
   const categories = useSelector((state) => (state.categories));
-  console.log(categories);
 
   return (
     <div className="subCategories-list-main-container">
