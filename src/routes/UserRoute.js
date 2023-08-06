@@ -5,6 +5,7 @@ import { isAdmin } from "../utils/helpers";
 export const UserRoute = ({ children }) => {
   let location = useLocation();
   const user  = useSelector((state) => (state.auth?.user));
+  console.log(user);
 
   if (!user) {
     return <Navigate to="/auth/login" state={{ from: location }} />;

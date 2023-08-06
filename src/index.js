@@ -10,18 +10,17 @@ import './index.css';
 import './styles/global.css';
 import './styles/main.css';
 import './styles/dashboardView.css';
+import AdminRouter from './routes/admin-router';
+import UserRouter from './routes/user-router';
 
 interceptorsService.createInterceptors();
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const isAdmin = JSON.parse(process.env.REACT_APP_IS_ADMIN);
 
-console.log(process.env);
-
-root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>
-);
+if (isAdmin) {
+  root.render(<AdminRouter />);
+} else {
+  root.render(<UserRouter />);
+}
 
 reportWebVitals();
