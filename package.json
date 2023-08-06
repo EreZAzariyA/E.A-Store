@@ -36,9 +36,9 @@
     ],
     "rules": {
       "no-trailing-spaces": "error",
-      "arrow-spacing":"error",
+      "arrow-spacing": "error",
       "space-infix-ops": "error",
-      "default-case":"off",
+      "default-case": "off",
       "template-curly-spacing": "error",
       "comma-spacing": "error"
     }

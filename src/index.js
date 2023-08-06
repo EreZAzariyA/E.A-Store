@@ -14,6 +14,8 @@ import './styles/dashboardView.css';
 interceptorsService.createInterceptors();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+console.log(process.env);
+
 root.render(
   <Provider store={store}>
     <BrowserRouter>
