@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { authServices } from '../../services/auth-services';
-import { isAdmin } from '../../utils/helpers';
+import { isAdmin } from "../../utils/helpers";
 import { Button } from 'antd';
 
-export const AdminRoute = ({ children }) => {
+export const UserRoute = ({ children }) => {
   let location = useLocation();
   const user  = useSelector((state) => (state.auth?.user));
 
@@ -14,10 +14,10 @@ export const AdminRoute = ({ children }) => {
 
   if (!user) {
     return <Navigate to="/auth" state={{ from: location }} />;
-  } else if (user && !isAdmin(user)) {
+  } else if (user && isAdmin(user)) {
     return (
       <>
-        <p style={{ textTransform: 'capitalize'}}>you are not authorized</p>
+        <p style={{ textTransform: 'capitalize'}}>you are not in the correct url</p>
         <Button danger onClick={logout}>Logout</Button>
       </>
     );

@@ -25,6 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-admin": "set PORT=4000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -36,9 +37,9 @@
     ],
     "rules": {
       "no-trailing-spaces": "error",
-      "arrow-spacing":"error",
+      "arrow-spacing": "error",
       "space-infix-ops": "error",
-      "default-case":"off",
+      "default-case": "off",
       "template-curly-spacing": "error",
       "comma-spacing": "error"
     }

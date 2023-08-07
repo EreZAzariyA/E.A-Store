@@ -1,7 +1,7 @@
 import { removeUserCartAction } from "../slicers/cart-slicer";
 
 export const middleware = (store) => (next) => (action) => {
-  const { dispatch, getState} = store;
+  const { dispatch } = store;
 
   switch (action.type) {
     case 'auth/logout':
