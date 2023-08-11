@@ -6,7 +6,7 @@ class SocketServices {
   socketIo;
 
   constructor () {
-    this.socketIo = new io(process.env.SOCKET_URL || URL);
+    this.socketIo = new io(URL);
   };
 
 }
