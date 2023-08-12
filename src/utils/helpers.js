@@ -38,7 +38,7 @@ export const validateDetails = (details) => {
 
 export const calculateTotals = (products) => {
   let total = 0;
-  [...products]?.forEach((product) => {
+  [...products || []].forEach((product) => {
     total += product.totalPrice;
   });
   return total || 0;

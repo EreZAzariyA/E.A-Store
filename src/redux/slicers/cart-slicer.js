@@ -2,10 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlicer = createSlice({
   name: 'shopping_cart',
-  initialState: {
-    products: [],
-    favorites: [],
-  },
+  initialState: null,
   reducers: {
     fetchUserCartAction(state, action) {
       state = action.payload;

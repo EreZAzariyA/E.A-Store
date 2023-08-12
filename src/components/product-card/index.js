@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
 import { CustomDivider } from "../components/Divider";
 import { RedHeartIcon, HeartIcon, brands } from "../../utils/helpers";
+import { Button, Card, Col, Row, Tooltip } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
-import { Button, Card, Col, Row, Tooltip } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import "./productCard.css";
 
 export const ProductCard = ({ product }) => {
@@ -17,7 +17,7 @@ export const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    if (shoppingCart?.products) {
+    if (shoppingCart?.products && shoppingCart?.favorites) {
       const isInCart = shoppingCart.products.some((pro) => (
         pro.product_id === product._id
       ));
@@ -34,7 +34,7 @@ export const ProductCard = ({ product }) => {
     const amount = 1;
     setInCart(true);
     try {
-      await shoppingCartServices.addProductToCart(product?._id, shoppingCart?._id, amount);
+      await shoppingCartServices.addProductToCart(product._id, shoppingCart._id, amount);
     } catch (err) {
       console.log(err);
     }
@@ -43,7 +43,7 @@ export const ProductCard = ({ product }) => {
   const removeProductHandler = async () => {
     setInCart(false);
     try {
-      await shoppingCartServices.removeProductFromCart(shoppingCart?._id, product?._id);
+      await shoppingCartServices.removeProductFromCart(shoppingCart._id, product._id);
     } catch (err) {
       console.log(err);
     }
@@ -52,11 +52,11 @@ export const ProductCard = ({ product }) => {
   const favoritesHandler = async (name) => {
     try {
       if (name === 'remove') {
-        await shoppingCartServices.removeProductFromFavorites(shoppingCart?._id, product?._id);
+        await shoppingCartServices.removeProductFromFavorites(shoppingCart._id, product._id);
         setIsFavorite(false);
         return;
       }
-      await shoppingCartServices.addProductToFavorites(product?._id, shoppingCart?._id);
+      await shoppingCartServices.addProductToFavorites(product._id, shoppingCart._id);
       setIsFavorite(true);
     } catch (err) {
       console.log(err);
@@ -114,7 +114,7 @@ export const ProductCard = ({ product }) => {
       <Row>
         <Col>
           <p>
-            <span>SKU: {product?._id?.slice(0, product?._id?.length / 3)}</span>
+            <span>SKU: {product._id?.slice(0, product._id?.length / 3)}</span>
           </p>
         </Col>
       </Row>

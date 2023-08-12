@@ -19,7 +19,7 @@ const Steps = {
 
 export const UserCart = () => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
-  const cartProducts = shoppingCart?.products;
+  const cartProducts = shoppingCart?.products || [];
   const totalPrice = calculateTotals(cartProducts);
 
   const [step, setStep] = useState(null);
@@ -29,7 +29,7 @@ export const UserCart = () => {
     confirm({
       title: "Are you sure you want to delete those items?",
       icon: <ExclamationCircleFilled />,
-      content: `You have ${shoppingCart.products?.length || 0} items`,
+      content: `You have ${cartProducts.length || 0} items`,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
@@ -68,7 +68,7 @@ export const UserCart = () => {
       <div className="right">
         <Button
           size="large"
-          disabled={!shoppingCart.products?.length}
+          disabled={!cartProducts.length}
           danger
           type="primary"
           className="reset-cart-btn"

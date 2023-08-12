@@ -4,7 +4,7 @@ export const middleware = (store) => (next) => (action) => {
   const { dispatch } = store;
 
   switch (action.type) {
-    case 'auth/logout':
+    case 'auth/logoutAction':
       dispatch(removeUserCartAction());
     break;
 
