@@ -33,13 +33,10 @@ class Config {
     order: {
       createOrder: "",
     },
-    socket: {
-      connect: "",
-      disconnect: "",
-    }
+    socket: ""
   };
 
-  constructor(baseUrl) {
+  constructor(baseUrl, socketUrl) {
     this.urls = {
       auth: {
         register: baseUrl + 'auth/register',
@@ -77,23 +74,20 @@ class Config {
         removeSubCategory: baseUrl + 'admin/remove-sub-category/',
         updateSubCategory: baseUrl + 'admin/update-sub-category',
       },
-      socket: {
-        connect: baseUrl + 'socket/connect',
-        disconnect: baseUrl + 'socket/disconnect'
-      },
+      socket: socketUrl,
     }
   };
 }
 
 class DevelopmentConfig extends Config {
   constructor() {
-    super("http://127.0.0.1:5000/api/");
+    super("http://127.0.0.1:5000/api/", "http://127.0.0.1:5000/");
   };
 }
 
 class ProductionConfig extends Config {
   constructor() {
-    super("https://k6u7v23xwh.execute-api.eu-central-1.amazonaws.com/api/");
+    super(process.env.REACT_APP_BASE_URL, process.env.REACT_APP_SOCKET_URL);
   };
 }
 
