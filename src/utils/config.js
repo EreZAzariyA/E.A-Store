@@ -32,6 +32,7 @@ class Config {
       resetCart: "",
     },
     order: {
+      fetchUserOrders: "",
       createOrder: "",
     },
     socket: ""
@@ -59,6 +60,7 @@ class Config {
         resetCart: baseUrl + 'shopping-carts/reset/'
       },
       order: {
+        fetchUserOrders: baseUrl + 'orders/user-orders/',
         createOrder: baseUrl + 'orders/create-order',
       },
       admin: {

@@ -66,7 +66,7 @@ export const getFullName = (user) => {
 };
 
 export const getEmail = (user) => {
-  return user.emails?.email;
+  return user.emails[0].email;
 };
 
 export const brands = {

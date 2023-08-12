@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 const FooterButtons = {
   KeepShopping: 'KeepShopping',
   Continue: 'Continue',
+  Update: 'Update',
   UserCoupon: 'UserCoupon',
 }
 
 export const UserCartFooter = (props) => {
-  const { onCreateOrder } = props;
+  const { order, onCreateOrder, onUpdateOrder } = props;
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -24,6 +25,9 @@ export const UserCartFooter = (props) => {
       break;
       case FooterButtons.Continue:
         onCreateOrder();
+      break;
+      case FooterButtons.Update:
+        onUpdateOrder();
       break;
     }
   };
@@ -44,7 +48,11 @@ export const UserCartFooter = (props) => {
         </Col>
 
         <Col md={{ span: 12, order: 0 }} xs={{ span: 24, order: 1 }}>
-          <Button onClick={() => handleButton(FooterButtons.Continue)}>Continue With The Purchase</Button>
+          {order ?
+            <Button onClick={() => handleButton(FooterButtons.Update)}>Update Your Last Purchase</Button>
+          :
+            <Button onClick={() => handleButton(FooterButtons.Continue)}>Continue With The Purchase</Button>
+          }
         </Col>
 
         <Col md={{ span: 6 }} xs={{ span: 12 }}>

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
 import { Col, Input, Layout, Row } from "antd";
 import { storeServices } from "../../../services/store-services";
+import { ordersServices } from "../../../services/orders-services";
 
 const { Header } = Layout;
 
@@ -13,14 +14,22 @@ export const DashboardHeader = () => {
   const isAdmin = user?.admin || false;
 
   useEffect(() => {
-    const fetchAllData = async () => {
+    const fetchStoreData = async () => {
       await storeServices.fetchAllProducts();
       await storeServices.fetchAllCategories();
       await storeServices.fetchAllSubCategories();
-      await shoppingCartServices.fetchUserShoppingCart(user?._id);
     };
 
-    fetchAllData();
+    fetchStoreData();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      await shoppingCartServices.fetchUserShoppingCart(user?._id);
+      await ordersServices.fetchUserOrdersByUser_id(user?._id);
+    };
+
+    fetchUserData();
   }, [user]);
 
   return (
