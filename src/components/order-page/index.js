@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux"
 import { OrderSummary } from "./order-summary";
 import { CustomDivider } from "../components/Divider";
@@ -6,6 +6,7 @@ import { ordersServices } from "../../services/orders-services";
 import { getEmail, getFullName } from "../../utils/helpers";
 import { Button, Checkbox, Col, Form, Input, Row } from "antd"
 import "./order.css";
+import { shoppingCartServices } from "../../services/shoppingCart-services";
 
 export const Order = ({ order, products, totalPrice, onBack }) => {
   const user = useSelector((state) => state.auth?.user);
@@ -16,16 +17,22 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
   const [initialValues, setInitialValues] = useState({
     first_name: user.profile?.first_name || '',
     last_name: user.profile?.last_name || '',
-    phone: order?.phone || '',
-    address: order?.address || '',
-    isBusiness: order?.isBusiness || false,
-    invoice_name: order?.invoice_name,
-    invoice_address: order?.invoice_address,
+    phone: order?.phone || shoppingCart.order_details?.phone || '',
+    address: order?.address || shoppingCart.order_details?.address || '',
+    isBusiness: order?.isBusiness || shoppingCart.order_details?.isBusiness || false,
+    invoice_name: order?.invoice_name || shoppingCart.order_details?.invoice_name || '',
+    invoice_address: order?.invoice_address || shoppingCart.order_details?.invoice_address || '',
   });
 
   const onFinish = async (values) => {
     setInitialValues(values);
     setIsDetailsLock(true);
+    try {
+      const updatedCart = await shoppingCartServices.updateCartOrderDetails(shoppingCart._id, initialValues);
+      console.log(updatedCart);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onProceedToPayment = async () => {

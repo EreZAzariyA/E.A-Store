@@ -23,6 +23,7 @@ class Config {
     },
     shoppingCart: {
       fetchUserShoppingCart: "",
+      updateCartOrderDetails: "",
       addProductToCart: "",
       updateStockInCart: "",
       addProductToFavorites: "",
@@ -49,6 +50,7 @@ class Config {
       },
       shoppingCart: {
         fetchUserShoppingCart: baseUrl + 'shopping-carts/fetch-user-cart/',
+        updateCartOrderDetails: baseUrl + 'shopping-carts/update-cart-order-details/',
         addProductToCart: baseUrl + 'shopping-carts/add-product-to-cart/',
         updateStockInCart: baseUrl + 'shopping-carts/update-product-stock-in-cart',
         addProductToFavorites: baseUrl + 'shopping-carts/add-product-to-favorites/',
