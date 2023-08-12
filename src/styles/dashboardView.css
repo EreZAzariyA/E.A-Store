@@ -2,6 +2,10 @@
   height: 100%;
 }
 
+.layout .ant-layout-content {
+  padding: 10px;
+}
+
 .layout.main-layout .site-layout {
   padding: 0 20px;
   overflow: auto;

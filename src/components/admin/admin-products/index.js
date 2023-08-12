@@ -148,7 +148,7 @@ export const ProductsTable = () => {
   ];
 
   return (
-    <Space direction="vertical" style={{width: '99%'}}>
+    <Space direction="vertical" className="w-100">
       {!step && (
         <>
           <Space align="center" wrap>

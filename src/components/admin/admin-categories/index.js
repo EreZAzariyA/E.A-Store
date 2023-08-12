@@ -13,19 +13,15 @@ const Steps = {
 
 export const CategoriesTable = () => {
   const products = useSelector((state) => (state.products));
-  const categories = useSelector((state) => (state.categories));
-
-  const [category, setCategory] = useState(null);
-  const [filteredCategories, setFilteredCategories] = useState([...categories]);
-  const [step, setStep] = useState(null);
+  const allCategories = useSelector((state) => (state.categories));
   const [filterState, setFilterState] = useState({
     category: ''
   });
+  const categories = filtering();
 
-  useEffect(() => {
-    const f = filtering();
-    setFilteredCategories(f);
-  }, []);
+  const [category, setCategory] = useState(null);
+  const [step, setStep] = useState(null);
+
 
   useEffect(() => {
     if (step && step === Steps.ADD_CATEGORY) {
@@ -33,13 +29,11 @@ export const CategoriesTable = () => {
     }
   }, [step]);
 
-  const filtering = () => {
-    let filteredCategories = categories;
+  function filtering() {
+    let filteredCategories = [...allCategories];
 
     if (filterState.category) {
-      setFilteredCategories([...categories]?.filter((c) => {
-        return c.category.toLowerCase().startsWith(filterState.category.toLowerCase())
-      }));
+      filteredCategories.filter((c) => (c.category.toLowerCase().startsWith(filterState.category.toLowerCase())));
     }
 
     return filteredCategories;
@@ -124,43 +118,43 @@ export const CategoriesTable = () => {
   ];
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
-    {!step && (
-      <>
-        <Space align="center" wrap>
-          <Input
-            type="text"
-            placeholder='Search category'
-            onChange={(val) => setFilterState({...filterState, category: val.target.value})}
+    <Space direction="vertical" className="w-100">
+      {!step && (
+        <>
+          <Space>
+            <Input
+              type="text"
+              placeholder='Search category'
+              onChange={(val) => setFilterState({...filterState, category: val.target.value})}
+            />
+          </Space>
+          <EditTable
+            loading={!categories}
+            rowKey={'_id'}
+            columns={columns}
+            dataSource={categories}
+            type={ComponentsTypes.CATEGORIES}
+            handleAdd={() => setStep(Steps.ADD_CATEGORY)}
+            onEditMode={handleEditMode}
           />
-        </Space>
-        <EditTable
-          loading={!categories}
-          rowKey={'_id'}
-          columns={columns}
-          dataSource={categories}
-          type={ComponentsTypes.CATEGORIES}
-          handleAdd={() => setStep(Steps.ADD_CATEGORY)}
-          onEditMode={handleEditMode}
-        />
-      </>
-    )}
+        </>
+      )}
 
-    {(step && step === Steps.ADD_CATEGORY) && (
-      <AdminInsert
-        type={ComponentsTypes.CATEGORIES}
-        onBack={() => setStep(null)}
-        onFinish={onFinish}
-      />
-    )}
-    {(step && step === Steps.UPDATE_CATEGORY) && (
-      <AdminInsert
-        type={ComponentsTypes.CATEGORIES}
-        onBack={() => setStep(null)}
-        onFinish={onFinish}
-        record={category}
-      />
-    )}
+      {(step && step === Steps.ADD_CATEGORY) && (
+        <AdminInsert
+          type={ComponentsTypes.CATEGORIES}
+          onBack={() => setStep(null)}
+          onFinish={onFinish}
+        />
+      )}
+      {(step && step === Steps.UPDATE_CATEGORY) && (
+        <AdminInsert
+          type={ComponentsTypes.CATEGORIES}
+          onBack={() => setStep(null)}
+          onFinish={onFinish}
+          record={category}
+        />
+      )}
     </Space>
   );
 };
