@@ -1,0 +1,123 @@
+.credit-card-container {
+  min-width: 350px;
+  border-radius: 15px;
+  height: 200px;
+  
+  background: url('/src/assets/images/credit-card/creditcardFront.jpg');
+  background-size: cover;
+  color: white;
+}
+
+.credit-card-container .card-wrapper {
+
+  transform: rotateY(0deg);
+  transition: transform 0.8s;
+
+  backface-visibility: hidden;
+}
+
+.credit-card-container .card-wrapper.flipped {
+  background: url('/src/assets/images/credit-card/creditcardBack.jpg');
+  background-size: cover;
+
+  transform: rotateY(180deg);
+
+}
+
+.credit-card-container .card-wrapper .card-back {
+  display: none;
+}
+
+
+
+/* 
+
+.credit-card-container .card-wrapper .card-front {
+
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform 0.8s;
+
+} */
+
+/* 
+.card-wrapper {
+  border: 1px solid black;
+  border-radius: 15px;
+  height: 200px;
+  min-width: 350px;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform 0.8s;
+  
+  backface-visibility: hidden;
+}
+
+.card-wrapper.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-wrapper.flipped .card-back {
+  border: 1px solid black;
+  border-radius: 15px;
+  height: 200px;
+  min-width: 350px;
+}
+ */
+
+/* .credit-card-container .card-wrapper.flipped {
+  transform: rotateY(180deg);
+}
+
+.credit-card-container .card-wrapper .card-front {
+  background: url('/src/assets/images/credit-card/creditcardFront.jpg');
+  background-size: cover;
+  color: white;
+
+} */
+
+/* .credit-card-container .card-wrapper.flipped .back {
+  transform: rotateY(180deg);
+  
+  background: url('/src/assets/images/credit-card/creditcardBack.jpg');
+  background-size: cover;
+
+  color: white;
+} */
+/* 
+.credit-card-container .card-wrapper.flipped .back div {
+  transform: rotateY(180deg);
+}
+
+.credit-card-container .card-wrapper .chip {
+  align-self: flex-start;
+  padding: 0 10px;
+}
+
+.credit-card-container .card-wrapper .chip img {
+  width: 70px;
+}
+
+.credit-card-container .card-wrapper .card-number-input {
+  margin-top: 10px;
+  width: 100%;
+  letter-spacing: 5px;
+}
+
+.credit-card-container .card-wrapper .card-number-input p {
+  font-size: 22px;
+}
+
+.credit-card-container .card-wrapper .details {
+  padding: 0 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+} */

@@ -50,7 +50,7 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
       try {
         await form.validateFields();
         setIsDetailsLock(true);
-        const order = {
+        const newOrder = {
           ...initialValues,
           products,
           totalPrice,
@@ -59,9 +59,10 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
         };
         if (toUpdate) {
           setStep(Steps.UPDATE_PAYMENT);
-          setCreatedOrder(order);
+          setCreatedOrder(newOrder);
         } else {
-          const createdOrder = await ordersServices.createOrder(order);
+          const createdOrder = await ordersServices.createOrder(newOrder);
+          console.log(createdOrder);
           if (createdOrder) {
             setStep(Steps.CREATE_PAYMENT);
             setCreatedOrder(createdOrder);
@@ -221,7 +222,7 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
             {order ?
               <Button size="large" style={{ width: '100%' }} onClick={() => onProceedToPayment(true)}>Proceed To Update Payment</Button>
             :
-              <Button size="large" style={{ width: '100%' }} onClick={onProceedToPayment}>Proceed To Payment</Button>
+              <Button size="large" style={{ width: '100%' }} onClick={() => onProceedToPayment(false)}>Proceed To Payment</Button>
             }
           </div>
         </div>
