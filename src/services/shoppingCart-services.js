@@ -32,7 +32,7 @@ class ShoppingCartServices {
     const response = await axios.post(config.urls.shoppingCart.updateCartOrderDetails, { shoppingCart_id, orderDetails: orderDetails });
     const updatedShoppingCart = response.data;
     store.dispatch(fetchUserCartAction(updatedShoppingCart));
-    return updatedShoppingCart.order_details;
+    return updatedShoppingCart;
   };
 
   /**

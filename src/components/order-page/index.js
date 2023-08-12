@@ -12,7 +12,7 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
   const user = useSelector((state) => state.auth?.user);
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const [form] = Form.useForm();
-  const [isDetailsLock, setIsDetailsLock] = useState(false);
+  const [isDetailsLock, setIsDetailsLock] = useState(shoppingCart?.order_details ? true : false);
 
   const [initialValues, setInitialValues] = useState({
     first_name: user.profile?.first_name || '',
@@ -26,10 +26,11 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
 
   const onFinish = async (values) => {
     setInitialValues(values);
-    setIsDetailsLock(true);
     try {
       const updatedCart = await shoppingCartServices.updateCartOrderDetails(shoppingCart._id, initialValues);
-      console.log(updatedCart);
+      if (updatedCart?.order_details) {
+        setIsDetailsLock(true);
+      }
     } catch (err) {
       console.log(err);
     }

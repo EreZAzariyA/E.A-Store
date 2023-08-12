@@ -10,7 +10,7 @@ const { Header } = Layout;
 
 export const DashboardHeader = () => {
   const user = useSelector((state) => state.auth?.user);
-  const isAdmin = user?.admin;
+  const isAdmin = user?.admin || false;
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -20,9 +20,7 @@ export const DashboardHeader = () => {
       await shoppingCartServices.fetchUserShoppingCart(user?._id);
     };
 
-    if (user) {
-      fetchAllData();
-    }
+    fetchAllData();
   }, [user]);
 
   return (
