@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { Card } from "antd";
-import "./subCategoryCard.css";
 
 export const SubCategoryCard = (props) => {
   const { subCategory } = props;
