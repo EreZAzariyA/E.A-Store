@@ -22,9 +22,8 @@ const UserRouter = () => (
     <BrowserRouter>
       <Routes>
 
-        <Route element={<UserRoute><DashboardView /></UserRoute>}>
+        <Route element={<DashboardView />}>
           <Route path="/" element={<Navigate to={'home'} replace />} />
-
           <Route path="home" element={<Dashboard />} />
           <Route path="my-favorites" element={<Favorites />} />
           <Route path="my-cart" element={<UserCart />} />

@@ -29,7 +29,9 @@ export const DashboardHeader = () => {
       await ordersServices.fetchUserOrdersByUser_id(user?._id);
     };
 
-    fetchUserData();
+    if (user) {
+      fetchUserData();
+    }
   }, [user]);
 
   return (
