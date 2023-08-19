@@ -5,6 +5,7 @@ import productsSlicer from "./slicers/products-slicer";
 import categoriesSlicer from "./slicers/categories-slicer";
 import subCategoriesSlicer from "./slicers/subCategories-slicer";
 import { middleware } from "./middlewares/middleware";
+import orderSlicer from "./slicers/orders-slicer";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     products: productsSlicer.reducer,
     categories: categoriesSlicer.reducer,
     subCategories: subCategoriesSlicer.reducer,
+    orders: orderSlicer.reducer,
   },
   middleware: [...getDefaultMiddleware(), middleware],
 });

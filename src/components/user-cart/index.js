@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { UserCartFooter } from "./cart-footer";
 import { Order } from "../order-page";
@@ -19,11 +19,20 @@ const Steps = {
 
 export const UserCart = () => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
+  const orders = useSelector((state) => state.orders);
   const cartProducts = shoppingCart?.products || [];
   const totalPrice = calculateTotals(cartProducts);
-
+  const [order, setOrder] = useState(null);
   const [step, setStep] = useState(null);
-  const order = null;
+
+
+  useEffect(() => {
+    if (orders && orders.length) {
+      const latestOrder = [...orders].sort((a, b) => b.createdAt > a.createdAt)?.[0] || null;
+      setOrder(latestOrder);
+    }
+  }, [orders]);
+
 
   const onRest = () => {
     confirm({
@@ -56,6 +65,17 @@ export const UserCart = () => {
     }
   };
 
+  const onCreateOrder = () => {
+    setStep(Steps.CREATE_ORDER);
+  };
+  const onUpdateOrder = () => {
+    setStep(Steps.UPDATE_ORDER);
+  };
+
+  const onBack = () => {
+    setStep(null);
+  };
+
   const mainCardTitle = () => (
     <div className="head-container">
       <div className="left">
@@ -80,14 +100,6 @@ export const UserCart = () => {
       </div>
     </div>
   );
-
-  const onCreateOrder = () => {
-    setStep(Steps.CREATE_ORDER);
-  };
-
-  const onBack = () => {
-    setStep(null);
-  };
 
   return (
     <div className="user-cart-container mt-10">
@@ -114,9 +126,11 @@ export const UserCart = () => {
             </div>
           </Card>
           {(cartProducts && cartProducts.length > 0) && (
-            <div className="user-cart-footer">
-              <UserCartFooter onCreateOrder={onCreateOrder} />
-            </div>
+            <>
+              <div className="user-cart-footer">
+                <UserCartFooter order={order} onCreateOrder={onCreateOrder} onUpdateOrder={onUpdateOrder} />
+              </div>
+            </>
           )}
         </>
       )}

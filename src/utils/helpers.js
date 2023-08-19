@@ -1,5 +1,6 @@
 import Icon from '@ant-design/icons';
 
+export const CREDIT_CARD_NUMBER_MAX_LENGTH = 16;
 export const MAX_FILE_SIZE = 2 * 1024 * 1024;  // 2 MB in bytes
 export const acceptedImageFile = '.png, .jpeg, .jpg, .webp';
 export const ALLOWED_TYPES = {
@@ -66,7 +67,7 @@ export const getFullName = (user) => {
 };
 
 export const getEmail = (user) => {
-  return user.emails?.email;
+  return user.emails[0].email;
 };
 
 export const brands = {

@@ -4,18 +4,14 @@ import { Col, Row, Table } from "antd";
 import "./orderSummary.css";
 
 export const OrderSummary = ({products}) => {
-  const [isTableLoading, setIsTableLoading] = useState(true);
   const [subTotalPrice, setSubTotalPrice] = useState(0);
   const deliveryPrice = 0;
 
   useEffect(() => {
-    if (products && products?.length) {
-      for (let product of products) {
-        setSubTotalPrice((perv) => perv + product?.totalPrice || 0);
-      }
-      setIsTableLoading(false);
+    for (let product of products) {
+      setSubTotalPrice((perv) => perv + product?.totalPrice || 0);
     }
-  }, [products]);
+  }, []);
 
   const columns = [
     {
@@ -60,7 +56,6 @@ export const OrderSummary = ({products}) => {
         rowKey={'product_id'}
         columns={columns}
         dataSource={products}
-        loading={isTableLoading}
         pagination={false}
       />
 

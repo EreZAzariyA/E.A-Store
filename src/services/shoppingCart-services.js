@@ -28,6 +28,13 @@ class ShoppingCartServices {
     return shoppingCart;
   };
 
+  updateCartOrderDetails = async (shoppingCart_id, orderDetails) => {
+    const response = await axios.post(config.urls.shoppingCart.updateCartOrderDetails, { shoppingCart_id, orderDetails: orderDetails });
+    const updatedShoppingCart = response.data;
+    store.dispatch(fetchUserCartAction(updatedShoppingCart));
+    return updatedShoppingCart;
+  };
+
   /**
   * Adds a product to the shopping cart.
   *
