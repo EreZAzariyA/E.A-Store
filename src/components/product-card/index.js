@@ -4,20 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
 import { CustomDivider } from "../components/Divider";
 import { RedHeartIcon, HeartIcon, brands } from "../../utils/helpers";
-import { Button, Card, Col, Row, Tooltip } from "antd";
+import { Button, Card, Col, Row, Tooltip, message } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import "./productCard.css";
 
 export const ProductCard = ({ product }) => {
+  const user = useSelector((state) => state.auth?.user);
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const navigate = useNavigate();
   const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    if (shoppingCart?.products && shoppingCart?.favorites) {
+    if (shoppingCart) {
       const isInCart = shoppingCart.products.some((pro) => (
         pro.product_id === product._id
       ));
@@ -27,25 +28,31 @@ export const ProductCard = ({ product }) => {
         pro === product._id
       ));
       setIsFavorite(isInFavorites);
+    } else {
+      setInCart(false);
+      setIsFavorite(false);
     }
   }, [shoppingCart, product]);
 
   const addProductHandler = async () => {
-    const amount = 1;
-    setInCart(true);
+    if (!user) {
+      navigate('/auth/login');
+      return;
+    }
     try {
-      await shoppingCartServices.addProductToCart(product._id, shoppingCart._id, amount);
+      await shoppingCartServices.addProductToCart(product._id, shoppingCart._id, 1);
+      setInCart(true);
     } catch (err) {
-      console.log(err);
+      message.error(err.message);
     }
   };
 
   const removeProductHandler = async () => {
-    setInCart(false);
     try {
       await shoppingCartServices.removeProductFromCart(shoppingCart._id, product._id);
+      setInCart(false);
     } catch (err) {
-      console.log(err);
+      message.error(err.message);
     }
   };
 
@@ -59,7 +66,7 @@ export const ProductCard = ({ product }) => {
       await shoppingCartServices.addProductToFavorites(product._id, shoppingCart._id);
       setIsFavorite(true);
     } catch (err) {
-      console.log(err);
+      message.error(err.message);
     }
   };
 

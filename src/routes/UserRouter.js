@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
-import { UserRoute } from "./user-router/index.js";
 import { Dashboard } from "../components/home-page";
 import { DashboardView } from "../layout/DashboardView";
 import { UserCart } from "../components/user-cart";
