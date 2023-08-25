@@ -25,14 +25,12 @@ export const UserCart = () => {
   const [order, setOrder] = useState(null);
   const [step, setStep] = useState(null);
 
-
   useEffect(() => {
     if (orders && orders.length) {
       const latestOrder = [...orders].sort((a, b) => b.createdAt > a.createdAt)?.[0] || null;
       setOrder(latestOrder);
     }
   }, [orders]);
-
 
   const onRest = () => {
     confirm({
@@ -48,12 +46,13 @@ export const UserCart = () => {
 
   const onResetConfirm = async () => {
     try {
-      await shoppingCartServices.resetCart(shoppingCart?._id);
-      message.success('Shopping cart reset success');
+      const updatedCart = await shoppingCartServices.resetCart(shoppingCart?._id);
+      if (updatedCart) {
+        message.success('Shopping cart reset success');
+      }
     } catch (err) {
-      message.error({
-        content: `Some error with, ${err}`
-      });
+      message.error(`Some error with, ${err}`);
+      return err;
     }
   };
 

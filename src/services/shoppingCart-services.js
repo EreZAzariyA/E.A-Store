@@ -96,8 +96,12 @@ class ShoppingCartServices {
 
 
   resetCart = async (shoppingCart_id) => {
-    await axios.post(config.urls.shoppingCart.resetCart + shoppingCart_id);
-    store.dispatch(resetCartAction());
+    const response = await axios.post(config.urls.shoppingCart.resetCart, {shoppingCart_id: shoppingCart_id});
+    const updatedShoppingCart = response.data;
+    if (updatedShoppingCart) {
+      store.dispatch(resetCartAction());
+    }
+    return updatedShoppingCart;
   };
 }
 
