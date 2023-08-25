@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux"
 import { OrderSummary } from "./order-summary";
 import { CustomDivider } from "../components/Divider";
-import { ordersServices } from "../../services/orders-services";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
 import { getEmail, getFullName } from "../../utils/helpers";
-import { Button, Checkbox, Col, Form, Input, Row } from "antd"
+import { Button, Checkbox, Col, Form, Input, Row, message } from "antd"
 import "./order.css";
 import { Payment } from "../payment";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer,
+} from "@paypal/react-paypal-js";
 
 const Steps = {
   CREATE_PAYMENT: "CREATE_PAYMENT",
@@ -22,6 +26,7 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
   const [createdOrder, setCreatedOrder] = useState(null);
   const [step, setStep] = useState(null);
   const [form] = Form.useForm();
+  console.log(shoppingCart);
 
   const [initialValues, setInitialValues] = useState({
     first_name: user.profile?.first_name || '',
@@ -45,36 +50,89 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
     }
   };
 
-  const onProceedToPayment = async (toUpdate) => {
-    if (!form.isFieldValidating() || isDetailsLock) {
-      try {
-        await form.validateFields();
-        setIsDetailsLock(true);
-        const newOrder = {
-          ...initialValues,
-          products,
-          totalPrice,
-          user_id: user?._id,
-          shoppingCart_id: shoppingCart?._id
-        };
-        if (toUpdate) {
-          setStep(Steps.UPDATE_PAYMENT);
-          setCreatedOrder(newOrder);
-        } else {
-          const createdOrder = await ordersServices.createOrder(newOrder);
-          console.log(createdOrder);
-          if (createdOrder) {
-            setStep(Steps.CREATE_PAYMENT);
-            setCreatedOrder(createdOrder);
-          }
+  // const onProceedToPayment = async (toUpdate) => {
+  //   if (!form.isFieldValidating() || isDetailsLock) {
+  //     try {
+  //       await form.validateFields();
+  //       setIsDetailsLock(true);
+  //       const newOrder = {
+  //         ...initialValues,
+  //         products,
+  //         totalPrice,
+  //         user_id: user?._id,
+  //         shoppingCart_id: shoppingCart?._id
+  //       };
+  //       if (toUpdate) {
+  //         setStep(Steps.UPDATE_PAYMENT);
+  //         setCreatedOrder(newOrder);
+  //       } else {
+  //         const createdOrder = await ordersServices.createOrder(newOrder);
+  //         if (createdOrder) {
+  //           setStep(Steps.CREATE_PAYMENT);
+  //           setCreatedOrder(createdOrder);
+  //         }
+  //       }
+  //     } catch (err) {
+  //       const fields = err.errorFields;
+  //       const firstFieldWithError = fields?.[0]?.name;
+  //       form.scrollToField(firstFieldWithError, { behavior: "smooth" });
+  //     }
+  //   }
+  // };
+
+  const createOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            currency_code: "USD",
+            value: shoppingCart?.products?.reduce((total, product) => total + product.totalPrice, 0), // Total amount for the order
+            breakdown: {
+              item_total: {
+                currency_code: "USD",
+                value: shoppingCart?.products?.reduce((total, product) => total + product.totalPrice, 0) // Total amount for the items (50.00 * 2)
+              }
+            }
+          },
+          items: [...shoppingCart?.products || []].map((product) => ({
+            name: product.name,
+            description: product.description,
+            unit_amount: {
+              currency_code: "USD",
+              value: product.price
+            },
+            quantity: product.amount,
+          })),
+
         }
-      } catch (err) {
-        const fields = err.errorFields;
-        const firstFieldWithError = fields?.[0]?.name;
-        form.scrollToField(firstFieldWithError, { behavior: "smooth" });
-      }
-    }
+      ]
+    });
   };
+
+  const onApprove = (data, actions) => {
+    console.log(data, actions);
+    return actions.order.capture().then(details => {
+      console.log(details);
+      // Handle the payment approval and order details here
+    });
+  };
+
+  const ButtonWrapper = ({ showSpinner }) => {
+    const [{ isPending }] = usePayPalScriptReducer();
+
+    return (
+      <>
+        { (showSpinner && isPending) && <div className="spinner" /> }
+        <PayPalButtons
+          onError={(err) => console.log(err)}
+          style={{shape: 'pill'}}
+          createOrder={createOrder}
+          onApprove={onApprove}
+          onCancel={(data) => { message.error('Cancelled...'); console.log(data); }}
+        />
+      </>
+    );
+  }
 
   return (
     <>
@@ -219,11 +277,23 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
           </div>
 
           <div className="proceed-to-payment">
-            {order ?
+            <div style={{ maxWidth: "750px", minHeight: "200px", margin: 'auto' }}>
+              <PayPalScriptProvider
+                options={{
+                  intent: 'capture',
+                  clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
+                  components: "buttons",
+                  currency: "USD",
+                }}
+              >
+                <ButtonWrapper showSpinner={false} />
+              </PayPalScriptProvider>
+            </div>
+            {/* {order ?
               <Button size="large" style={{ width: '100%' }} onClick={() => onProceedToPayment(true)}>Proceed To Update Payment</Button>
             :
               <Button size="large" style={{ width: '100%' }} onClick={() => onProceedToPayment(false)}>Proceed To Payment</Button>
-            }
+            } */}
           </div>
         </div>
       )}

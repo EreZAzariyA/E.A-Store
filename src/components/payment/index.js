@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { CreditCard } from "../components/credit-card";
-import { Button, DatePicker, Form, Input, Popconfirm } from "antd";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer
+} from "@paypal/react-paypal-js";
 import { CREDIT_CARD_NUMBER_MAX_LENGTH } from "../../utils/helpers";
+import { Button, DatePicker, Form, Input, Popconfirm } from "antd";
 import "./payment.css";
+import { async } from "q";
 
 const Focus = {
   Front: 'Front',
@@ -19,7 +25,6 @@ export const Payment = ({createdOrder, order, onBack}) => {
   });
 
   const handleChange = (value, name) => {
-
     setInitialValues({
       ...initialValues,
       [name]: value ?? ''
@@ -28,15 +33,70 @@ export const Payment = ({createdOrder, order, onBack}) => {
 
   const onFocus = (name) => {
     if (name === 'cvc') {
-      setInitialValues({...initialValues, focus: Focus.Back})
+      setInitialValues({ ...initialValues, focus: Focus.Back })
     } else {
-      setInitialValues({...initialValues, focus: Focus.Front})
+      setInitialValues({ ...initialValues, focus: Focus.Front })
     }
   };
 
   const onFinish = (values) => {
     console.log(values);
   };
+  const style = {"layout":"vertical"};
+
+  async function createOrder() {
+    const response = await fetch("https://react-paypal-js-storybook.fly.dev/api/paypal/create-order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      cart: [
+        {
+          sku: "1blwyeo8",
+          quantity: 2,
+        },
+      ],
+    }),
+    });
+    const order = await response.json();
+    console.log(order);
+    return order.id;
+  }
+
+  async function onApprove(data) {
+    return fetch("https://react-paypal-js-storybook.fly.dev/api/paypal/capture-order", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          orderID: data.orderID,
+      }),
+    })
+      .then((response) => response.json())
+      .then((orderData) => {
+          // Your code here after capture the order
+      });
+  }
+
+  const ButtonWrapper = ({ showSpinner }) => {
+    const [{ isPending }] = usePayPalScriptReducer();
+
+    return (
+      <>
+        { (showSpinner && isPending) && <div className="spinner" /> }
+        <PayPalButtons
+          style={style}
+          disabled={false}
+          forceReRender={[style]}
+          fundingSource={undefined}
+          createOrder={createOrder}
+          onApprove={onApprove}
+        />
+      </>
+    );
+  }
 
   return (
     <div className="payment-container">
@@ -49,9 +109,20 @@ export const Payment = ({createdOrder, order, onBack}) => {
         </Popconfirm>
       </div>
 
-      <CreditCard {...initialValues} />
+      <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+        <PayPalScriptProvider
+          options={{
+            clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
+            components: "buttons",
+            currency: "USD"
+          }}
+        >
+          <ButtonWrapper showSpinner={false} />
+        </PayPalScriptProvider>
+      </div>
 
-      <Form
+      {/* <CreditCard {...initialValues} /> */}
+      {/* <Form
         className="mt-20"
         initialValues={initialValues}
         onFinish={onFinish}
@@ -72,7 +143,7 @@ export const Payment = ({createdOrder, order, onBack}) => {
           <Input allowClear type="tel" maxLength={3} onChange={(e) => handleChange(e.target.value, 'cvc')} onFocus={() => onFocus('cvc')} />
         </Form.Item>
 
-      </Form>
+      </Form> */}
     </div>
   );
 };
