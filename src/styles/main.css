@@ -1,3 +1,16 @@
+.logo {
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  font-family: "Times New Roman", Times, serif;
+  padding: 10px;
+  margin: auto;
+
+  max-width: 150px;
+  min-width: 120px;
+}
+
 .editable-row .long-text-field {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -5,8 +18,3 @@
   overflow: hidden;
   width: 100%;
 }
-/* 
-.insert-form {
-  width: 80%;
-  margin: auto;
-} */

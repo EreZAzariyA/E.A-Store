@@ -15,9 +15,19 @@
   height: auto;
   border-radius: 8px;
   background-color: white;
-  padding: 10px 20px;
+  padding: 0 10px;
 }
 
-.order-page > div.proceed-to-payment {
-  padding: 0;
+.order-page .order-form-title {
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-align: left;
+}
+
+.order-page div.payment .paypal-buttons {
+  max-width: 750px;
+  min-height: 200px;
+  margin: auto;
+  padding: 20px 0;
 }

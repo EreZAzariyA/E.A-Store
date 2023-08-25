@@ -1,21 +1,33 @@
-import { Badge, Button, Col, Dropdown, Row, Space, Tooltip } from "antd";
-import UserOutlined from "@ant-design/icons/UserOutlined";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { authServices } from "../../../services/auth-services";
 import { HeartIcon } from "../../../utils/helpers";
-import { useNavigate } from "react-router-dom";
-import { ShoppingCartOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import UserOutlined from "@ant-design/icons/UserOutlined";
+import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
+import { Badge, Button, Col, Dropdown, Row, Space, Tooltip } from "antd";
+
+let items = [];
 
 export const PersonalArea = () => {
-  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth?.user);
   const products = useSelector((state) => state.shoppingCart?.products);
+  const navigate = useNavigate();
 
-  const items = [
-    {
+  if (user) {
+    items = [{
       label: <Button type="text" danger>Logout</Button>,
       key: 'logout', onClick: () => authServices.logout()
+    }];
+  } else {
+    items = [{
+      label: 'Login',
+      key: 'login', onClick: () => navigate('auth/login')
     },
-  ];
+    {
+      label: 'Register',
+      key: 'register', onClick: () => navigate('auth/register')
+    }];
+  }
 
   return (
     <Row align={'middle'} justify={'space-evenly'}>

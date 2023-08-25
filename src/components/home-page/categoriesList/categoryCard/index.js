@@ -12,7 +12,7 @@ export const CategoryCard = (props) => {
       hoverable
       style={{
         width: 240,
-        borderRadius: '50%'
+        borderRadius: '50%',
       }}
     >
       <img alt="example" style={{width: '150px', height: '120px', objectFit: 'contain'}} src={category?.image_url} />

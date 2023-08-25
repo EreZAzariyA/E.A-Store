@@ -20,11 +20,10 @@ const Steps = {
 export const UserCart = () => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const orders = useSelector((state) => state.orders);
-  const cartProducts = shoppingCart?.products || [];
-  const totalPrice = calculateTotals(cartProducts);
   const [order, setOrder] = useState(null);
   const [step, setStep] = useState(null);
-
+  const cartProducts = shoppingCart?.products || [];
+  const totalPrice = calculateTotals(cartProducts);
 
   useEffect(() => {
     if (orders && orders.length) {
@@ -32,7 +31,6 @@ export const UserCart = () => {
       setOrder(latestOrder);
     }
   }, [orders]);
-
 
   const onRest = () => {
     confirm({
@@ -48,12 +46,13 @@ export const UserCart = () => {
 
   const onResetConfirm = async () => {
     try {
-      await shoppingCartServices.resetCart(shoppingCart?._id);
-      message.success('Shopping cart reset success');
+      const updatedCart = await shoppingCartServices.resetCart(shoppingCart?._id);
+      if (updatedCart) {
+        message.success('Shopping cart reset success');
+      }
     } catch (err) {
-      message.error({
-        content: `Some error with, ${err}`
-      });
+      message.error(`Some error with, ${err}`);
+      return err;
     }
   };
 
@@ -65,15 +64,8 @@ export const UserCart = () => {
     }
   };
 
-  const onCreateOrder = () => {
-    setStep(Steps.CREATE_ORDER);
-  };
-  const onUpdateOrder = () => {
-    setStep(Steps.UPDATE_ORDER);
-  };
-
-  const onBack = () => {
-    setStep(null);
+  const handleStepChange = (step) => {
+    setStep(step);
   };
 
   const mainCardTitle = () => (
@@ -128,7 +120,11 @@ export const UserCart = () => {
           {(cartProducts && cartProducts.length > 0) && (
             <>
               <div className="user-cart-footer">
-                <UserCartFooter order={order} onCreateOrder={onCreateOrder} onUpdateOrder={onUpdateOrder} />
+                <UserCartFooter
+                  order={order}
+                  onCreateOrder={() => handleStepChange(Steps.CREATE_ORDER)}
+                  onUpdateOrder={() => handleStepChange(Steps.UPDATE_ORDER)}
+                />
               </div>
             </>
           )}
@@ -138,8 +134,7 @@ export const UserCart = () => {
       {(step === Steps.CREATE_ORDER) && (
         <Order
           products={cartProducts}
-          totalPrice={totalPrice}
-          onBack={onBack}
+          onBack={() => handleStepChange(null)}
         />
       )}
 
@@ -147,8 +142,7 @@ export const UserCart = () => {
         <Order
           order={order}
           products={cartProducts}
-          totalPrice={totalPrice}
-          onBack={onBack}
+          onBack={() => handleStepChange(null)}
         />
       )}
     </div>

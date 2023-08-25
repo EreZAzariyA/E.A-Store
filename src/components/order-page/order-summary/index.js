@@ -57,6 +57,7 @@ export const OrderSummary = ({products}) => {
         columns={columns}
         dataSource={products}
         pagination={false}
+        scroll={{ x: 600 }}
       />
 
       <div className="sub-total mt-20">

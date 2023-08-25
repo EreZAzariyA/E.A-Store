@@ -57,7 +57,7 @@ class Config {
         addProductToFavorites: baseUrl + 'shopping-carts/add-product-to-favorites/',
         removeProductFromCart: baseUrl + 'shopping-carts/remove-product-from-cart/',
         removeProductFromFavorites: baseUrl + 'shopping-carts/remove-product-from-favorites/',
-        resetCart: baseUrl + 'shopping-carts/reset/'
+        resetCart: baseUrl + 'shopping-carts/reset-shopping-cart/'
       },
       order: {
         fetchUserOrders: baseUrl + 'orders/user-orders/',

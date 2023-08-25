@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { PersonalArea } from "./PersonalArea";
-import { PromotionsArea } from "./PromotionsArea";
 import { useSelector } from "react-redux";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
 import { Col, Input, Layout, Row } from "antd";
 import { storeServices } from "../../../services/store-services";
 import { ordersServices } from "../../../services/orders-services";
+import { Logo } from "../../../components/components/Logo";
 
 const { Header } = Layout;
 
@@ -29,7 +29,9 @@ export const DashboardHeader = () => {
       await ordersServices.fetchUserOrdersByUser_id(user?._id);
     };
 
-    fetchUserData();
+    if (user) {
+      fetchUserData();
+    }
   }, [user]);
 
   return (
@@ -43,8 +45,8 @@ export const DashboardHeader = () => {
           </Row>
 
           <Row justify={'space-evenly'} align={'middle'}>
-            <Col span={6} className="promotions">
-              <PromotionsArea />
+            <Col span={6}>
+              <Logo />
             </Col>
 
             <Col span={12} className="search">

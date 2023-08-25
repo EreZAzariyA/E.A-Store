@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, Menu } from "antd";
 import { useSelector } from "react-redux";
 
@@ -10,28 +10,19 @@ export const DashboardWrapper = () => {
   const [ pathOptions, setPathOptions] = useState([]);
   const [ current, setCurrent ] = useState('');
 
-  const { category_id } = useParams();
-  const [activeBreadcrumb, setActiveBreadcrumb] = useState(category_id);
-
   useEffect(() => {
-    setActiveBreadcrumb(category_id);
-  }, [category_id]);
-
-  useEffect(() => {
-    let locationArray = location.pathname.split('/');
-    const current = [...locationArray].pop();
-    setCurrent(current);
-    const toUnIncudes = ['', 'home'];
-    locationArray = locationArray.filter((path) => !toUnIncudes.includes(path));
+    const locationArray = location.pathname.split('/').filter((path) => path !== '' && path !== 'home');
+    const [,, categoryIdPath] = locationArray;
+    setCurrent(categoryIdPath);
 
     const options = [];
     for (let i = 0; i < locationArray.length; i++) {
-      const parentPath = locationArray[i - 1];
+      const parentPath = locationArray.slice(0, i).join('/');
       const path = locationArray[i];
 
       options.push({
         title: (
-          <Link to={`${parentPath ? ('/' + parentPath) : ''}/${path}`}>
+          <Link to={`${parentPath}/${path}`}>
             {path}
           </Link>
         )
@@ -39,7 +30,6 @@ export const DashboardWrapper = () => {
     }
 
     setPathOptions(options);
-    // setCurrent([...locationArray].pop());
   }, [location.pathname, navigate]);
 
   const defaultItems = [
@@ -67,9 +57,7 @@ export const DashboardWrapper = () => {
 
       {pathOptions.length > 0 &&
         <Breadcrumb
-          items={[
-            {title: <Link to={'/'}>Home</Link>}
-          ].concat(pathOptions)}
+          items={[{title: <Link to={'/'}>Home</Link>}, ...pathOptions]}
         />
       }
     </>

@@ -23,26 +23,37 @@ export const CreditCard = ({number, name, date, cvc, focus}) => {
   const isFlipped = focus === Focus.Back;
 
   return (
-    <div className="credit-card-container">
-      <div className={`card-wrapper ${isFlipped ? 'flipped' : ''}`}>
+    <div className={`credit-card-container ${isFlipped ? 'flipped' : ''}`}>
+      <div className="card-wrapper">
+        <div className="card-front">
+          <div className="chip">
+            <img src={chipImage} alt="" />
+          </div>
 
+          <div className="card-number-input">
+            <p>{formatCreditCardNumber(number) || 'xxxx-xxxx-xxxx-xxxx'}</p>
+          </div>
+
+          <div className="details">
+            <div className="name">{name || 'should-fill'}</div>
+            <div className="expire">{date ? dayjs(date).format('YYYY-MM') : 'should-fill'}</div>
+          </div>
+        </div>
+
+        <div className="card-back">
+          <div className="line"></div>
+          <div className="cvc-number">
+            <p>{cvc || '000'}</p>
+          </div>
+        </div>
       </div>
-
     </div>
-  )
-
-}
+  );
+};
 
 // {!isFlipped && (
 //   <div className="card-front">
-//     <p>front</p>
-//     {/* <div className="chip">
-//       <img src={chipImage} alt="" />
-//     </div>
 
-//     <div className="card-number-input">
-//       <p>{formatCreditCardNumber(number) || 'xxxx-xxxx-xxxx-xxxx'}</p>
-//     </div>
 
 //     <div className="details">
 //       <div className="name">{name || 'should-fill'}</div>

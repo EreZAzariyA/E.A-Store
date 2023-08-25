@@ -1,25 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux"
 import { OrderSummary } from "./order-summary";
 import { CustomDivider } from "../components/Divider";
-import { ordersServices } from "../../services/orders-services";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
 import { getEmail, getFullName } from "../../utils/helpers";
-import { Button, Checkbox, Col, Form, Input, Row } from "antd"
+import { Button, Checkbox, Col, Form, Input, Row, message } from "antd"
 import "./order.css";
-import { Payment } from "../payment";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer,
+} from "@paypal/react-paypal-js";
+import { ResultView } from "../components/ResultView";
 
 const Steps = {
-  CREATE_PAYMENT: "CREATE_PAYMENT",
-  UPDATE_PAYMENT: "UPDATE_PAYMENT",
-  PAYMENT: "PAYMENT",
+  COMPLETED: "COMPLETED",
 };
 
-export const Order = ({ order, products, totalPrice, onBack }) => {
+export const Order = ({ order, products, onBack }) => {
   const user = useSelector((state) => state.auth?.user);
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const [isDetailsLock, setIsDetailsLock] = useState((shoppingCart?.order_details || order) ? true : false);
-  const [createdOrder, setCreatedOrder] = useState(null);
   const [step, setStep] = useState(null);
   const [form] = Form.useForm();
 
@@ -45,35 +46,58 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
     }
   };
 
-  const onProceedToPayment = async (toUpdate) => {
-    if (!form.isFieldValidating() || isDetailsLock) {
-      try {
-        await form.validateFields();
-        setIsDetailsLock(true);
-        const newOrder = {
-          ...initialValues,
-          products,
-          totalPrice,
-          user_id: user?._id,
-          shoppingCart_id: shoppingCart?._id
-        };
-        if (toUpdate) {
-          setStep(Steps.UPDATE_PAYMENT);
-          setCreatedOrder(newOrder);
-        } else {
-          const createdOrder = await ordersServices.createOrder(newOrder);
-          console.log(createdOrder);
-          if (createdOrder) {
-            setStep(Steps.CREATE_PAYMENT);
-            setCreatedOrder(createdOrder);
-          }
+  const createOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            currency_code: "USD",
+            value: shoppingCart?.products?.reduce((total, product) => total + product.totalPrice, 0), // Total amount for the order
+            breakdown: {
+              item_total: {
+                currency_code: "USD",
+                value: shoppingCart?.products?.reduce((total, product) => total + product.totalPrice, 0) // Total amount for the items (50.00 * 2)
+              }
+            }
+          },
+          items: [...shoppingCart?.products || []].map((product) => ({
+            name: product.name,
+            description: product.description,
+            unit_amount: {
+              currency_code: "USD",
+              value: product.price
+            },
+            quantity: product.amount,
+          })),
+
         }
-      } catch (err) {
-        const fields = err.errorFields;
-        const firstFieldWithError = fields?.[0]?.name;
-        form.scrollToField(firstFieldWithError, { behavior: "smooth" });
-      }
-    }
+      ]
+    });
+  };
+
+  const onApprove = (data, actions) => {
+    console.log(data, actions);
+    return actions.order.capture().then(details => {
+      setStep(Steps[details.status]);
+      console.log(details);
+    });
+  };
+
+  const ButtonWrapper = ({ showSpinner }) => {
+    const [{ isPending }] = usePayPalScriptReducer();
+
+    return (
+      <>
+        { (showSpinner && isPending) && <div className="spinner" /> }
+        <PayPalButtons
+          onError={(err) => console.log(err)}
+          style={{shape: 'pill'}}
+          createOrder={createOrder}
+          onApprove={onApprove}
+          onCancel={(data) => { message.error('Cancelled...'); console.log(data); }}
+        />
+      </>
+    );
   };
 
   return (
@@ -86,8 +110,9 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
             <Button type="link" onClick={onBack}>Back to previous page</Button>
           </div>
 
-          {!isDetailsLock && (
-            <div className="order-form">
+          <div className={`order-form ${isDetailsLock ? 'locked' : ''}`}>
+            <p className="order-form-title">Shopping Details</p>
+            {!isDetailsLock && (
               <Form
                 form={form}
                 layout="vertical"
@@ -192,52 +217,50 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
                 </Row>
 
               </Form>
-            </div>
-          )}
-          {isDetailsLock && (
-            <div className="order-form locked">
-              {initialValues?.isBusiness && (initialValues?.invoice_name || initialValues?.invoice_address) ? (
-                <h4>
-                  {initialValues.invoice_name && (
-                    <span>{initialValues.invoice_name} </span>
-                  )}
-                  {initialValues.invoice_address && (
-                    <span>{initialValues.invoice_address}</span>
-                  )}
-                </h4>
-              ) : (
-                <h4>{getFullName(user)}</h4>
-              )}
-              <p>E-mail: {getEmail(user)}</p>
-              <p>Phone: {initialValues.phone}</p>
-              <Button type="link" onClick={() => setIsDetailsLock(false)}>Edit Details</Button>
-            </div>
-          )}
+            )}
+            {isDetailsLock && (
+              <>
+                {initialValues?.isBusiness && (initialValues?.invoice_name || initialValues?.invoice_address) ? (
+                  <h4>
+                    {initialValues.invoice_name && (
+                      <span>{initialValues.invoice_name} </span>
+                    )}
+                    {initialValues.invoice_address && (
+                      <span>{initialValues.invoice_address}</span>
+                    )}
+                  </h4>
+                ) : (
+                  <h4>{getFullName(user)}</h4>
+                )}
+                <p>E-mail: {getEmail(user)}</p>
+                <p>Phone: {initialValues.phone}</p>
+                <Button type="link" onClick={() => setIsDetailsLock(false)}>Edit Details</Button>
+              </>
+            )}
+          </div>
 
           <div className="order-summary">
             <OrderSummary products={products} />
           </div>
 
-          <div className="proceed-to-payment">
-            {order ?
-              <Button size="large" style={{ width: '100%' }} onClick={() => onProceedToPayment(true)}>Proceed To Update Payment</Button>
-            :
-              <Button size="large" style={{ width: '100%' }} onClick={() => onProceedToPayment(false)}>Proceed To Payment</Button>
-            }
+          <div className="payment">
+            <div className="paypal-buttons">
+              <PayPalScriptProvider
+                options={{
+                  intent: 'capture',
+                  clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
+                  components: "buttons",
+                  currency: "USD",
+                }}
+              >
+                <ButtonWrapper showSpinner={false} />
+              </PayPalScriptProvider>
+            </div>
           </div>
         </div>
       )}
-      {(step && step === Steps.CREATE_PAYMENT) && (
-        <Payment
-          createdOrder={createdOrder}
-          onBack={() => setStep(null)}
-        />
-      )}
-      {(step && step === Steps.UPDATE_PAYMENT) && (
-        <Payment
-          order={order}
-          onBack={() => setStep(null)}
-        />
+      {(step && step === Steps.COMPLETED) && (
+        <ResultView />
       )}
     </>
   );
