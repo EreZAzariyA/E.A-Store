@@ -57,6 +57,10 @@ export const ProductCard = ({ product }) => {
   };
 
   const favoritesHandler = async (name) => {
+    if (!user) {
+      navigate('/auth/login');
+      return;
+    }
     try {
       if (name === 'remove') {
         await shoppingCartServices.removeProductFromFavorites(shoppingCart._id, product._id);
