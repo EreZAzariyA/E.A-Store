@@ -26,7 +26,6 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
   const [createdOrder, setCreatedOrder] = useState(null);
   const [step, setStep] = useState(null);
   const [form] = Form.useForm();
-  console.log(shoppingCart);
 
   const [initialValues, setInitialValues] = useState({
     first_name: user.profile?.first_name || '',
@@ -49,36 +48,6 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
       console.log(err);
     }
   };
-
-  // const onProceedToPayment = async (toUpdate) => {
-  //   if (!form.isFieldValidating() || isDetailsLock) {
-  //     try {
-  //       await form.validateFields();
-  //       setIsDetailsLock(true);
-  //       const newOrder = {
-  //         ...initialValues,
-  //         products,
-  //         totalPrice,
-  //         user_id: user?._id,
-  //         shoppingCart_id: shoppingCart?._id
-  //       };
-  //       if (toUpdate) {
-  //         setStep(Steps.UPDATE_PAYMENT);
-  //         setCreatedOrder(newOrder);
-  //       } else {
-  //         const createdOrder = await ordersServices.createOrder(newOrder);
-  //         if (createdOrder) {
-  //           setStep(Steps.CREATE_PAYMENT);
-  //           setCreatedOrder(createdOrder);
-  //         }
-  //       }
-  //     } catch (err) {
-  //       const fields = err.errorFields;
-  //       const firstFieldWithError = fields?.[0]?.name;
-  //       form.scrollToField(firstFieldWithError, { behavior: "smooth" });
-  //     }
-  //   }
-  // };
 
   const createOrder = (data, actions) => {
     return actions.order.create({
@@ -132,7 +101,7 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
         />
       </>
     );
-  }
+  };
 
   return (
     <>
@@ -144,8 +113,9 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
             <Button type="link" onClick={onBack}>Back to previous page</Button>
           </div>
 
-          {!isDetailsLock && (
-            <div className="order-form">
+          <div className={`order-form ${isDetailsLock ? 'locked' : ''}`}>
+            <p className="order-form-title">Shopping Details</p>
+            {!isDetailsLock && (
               <Form
                 form={form}
                 layout="vertical"
@@ -250,27 +220,27 @@ export const Order = ({ order, products, totalPrice, onBack }) => {
                 </Row>
 
               </Form>
-            </div>
-          )}
-          {isDetailsLock && (
-            <div className="order-form locked">
-              {initialValues?.isBusiness && (initialValues?.invoice_name || initialValues?.invoice_address) ? (
-                <h4>
-                  {initialValues.invoice_name && (
-                    <span>{initialValues.invoice_name} </span>
-                  )}
-                  {initialValues.invoice_address && (
-                    <span>{initialValues.invoice_address}</span>
-                  )}
-                </h4>
-              ) : (
-                <h4>{getFullName(user)}</h4>
-              )}
-              <p>E-mail: {getEmail(user)}</p>
-              <p>Phone: {initialValues.phone}</p>
-              <Button type="link" onClick={() => setIsDetailsLock(false)}>Edit Details</Button>
-            </div>
-          )}
+            )}
+            {isDetailsLock && (
+              <>
+                {initialValues?.isBusiness && (initialValues?.invoice_name || initialValues?.invoice_address) ? (
+                  <h4>
+                    {initialValues.invoice_name && (
+                      <span>{initialValues.invoice_name} </span>
+                    )}
+                    {initialValues.invoice_address && (
+                      <span>{initialValues.invoice_address}</span>
+                    )}
+                  </h4>
+                ) : (
+                  <h4>{getFullName(user)}</h4>
+                )}
+                <p>E-mail: {getEmail(user)}</p>
+                <p>Phone: {initialValues.phone}</p>
+                <Button type="link" onClick={() => setIsDetailsLock(false)}>Edit Details</Button>
+              </>
+            )}
+          </div>
 
           <div className="order-summary">
             <OrderSummary products={products} />

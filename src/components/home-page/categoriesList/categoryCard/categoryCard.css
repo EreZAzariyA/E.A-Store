@@ -1,5 +1,5 @@
 .ant-card {
-  background: linear-gradient(180deg, rgba(173, 216, 230, 0.4), transparent);
+  background: linear-gradient(180deg, rgba(173, 216, 230, 0.4), transparent 80%);
   z-index: 1;
   position: relative;
 }
