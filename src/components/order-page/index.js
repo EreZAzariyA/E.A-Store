@@ -12,6 +12,7 @@ import {
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
 import { ResultView } from "../components/ResultView";
+import { ordersServices } from "../../services/orders-services";
 
 const Steps = {
   COMPLETED: "COMPLETED",
@@ -75,8 +76,18 @@ export const Order = ({ order, products, onBack }) => {
     });
   };
 
-  const onApprove = (data, actions) => {
+  const onApprove = async (data, actions) => {
     console.log(data, actions);
+    const newOrder = {
+      ...initialValues,
+      products,
+      user_id: user?._id,
+      shoppingCart_id: shoppingCart?._id
+    };
+
+    const createdOrder = await ordersServices.createOrder(newOrder);
+    console.log(createdOrder);
+
     return actions.order.capture().then(details => {
       setStep(Steps[details.status]);
       console.log(details);
