@@ -9,6 +9,7 @@ import TableOutlined from "@ant-design/icons/TableOutlined";
 import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
 import UploadOutlined from "@ant-design/icons/UploadOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
+import ScheduleOutlined from "@ant-design/icons/ScheduleOutlined";
 
 const { Content, Sider } = Layout;
 
@@ -52,6 +53,11 @@ export const AdminLayout = () => {
         label: 'Upload-Image',
         key: 'upload-image',
         icon: <UploadOutlined />
+      },
+      {
+        label: 'Orders',
+        key: 'orders',
+        icon: <ScheduleOutlined />
       },
       {
         label: <Button danger type="text">Logout</Button>,

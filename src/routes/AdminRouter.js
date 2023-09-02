@@ -14,6 +14,7 @@ import { AuthView } from "../layout/AuthView";
 import { Login } from "../layout/AuthView/login";
 import { Register } from "../layout/AuthView/register";
 import store from "../redux/store";
+import { Orders } from "../components/admin/orders";
 
 const AdminRouter = () => (
   <Provider store={store}>
@@ -28,6 +29,7 @@ const AdminRouter = () => (
           <Route path="categories" element={<CategoriesTable />} />
           <Route path="sub-categories" element={<SubCategoriesTable />} />
           <Route path="upload-image" element={<UploadImage />} />
+          <Route path="orders" element={<Orders />} />
           <Route path="page-not-found" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to={'page-not-found'} replace />} />
         </Route>

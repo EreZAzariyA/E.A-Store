@@ -20,6 +20,7 @@ class Config {
       addSubCategory: "",
       removeSubCategory: "",
       updateSubCategory: "",
+      fetchAllOrders: "",
     },
     shoppingCart: {
       fetchUserShoppingCart: "",
@@ -77,6 +78,8 @@ class Config {
         addSubCategory: baseUrl + 'admin/add-sub-category',
         removeSubCategory: baseUrl + 'admin/remove-sub-category/',
         updateSubCategory: baseUrl + 'admin/update-sub-category',
+
+        fetchAllOrders: baseUrl + 'admin/fetch-orders'
       },
       socket: socketUrl,
     }
