@@ -21,7 +21,7 @@ class InterceptorsService {
     axios.interceptors.response.use((response) => {
       return response;
     }, (err) => {
-      if (err.response.status === 401) {
+      if (err.response?.status === 401) {
         store.dispatch(logoutAction());
       }
       return message.error(getError(err));
