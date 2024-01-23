@@ -38,19 +38,13 @@ export const DashboardHeader = () => {
     <Header>
       {!isAdmin && (
         <>
-          <Row className="top-header-text">
-            <Col span={24}>
-              <p>We guarantee the lowest price in your city of residence for equal delivery and payment terms</p>
-            </Col>
-          </Row>
-
           <Row justify={'space-evenly'} align={'middle'}>
             <Col span={6}>
               <Logo />
             </Col>
 
             <Col span={12} className="search">
-              <Input placeholder="Search products by name or id" />
+              <Input placeholder="Search products by name or ID" />
             </Col>
 
             <Col span={6} className="personal">
