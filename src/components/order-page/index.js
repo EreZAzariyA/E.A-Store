@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { OrderSummary } from "./order-summary";
 import { CustomDivider } from "../components/Divider";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
-import { getEmail, getFullName } from "../../utils/helpers";
+import { OrdersStatus, getEmail, getFullName } from "../../utils/helpers";
 import { Button, Checkbox, Col, Form, Input, Row, message } from "antd"
 import "./order.css";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@paypal/react-paypal-js";
 import { ResultView } from "../components/ResultView";
 import { ordersServices } from "../../services/orders-services";
+import moment from "moment";
 
 const Steps = {
   COMPLETED: "COMPLETED",
@@ -22,6 +23,7 @@ export const Order = ({ order, products, onBack }) => {
   const user = useSelector((state) => state.auth?.user);
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const [isDetailsLock, setIsDetailsLock] = useState((shoppingCart?.order_details || order) ? true : false);
+  const [createdOrder, setCreatedOrder] = useState(null);
   const [step, setStep] = useState(null);
   const [form] = Form.useForm();
 
@@ -77,21 +79,30 @@ export const Order = ({ order, products, onBack }) => {
   };
 
   const onApprove = async (data, actions) => {
-    console.log(data, actions);
     const newOrder = {
       ...initialValues,
+      order_details: {...data},
       products,
       user_id: user?._id,
-      shoppingCart_id: shoppingCart?._id
+      status: OrdersStatus.SENT,
+      shoppingCart_id: shoppingCart?._id,
+      arrival_date: moment().add(5, 'days').valueOf()
     };
 
-    const createdOrder = await ordersServices.createOrder(newOrder);
-    console.log(createdOrder);
+    try {
+      const newCreatedOrder = await ordersServices.createOrder(newOrder);
+      shoppingCartServices.resetCart(shoppingCart?._id);
+      setCreatedOrder(newCreatedOrder);
+      setStep(Steps.COMPLETED);
+    } catch (err) {
+      message.error(err.message);
+    }
 
-    return actions.order.capture().then(details => {
-      setStep(Steps[details.status]);
-      console.log(details);
-    });
+    return actions.order.capture()
+  };
+
+  const handleCancel = ({orderID}) => {
+    message.error(`Order ID: ${orderID} Cancelled...`);
   };
 
   const ButtonWrapper = ({ showSpinner }) => {
@@ -99,13 +110,13 @@ export const Order = ({ order, products, onBack }) => {
 
     return (
       <>
-        { (showSpinner && isPending) && <div className="spinner" /> }
+        {(showSpinner && isPending) && <div className="spinner" /> }
         <PayPalButtons
           onError={(err) => console.log(err)}
           style={{shape: 'pill'}}
           createOrder={createOrder}
           onApprove={onApprove}
-          onCancel={(data) => { message.error('Cancelled...'); console.log(data); }}
+          onCancel={handleCancel}
         />
       </>
     );
@@ -271,7 +282,7 @@ export const Order = ({ order, products, onBack }) => {
         </div>
       )}
       {(step && step === Steps.COMPLETED) && (
-        <ResultView />
+        <ResultView createdOrder={createdOrder} />
       )}
     </>
   );

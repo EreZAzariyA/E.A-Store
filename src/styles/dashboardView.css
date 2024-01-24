@@ -1,5 +1,6 @@
 .layout {
   height: 100%;
+  text-align: center;
 }
 
 .layout .ant-layout-content {
@@ -16,7 +17,7 @@
   height: min-content;
 
   line-height: 5px;
-  padding: 10px 0;
+  padding: 15px 0;
 
   position: sticky;
   top: 0;
@@ -30,6 +31,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.layout .ant-layout-header .personal {
+  max-width: 150px;
 }
 
 @media (max-width: 765px) {

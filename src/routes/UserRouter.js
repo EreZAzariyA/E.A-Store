@@ -16,6 +16,7 @@ import { Register } from "../layout/AuthView/register";
 import { PageNotFound } from "../components/components/PageNotFound";
 import store from "../redux/store";
 import { UserRoute } from "./user-router/index.js";
+import { UserOrders } from "../components/user-orders/index.js";
 
 const UserRouter = () => (
   <Provider store={store}>
@@ -33,6 +34,7 @@ const UserRouter = () => (
           <Route path="categories/:category_id/sub-category/:subCategoryId/product/:product_id" element={<ProductPage /> } />
 
           <Route path="my-cart" element={<UserRoute><UserCart /></UserRoute>} />
+          <Route path="my-orders" element={<UserRoute><UserOrders /></UserRoute>} />
 
           <Route path="page-not-found" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to={'page-not-found'} replace />} />

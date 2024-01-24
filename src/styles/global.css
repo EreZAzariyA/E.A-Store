@@ -20,3 +20,19 @@
 .w-100 {
   width: 100%;
 }
+
+.d-flex {
+  display: flex;
+}
+.flex-d-column {
+  flex-direction: column;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-space-between {
+  justify-content: space-between;
+}
+.align-items-center {
+  align-items: center;
+}
