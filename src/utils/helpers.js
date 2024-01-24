@@ -22,6 +22,17 @@ export const ComponentsTypes = {
   SUB_CATEGORIES: 'sub_categories',
 }
 
+export const Brands = [
+  {
+    name: "Apple",
+    image_url: "https://afi4nnu0d31evx7v.public.blob.vercel-storage.com/brands/Apple-xo4vJctgqKqEutE4QNtD7rA4NqaXRJ.png"
+  },
+  {
+    name: "JBL",
+    image_url: "https://afi4nnu0d31evx7v.public.blob.vercel-storage.com/brands/JBL-6DJhJ5ajBIceNjvHuHtHBBG1OsER1J.png"
+  },
+]
+
 export const numberWithCommas = (x, number = 2) => {
   const formattedNumber = parseFloat(x).toFixed(number);
   return formattedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
