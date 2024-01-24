@@ -11,7 +11,7 @@ export const OrderSummary = ({products}) => {
     for (let product of products) {
       setSubTotalPrice((perv) => perv + product?.totalPrice || 0);
     }
-  }, []);
+  }, [products]);
 
   const columns = [
     {
