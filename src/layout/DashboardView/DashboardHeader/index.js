@@ -36,13 +36,12 @@ export const DashboardHeader = () => {
 
   return (
     <Header>
-      {!isAdmin && (
-        <>
-          <Row justify={'space-between'} align={'middle'} wrap>
-            <Col span={6}>
-              <Logo />
-            </Col>
-
+      <Row style={{width: '100%'}} justify={isAdmin ? 'start' : 'space-between'} align={'middle'} wrap>
+        <Col span={6}>
+          <Logo />
+        </Col>
+        {!isAdmin && (
+          <>
             <Col span={10} className="search">
               <Input placeholder="Search products by name or ID" />
             </Col>
@@ -50,9 +49,9 @@ export const DashboardHeader = () => {
             <Col span={8} className="personal">
               <PersonalArea />
             </Col>
-          </Row>
-        </>
-      )}
+          </>
+        )}
+      </Row>
     </Header>
   );
 };
