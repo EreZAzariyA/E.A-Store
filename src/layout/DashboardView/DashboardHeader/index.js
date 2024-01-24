@@ -38,16 +38,16 @@ export const DashboardHeader = () => {
     <Header>
       {!isAdmin && (
         <>
-          <Row justify={'space-evenly'} align={'middle'}>
+          <Row justify={'space-between'} align={'middle'} wrap>
             <Col span={6}>
               <Logo />
             </Col>
 
-            <Col span={12} className="search">
+            <Col span={10} className="search">
               <Input placeholder="Search products by name or ID" />
             </Col>
 
-            <Col span={6} className="personal">
+            <Col span={8} className="personal">
               <PersonalArea />
             </Col>
           </Row>

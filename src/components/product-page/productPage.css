@@ -19,6 +19,22 @@
   width: 100%;
 }
 
+.product-page-container .brand-img {
+  float: right;
+}
+
+@media only screen and (max-width: 768px) {
+  .product-page-container .brand-img {
+    float: none;
+  }
+}
+
+.product-page-container .brand-img img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
 .product-page-container .product-details {
   padding: 0 10px;
   font-size: 20px;
@@ -53,6 +69,10 @@
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+.product-page-container .product-details .quantity .ant-input-number {
+  padding: 0;
 }
 
 .product-page-container .product-details .quantity div {

@@ -72,6 +72,7 @@ export const DashboardWrapper = () => {
 
       {pathOptions.length > 0 &&
         <Breadcrumb
+          separator=">"
           items={[{title: <Link to={'/'}>Home</Link>}, ...pathOptions]}
         />
       }

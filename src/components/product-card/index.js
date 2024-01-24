@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
 import { CustomDivider } from "../components/Divider";
-import { RedHeartIcon, HeartIcon, brands } from "../../utils/helpers";
+import { RedHeartIcon, HeartIcon, Brands, getShortID } from "../../utils/helpers";
 import { Button, Card, Col, Row, Tooltip, message } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
@@ -16,6 +16,7 @@ export const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const brand = Brands.find((b) => b.name === product.brand);
 
   useEffect(() => {
     if (shoppingCart) {
@@ -89,7 +90,7 @@ export const ProductCard = ({ product }) => {
       <Row justify={'space-between'} align={'middle'}>
         <Col>
           <div className="brand-logo">
-            <img src={brands['samsung'].image_url} alt="" />
+            <img src={brand.image_url} alt={brand.name + ' image'} />
           </div>
         </Col>
 
@@ -125,7 +126,7 @@ export const ProductCard = ({ product }) => {
       <Row>
         <Col>
           <p>
-            <span>SKU: {product._id?.slice(0, product._id?.length / 3)}</span>
+            <span>ID: {getShortID(product._id)}</span>
           </p>
         </Col>
       </Row>

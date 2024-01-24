@@ -24,7 +24,9 @@
 }
 
 .card.product-card .brand-logo img {
-  width: 80px;
+  width: 50px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .card.product-card .description-field {

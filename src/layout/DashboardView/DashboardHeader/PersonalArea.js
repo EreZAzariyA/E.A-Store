@@ -4,7 +4,7 @@ import { authServices } from "../../../services/auth-services";
 import { HeartIcon } from "../../../utils/helpers";
 import UserOutlined from "@ant-design/icons/UserOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
-import { Badge, Button, Col, Dropdown, Row, Space, Tooltip } from "antd";
+import { Badge, Button, Col, Dropdown, Row, Space, Tooltip, Typography } from "antd";
 
 let items = [];
 
@@ -14,18 +14,28 @@ export const PersonalArea = () => {
   const navigate = useNavigate();
 
   if (user) {
-    items = [{
-      label: <Button type="text" danger>Logout</Button>,
-      key: 'logout', onClick: () => authServices.logout()
-    }];
+    items = [
+      {
+        label: <Typography.Text>Orders</Typography.Text>,
+        key: 'orders',
+        onClick: () => navigate('/my-orders')
+      },
+      {
+        label: <Button type="text" danger>Logout</Button>,
+        key: 'logout',
+        onClick: () => authServices.logout()
+      }
+    ];
   } else {
     items = [{
       label: 'Login',
-      key: 'login', onClick: () => navigate('auth/login')
+      key: 'login',
+      onClick: () => navigate('auth/login')
     },
     {
       label: 'Register',
-      key: 'register', onClick: () => navigate('auth/register')
+      key: 'register',
+      onClick: () => navigate('auth/register')
     }];
   }
 
@@ -35,7 +45,7 @@ export const PersonalArea = () => {
         <Tooltip title="My Cart">
           <Badge count={products?.length}>
             <Button type="link" onClick={() => navigate('/my-cart')}>
-              <ShoppingCartOutlined style={{ fontSize: '26px', color: '#08c' }} />
+              <ShoppingCartOutlined style={{ fontSize: '24px', color: '#08c' }} />
             </Button>
           </Badge>
         </Tooltip>
@@ -43,7 +53,7 @@ export const PersonalArea = () => {
       <Col>
         <Tooltip title="My Favorites">
           <Button type="link" onClick={() => navigate('/my-favorites')}>
-            <HeartIcon style={{ fontSize: '24px' }} />
+            <HeartIcon style={{ fontSize: '24px', color: '#08c' }} />
           </Button>
         </Tooltip>
       </Col>
@@ -51,10 +61,13 @@ export const PersonalArea = () => {
         <Dropdown
           menu={{
             items,
+            style: {
+              textAlign: 'center'
+            }
           }}
         >
           <Space>
-            <UserOutlined style={{ fontSize: '26px', color: '#08c' }} />
+            <UserOutlined style={{ fontSize: '24px', color: '#08c' }} />
           </Space>
         </Dropdown>
       </Col>
