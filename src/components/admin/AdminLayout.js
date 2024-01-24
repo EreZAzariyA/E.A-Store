@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { DashboardHeader } from "../../layout/DashboardView/DashboardHeader";
 import { authServices } from "../../services/auth-services";
-import { Button, Layout, Menu } from "antd";
+import adminOrdersServices from "../../services/admin/orders-services";
+import { Badge, Button, Layout, Menu } from "antd";
 import PieChartOutlined from "@ant-design/icons/PieChartOutlined";
 import AppstoreAddOutlined from "@ant-design/icons/AppstoreAddOutlined";
 import TableOutlined from "@ant-design/icons/TableOutlined";
@@ -14,9 +15,10 @@ import ScheduleOutlined from "@ant-design/icons/ScheduleOutlined";
 const { Content, Sider } = Layout;
 
 export const AdminLayout = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [current, setCurrent] = useState('');
-  const navigate = useNavigate();
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const locationArray = pathname.split('/');
@@ -26,6 +28,16 @@ export const AdminLayout = () => {
   const logout = () => {
     authServices.logout();
   };
+
+  const getOrdersCount = async () => {
+    return adminOrdersServices.fetchAllOrders().then((allOrders) => {
+      setCount(allOrders.length);
+    });
+  };
+
+  useEffect(() => {
+    getOrdersCount();
+  }, []);
 
   const menu = () => {
     const items = [
@@ -55,7 +67,7 @@ export const AdminLayout = () => {
         icon: <UploadOutlined />
       },
       {
-        label: 'Orders',
+        label: <Badge count={count} style={{ marginRight: '-100%' }}>Orders</Badge>,
         key: 'orders',
         icon: <ScheduleOutlined />
       },
@@ -73,7 +85,7 @@ export const AdminLayout = () => {
         items={items}
         onClick={(e) => navigate(`${e.key}`)}
         selectedKeys={[current]}
-        style={{ position: 'relative', height: '100%' }}
+        style={{ position: 'relative', height: '100%', textAlign: 'justify' }}
       />
     );
   };

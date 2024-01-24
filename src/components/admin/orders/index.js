@@ -6,9 +6,9 @@ export const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    adminOrdersServices.fetchAllOrders().then((orderss) => {
-      console.log(orderss);
-      setOrders(orderss);
+    adminOrdersServices.fetchAllOrders().then((allOrders) => {
+      console.log(allOrders);
+      setOrders(allOrders);
     });
   }, []);
 
