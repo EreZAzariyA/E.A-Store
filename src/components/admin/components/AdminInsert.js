@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { ComponentsTypes } from "../../../utils/helpers";
+import { Brands, ComponentsTypes } from "../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
-import { Button, Divider, Form, Input, InputNumber, Select } from "antd"
+import { Button, Col, Divider, Form, Input, InputNumber, Row, Select } from "antd"
 
 export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const categories = useSelector((state) => state.categories);
@@ -17,6 +17,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
 
   const [initialValue, setInitialValue] = useState(isProducts ? {
     name: record?.name || '',
+    brand: record?.brand || '',
     description: record?.description || '',
     category_id: record?.category_id || '',
     subCategory_id: record?.subCategory_id || '',
@@ -94,6 +95,28 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
               type="text"
               placeholder="Product name"
             />
+          </Form.Item>
+
+          <Form.Item
+            label={'Brand'}
+            name={'brand'}
+            rules={[{ required: true, message: 'Brand is missing' }]}
+          >
+            <Select onChange={(val) => handleChange('brand', val)}>
+              <Select.Option key={''} disabled>Select brand</Select.Option>
+              {Brands.map((brand) => (
+                <Select.Option key={brand.name}>
+                  <Row align={"stretch"} justify={"center"}>
+                    <Col span={2}>
+                      {brand.name}
+                    </Col>
+                    <Col span={2}>
+                      <img src={brand.image_url} width={30} alt={brand.name + ' brand image'} />
+                    </Col>
+                  </Row>
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
