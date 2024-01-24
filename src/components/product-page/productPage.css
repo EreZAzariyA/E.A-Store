@@ -1,3 +1,60 @@
-/* .product-page-container {
+.product-page-container {
+  padding: 10px 0;
+}
+
+.product-page-container .product-name {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.product-page-container .product-id {
+  font-size: 12px;
+}
+
+.product-page-container .product-id span {
+  font-size: 15px;
+}
+
+.product-page-container .product-img img {
   width: 100%;
-} */
+}
+
+.product-page-container .product-details {
+  padding: 0 10px;
+  font-size: 20px;
+  font-family: "Fira Sans";
+  text-align: justify;
+}
+
+.product-page-container .product-details div {
+  border-bottom: 1px solid black;
+  padding: 15px 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .product-page-container .product-details div {
+    text-align: center;
+  }
+}
+.product-page-container .product-details .product-price {
+  font-weight: 600;
+}
+
+.product-page-container .product-details .product-availability span {
+  font-size: 16px;
+}
+
+.product-page-container .product-details .product-delivery-options ul {
+  list-style-type: none;
+  font-size: 16px;
+}
+
+.product-page-container .product-details .product-delivery-options ul li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.product-page-container .product-details .quantity div {
+  border: none;
+}
