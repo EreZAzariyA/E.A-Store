@@ -1,6 +1,5 @@
 import { Button, Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import Timer from './Timer';
 
 export const ResultView = ({createdOrder}) => {
   const navigate = useNavigate();
@@ -14,7 +13,6 @@ export const ResultView = ({createdOrder}) => {
         <Button type="primary" key={'home'} onClick={() => navigate('/')}>
           Go Home
         </Button>,
-        <Timer key={'date'} targetDate={createdOrder.arrival_date}/>
       ]}
     />
   );

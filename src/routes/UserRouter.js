@@ -5,8 +5,7 @@ import { DashboardView } from "../layout/DashboardView";
 import { UserCart } from "../components/user-cart";
 import { Favorites } from "../components/favorites";
 import { ProductPage } from "../components/product-page";
-import { CategoryPage } from "../components/categories/category-page";
-import { CategoriesPage } from "../components/categories";
+import { CategoryPage } from "../components/category-page/index.js";
 import { SubCategoryPage } from "../components/subCategory-page";
 
 import { PublicRoute } from "./public-router";
@@ -28,7 +27,6 @@ const UserRouter = () => (
           <Route path="/" element={<Navigate to={'home'} replace />} />
           <Route path="home" element={<Dashboard />} />
           <Route path="favorites" element={<Favorites />} />
-          <Route path="categories" element={<CategoriesPage />} />
           <Route path="categories/:category_id" element={<CategoryPage />} />
           <Route path="categories/:category_id/sub-category" element={<p>SubCategoryPage</p>} />
           <Route path="categories/:category_id/sub-category/:subCategoryId" element={<SubCategoryPage /> } />

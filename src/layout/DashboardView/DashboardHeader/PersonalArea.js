@@ -43,7 +43,7 @@ export const PersonalArea = () => {
     <Row align={'middle'}>
       <Col span={8}>
         <Tooltip title="My Cart">
-          <Badge count={products?.length}>
+          <Badge offset={[-10, 0]} count={products?.length}>
             <Button type="link" onClick={() => navigate('/my-cart')}>
               <ShoppingCartOutlined style={{ fontSize: '24px', color: Colors.ICON }} />
             </Button>

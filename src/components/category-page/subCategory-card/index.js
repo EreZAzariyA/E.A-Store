@@ -8,6 +8,7 @@ export const SubCategoryCard = (props) => {
   return (
     <Card
       onClick={() => navigate(`sub-category/${subCategory._id}`)}
+      className="sub-category-card"
       hoverable
       style={{
         width: 240,
