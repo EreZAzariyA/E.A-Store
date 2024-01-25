@@ -10,13 +10,21 @@ export const ALLOWED_TYPES = {
   WEBP: 'image/webp'
 };
 
+export const Colors = {
+  ICON: '#08c',
+  DANGER: 'red'
+};
+
+export const Sizes = {
+  ICON: 25
+}
+
 export const OrdersStatus = {
   PENDING: 'PENDING',
   SENT: 'SENT',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED',
 };
-
 
 export const getBase64 = (img, callback) => {
   const reader = new FileReader();

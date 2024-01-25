@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authServices } from "../../../services/auth-services";
-import { HeartIcon } from "../../../utils/helpers";
+import { Colors, HeartIcon } from "../../../utils/helpers";
 import UserOutlined from "@ant-design/icons/UserOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
 import { Badge, Button, Col, Dropdown, Row, Space, Tooltip, Typography } from "antd";
@@ -45,7 +45,7 @@ export const PersonalArea = () => {
         <Tooltip title="My Cart">
           <Badge count={products?.length}>
             <Button type="link" onClick={() => navigate('/my-cart')}>
-              <ShoppingCartOutlined style={{ fontSize: '24px', color: '#08c' }} />
+              <ShoppingCartOutlined style={{ fontSize: '24px', color: Colors.ICON }} />
             </Button>
           </Badge>
         </Tooltip>
@@ -53,7 +53,7 @@ export const PersonalArea = () => {
       <Col>
         <Tooltip title="My Favorites">
           <Button type="link" onClick={() => navigate('/my-favorites')}>
-            <HeartIcon style={{ fontSize: '24px', color: '#08c' }} />
+            <HeartIcon style={{ fontSize: '24px', color: Colors.ICON }} />
           </Button>
         </Tooltip>
       </Col>
@@ -67,7 +67,7 @@ export const PersonalArea = () => {
           }}
         >
           <Space>
-            <UserOutlined style={{ fontSize: '24px', color: '#08c' }} />
+            <UserOutlined style={{ fontSize: '24px', color: Colors.ICON }} />
           </Space>
         </Dropdown>
       </Col>

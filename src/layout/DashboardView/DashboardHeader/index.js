@@ -2,14 +2,15 @@ import { useEffect } from "react";
 import { PersonalArea } from "./PersonalArea";
 import { useSelector } from "react-redux";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
-import { Col, Input, Layout, Row } from "antd";
+import { Button, Col, Input, Layout, Row } from "antd";
 import { storeServices } from "../../../services/store-services";
 import { ordersServices } from "../../../services/orders-services";
 import { Logo } from "../../../components/components/Logo";
+import { CiMenuBurger } from "react-icons/ci";
 
 const { Header } = Layout;
 
-export const DashboardHeader = () => {
+export const DashboardHeader = ({isOpen, setIsOpen}) => {
   const user = useSelector((state) => state.auth?.user);
   const isAdmin = user?.admin || false;
 
@@ -42,11 +43,15 @@ export const DashboardHeader = () => {
         </Col>
         {!isAdmin && (
           <>
-            <Col span={10} className="search">
-              <Input placeholder="Search products by name or ID" />
+            <Col sm={{span: 0}}>
+              <Button type="link"><CiMenuBurger color="#08c" size={30} onClick={() => setIsOpen(!isOpen)} /></Button>
             </Col>
 
-            <Col span={8} className="personal">
+            <Col sm={{span: 10}} xs={{span: 0}} className="search">
+              <Input placeholder="Search Products By Name Or ID" />
+            </Col>
+
+            <Col sm={{span: 8}} xs={{span: 0}} className="personal">
               <PersonalArea />
             </Col>
           </>
