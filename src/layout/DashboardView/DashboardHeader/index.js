@@ -48,7 +48,7 @@ export const DashboardHeader = ({ isOpen, setIsOpen }) => {
 
   return (
     <Header>
-      <Row style={{width: '100%'}} justify={isAdmin ? 'start' : 'space-between'} align={'middle'} wrap>
+      <Row style={{width: '100%'}} justify={admin ? 'start' : 'space-between'} align={'middle'} wrap>
         <Col span={2}>
           <Logo />
         </Col>
