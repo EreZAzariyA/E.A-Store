@@ -11,6 +11,7 @@ import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
 import UploadOutlined from "@ant-design/icons/UploadOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
 import ScheduleOutlined from "@ant-design/icons/ScheduleOutlined";
+import { OrdersStatus } from "../../utils/helpers";
 
 const { Content, Sider } = Layout;
 
@@ -31,7 +32,7 @@ export const AdminLayout = () => {
 
   const getOrdersCount = async () => {
     return adminOrdersServices.fetchAllOrders().then((allOrders) => {
-      setCount(allOrders.length);
+      setCount([...allOrders].filter((o) => o.status === OrdersStatus.PENDING).length);
     });
   };
 
