@@ -53,7 +53,7 @@ export const DashboardHeader = ({ isOpen, setIsOpen }) => {
           <Logo />
         </Col>
 
-        {!isAdmin && (
+        {!admin && (
           <>
             <Col sm={{span: 0}} xs={{ span: 16 }}>
               <Row justify={"end"}>

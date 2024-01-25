@@ -72,6 +72,7 @@ export const Orders = () => {
       render: (record) => {
         const targetDate = getTimeToCancel(record.createdAt);
         const cancelAvailable = isCancelAvailable(targetDate);
+        const orderIsSent = record.status === OrdersStatus.SENT;
 
         if (isAdminValidate) {
           return (
@@ -85,15 +86,20 @@ export const Orders = () => {
         } else {
           return (
             <>
-              {cancelAvailable && (
+              {!orderIsSent && (
                 <>
-                  <span>Time to cancel</span>
-                  <Timer targetDate={targetDate} />
+                  {cancelAvailable && (
+                    <>
+                      <span>Time to cancel</span>
+                      <Timer targetDate={targetDate} />
+                    </>
+                  )}
+                  <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record)}>
+                    <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
+                  </Popconfirm>
                 </>
               )}
-              <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record)}>
-                <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
-              </Popconfirm>
+              {orderIsSent && `Arrival Date: ${moment(record?.arrival_date).format('ll')} `}
             </>
           );
         }
