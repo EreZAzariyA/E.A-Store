@@ -4,7 +4,7 @@ import { UserCartFooter } from "./cart-footer";
 import { Order } from "../order-page";
 import { CartProductCard } from "./cart-product-card";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
-import { calculateTotals, numberWithCommas } from "../../utils/helpers";
+import { OrdersStatus, calculateTotals, numberWithCommas } from "../../utils/helpers";
 import { Button, Card, Modal, message } from "antd";
 import { CiEraser } from "react-icons/ci";
 import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled'
@@ -27,7 +27,8 @@ export const UserCart = () => {
 
   useEffect(() => {
     if (orders && orders.length) {
-      const latestOrder = [...orders].sort((a, b) => b.createdAt > a.createdAt)?.[0] || null;
+      const paddingOrders = [...orders].filter((o) => o.status === OrdersStatus.PENDING);
+      const latestOrder = [...paddingOrders].sort((a, b) => b.createdAt > a.createdAt)?.[0] || null;
       setOrder(latestOrder);
     }
   }, [orders]);

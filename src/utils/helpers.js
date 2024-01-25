@@ -77,6 +77,14 @@ export const isAdmin = (user) => {
   return user?.admin || false;
 };
 
+export const isAdminProcess = () => {
+  let isAdmin = false;
+  if (process.env.REACT_APP_IS_ADMIN) {
+    isAdmin = JSON.parse(process.env.REACT_APP_IS_ADMIN);
+  }
+  return isAdmin;
+}
+
 export const MessagesTypes = {
   REGISTER_SUCCESSFULLY: 'User register successfully',
   LOGGED_IN_SUCCESSFULLY: 'User logged-in success',

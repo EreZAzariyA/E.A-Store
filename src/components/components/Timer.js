@@ -27,7 +27,7 @@ const Timer = ({ targetDate }) => {
   return (
     <div>
       <p>
-        {formatTime(remainingTime.days())}d {formatTime(remainingTime.hours())}h{' '}
+        {formatTime(remainingTime.hours())}h{' '}
         {formatTime(remainingTime.minutes())}m {formatTime(remainingTime.seconds())}s
       </p>
     </div>

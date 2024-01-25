@@ -22,12 +22,12 @@ export const DashboardView = () => {
     {
       label: 'Cart',
       key: 'my-cart',
-      icon: <AiOutlineShoppingCart color={Colors.ICON} size={Sizes.ICON}/>
+      icon: <AiOutlineShoppingCart color={Colors.ICON} size={Sizes.ICON} />
     },
     {
       label: 'Orders',
       key: 'my-orders',
-      icon: <LiaShippingFastSolid color={Colors.ICON} size={Sizes.ICON}/>
+      icon: <LiaShippingFastSolid color={Colors.ICON} size={Sizes.ICON} />
     },
   ];
   items.forEach((i) => {

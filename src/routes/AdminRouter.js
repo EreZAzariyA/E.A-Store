@@ -14,7 +14,7 @@ import { AuthView } from "../layout/AuthView";
 import { Login } from "../layout/AuthView/login";
 import { Register } from "../layout/AuthView/register";
 import store from "../redux/store";
-import { Orders } from "../components/admin/orders";
+import { Orders } from "../components/orders";
 
 const AdminRouter = () => (
   <Provider store={store}>

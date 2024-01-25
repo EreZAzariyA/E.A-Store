@@ -51,7 +51,7 @@ export const UserCartFooter = (props) => {
           {order ?
             <Button onClick={() => handleButton(FooterButtons.Update)}>Update Your Last Purchase</Button>
           :
-            <Button onClick={() => handleButton(FooterButtons.Continue)}>Continue With The Purchase</Button>
+            <Button onClick={() => handleButton(FooterButtons.Continue)}>Continue To Order Payment</Button>
           }
         </Col>
 

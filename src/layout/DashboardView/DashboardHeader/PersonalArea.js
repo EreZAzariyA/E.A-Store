@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authServices } from "../../../services/auth-services";
-import { Colors, HeartIcon } from "../../../utils/helpers";
+import { Colors, HeartIcon, Sizes } from "../../../utils/helpers";
+import { Badge, Button, Col, Dropdown, Row, Space, Tooltip, Typography } from "antd";
 import UserOutlined from "@ant-design/icons/UserOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
-import { Badge, Button, Col, Dropdown, Row, Space, Tooltip, Typography } from "antd";
+import { LiaShippingFastSolid } from "react-icons/lia";
 
 let items = [];
 
@@ -18,6 +19,7 @@ export const PersonalArea = () => {
       {
         label: <Typography.Text>Orders</Typography.Text>,
         key: 'orders',
+        icon: <LiaShippingFastSolid color={Colors.ICON} size={Sizes.ICON} />,
         onClick: () => navigate('/my-orders')
       },
       {
