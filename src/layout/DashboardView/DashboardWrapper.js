@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, Menu } from "antd";
 import { useSelector } from "react-redux";
-import { toCapitalize } from "../../utils/helpers";
+import { Colors, Sizes, toCapitalize } from "../../utils/helpers";
+import { BiSupport } from "react-icons/bi";
 
 export const DashboardWrapper = () => {
   const location = useLocation();
@@ -47,11 +48,21 @@ export const DashboardWrapper = () => {
     setPathOptions(options);
   }, [categories, location.pathname, navigate, products, subCategories]);
 
-  const defaultItems = [
+  const items = [
     {
-      label: 'Home',
-      key: 'home',
-      onClick: () => navigate('/home')
+      label: <span><BiSupport color={Colors.ICON} size={Sizes.TOP_MENU_ICON} style={{ marginRight: '5px'}} />Customers-Support</span>,
+      key: 'customers-support',
+      onClick: () => navigate('/customers-support')
+    },
+    {
+      label: <span>Business Relations</span>,
+      key: 'business-relations',
+      onClick: () => navigate('/customers-support#business-relations')
+    },
+    {
+      label: <span>Gift Card</span>,
+      key: 'gift-card',
+      onClick: () => navigate('/gift-card')
     },
   ];
 
@@ -60,14 +71,9 @@ export const DashboardWrapper = () => {
       <Menu
         mode="horizontal"
         selectedKeys={[current]}
-        style={{background: 'transparent', justifyContent: 'center'}}
-        items={defaultItems.concat(categories?.map((category) => {
-          return {
-            key: category._id,
-            label: category.category,
-            onClick: () => navigate(`/categories/${category._id}`)
-          };
-        }))}
+        style={{ background: 'transparent' }}
+        items={items}
+        className="top-menu-navbar"
       />
 
       {pathOptions.length > 0 &&

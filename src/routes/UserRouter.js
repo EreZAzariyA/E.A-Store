@@ -17,6 +17,7 @@ import { PageNotFound } from "../components/components/PageNotFound";
 import store from "../redux/store";
 import { UserRoute } from "./user-router/index.js";
 import { UserOrders } from "../components/user-orders/index.js";
+import { SearchPage } from "../components/search-page/index.js";
 
 const UserRouter = () => (
   <Provider store={store}>
@@ -26,13 +27,14 @@ const UserRouter = () => (
         <Route element={<DashboardView />}>
           <Route path="/" element={<Navigate to={'home'} replace />} />
           <Route path="home" element={<Dashboard />} />
-          <Route path="my-favorites" element={<Favorites />} />
+          <Route path="favorites" element={<Favorites />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="categories/:category_id" element={<CategoryPage />} />
           <Route path="categories/:category_id/sub-category" element={<p>SubCategoryPage</p>} />
           <Route path="categories/:category_id/sub-category/:subCategoryId" element={<SubCategoryPage /> } />
           <Route path="categories/:category_id/sub-category/:subCategoryId/product/:product_id" element={<ProductPage /> } />
 
+          <Route path="search" element={<SearchPage />} />
           <Route path="my-cart" element={<UserRoute><UserCart /></UserRoute>} />
           <Route path="my-orders" element={<UserRoute><UserOrders /></UserRoute>} />
 

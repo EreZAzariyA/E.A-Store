@@ -40,8 +40,8 @@ export const PersonalArea = () => {
   }
 
   return (
-    <Row align={'middle'} justify={'space-evenly'}>
-      <Col>
+    <Row align={'middle'}>
+      <Col span={8}>
         <Tooltip title="My Cart">
           <Badge count={products?.length}>
             <Button type="link" onClick={() => navigate('/my-cart')}>
@@ -50,14 +50,14 @@ export const PersonalArea = () => {
           </Badge>
         </Tooltip>
       </Col>
-      <Col>
+      <Col span={8}>
         <Tooltip title="My Favorites">
-          <Button type="link" onClick={() => navigate('/my-favorites')}>
+          <Button type="link" onClick={() => navigate('/favorites')}>
             <HeartIcon style={{ fontSize: '24px', color: Colors.ICON }} />
           </Button>
         </Tooltip>
       </Col>
-      <Col>
+      <Col span={8}>
         <Dropdown
           menu={{
             items,

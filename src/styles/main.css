@@ -8,8 +8,7 @@
   margin: auto;
   cursor: pointer;
 
-  max-width: 150px;
-  min-width: 120px;
+  width: 150px;
 }
 
 .editable-row .long-text-field {

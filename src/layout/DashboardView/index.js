@@ -1,4 +1,4 @@
-import { Button, Input, Layout, Menu } from "antd";
+import { Button, Layout, Menu } from "antd";
 import { DashboardHeader } from "./DashboardHeader";
 import { DashboardWrapper } from "./DashboardWrapper";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ import { VscAccount } from "react-icons/vsc";
 import { authServices } from "../../services/auth-services";
 import { useSelector } from "react-redux";
 import { LiaShippingFastSolid } from "react-icons/lia";
-import { CiSearch } from "react-icons/ci";
 
 const { Content, Sider } = Layout;
 
@@ -20,11 +19,6 @@ export const DashboardView = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const items = [
-    {
-      label: <Input />,
-      key: 'search',
-      icon: <CiSearch color={Colors.ICON} size={Sizes.ICON}/>
-    },
     {
       label: 'Cart',
       key: 'my-cart',
@@ -52,12 +46,13 @@ export const DashboardView = () => {
       {
         label: 'Your Profile',
         key: 'profile',
-        onClick: () => navigate('auth/login'),
+        onClick: () => navigate('profile'),
         icon: <AiOutlineProfile color={Colors.ICON} size={Sizes.ICON} />
       },
       {
         label: 'Favorites Products',
-        key: 'my-favorites',
+        key: 'favorites',
+        onClick: () => navigate('favorites'),
         icon: <IoIosStarOutline color={Colors.ICON} size={Sizes.ICON}/>
       },
       {
@@ -83,6 +78,12 @@ export const DashboardView = () => {
     ]
   });
 
+  const handleOnBreakpoint = (brake) => {
+    if (!brake) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <Layout className="layout main-layout">
       <DashboardHeader isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -93,6 +94,8 @@ export const DashboardView = () => {
           width={225}
           collapsed={!isOpen}
           collapsedWidth={0}
+          breakpoint="sm"
+          onBreakpoint={handleOnBreakpoint}
         >
           <Menu
             items={items}

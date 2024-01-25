@@ -16,7 +16,8 @@ export const Colors = {
 };
 
 export const Sizes = {
-  ICON: 25
+  ICON: 25,
+  TOP_MENU_ICON: 20
 }
 
 export const OrdersStatus = {

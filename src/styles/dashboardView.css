@@ -42,3 +42,13 @@
     line-height: normal;
   }
 }
+
+.layout .top-menu-navbar {
+  text-align: justify;
+}
+
+.layout .top-menu-navbar .ant-menu-title-content span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
