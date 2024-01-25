@@ -1,15 +1,12 @@
-import { CategoriesList } from "./categoriesList";
+import { HomeCategoriesList } from "./home-categories-list";
 import "./dashboard.css";
 
-export const Dashboard = () => {
-
-  return (
-    <div className="home-main-container">
-      <div className="home-inner-container">
-        <div className="sub-categories-container mt-20">
-          <CategoriesList />
-        </div>
+export const Dashboard = () => (
+  <div className="home-main-container">
+    <div className="home-inner-container">
+      <div className="categories-container mt-20">
+        <HomeCategoriesList />
       </div>
     </div>
-  );
-};
+  </div>
+);

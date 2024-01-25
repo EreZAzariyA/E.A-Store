@@ -2,14 +2,13 @@ import { Col, Row } from "antd";
 import { useSelector } from "react-redux";
 import { CategoryCard } from "./categoryCard";
 
-export const CategoriesList = () => {
+export const HomeCategoriesList = () => {
   const categories = useSelector((state) => (state.categories));
 
   return (
-    <div className="subCategories-list-main-container">
-      <div className="subCategories-list-inner-container">
-        <div className="subCategories-list">
-
+    <div className="categories-list-main-container">
+      <div className="categories-list-inner-container">
+        <div className="categories-list">
           <Row align={"stretch"} justify={'space-evenly'} gutter={[0, 15]}>
             {categories?.map((category) => (
               <Col key={category?._id}>
