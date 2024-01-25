@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../utils/config";
 import store from "../redux/store";
-import { createOrderAction, fetchUserOrdersAction } from "../redux/slicers/orders-slicer";
+import { createOrderAction, fetchUserOrdersAction, updateOrderStatusAction } from "../redux/slicers/orders-slicer";
 
 
 class OrdersServices {
@@ -19,6 +19,13 @@ class OrdersServices {
     store.dispatch(createOrderAction(createdOrder));
     return createdOrder;
   };
+
+  updateOrderStatus = async (order_id, status) => {
+    const response = await axios.put(config.urls.order.updateOrderStatus, {order_id, status});
+    const updatedOrder = response.data;
+    store.dispatch(updateOrderStatusAction({order_id: order_id, status: status}));
+    return updatedOrder;
+  }
 };
 
 export const ordersServices = new OrdersServices();

@@ -8,15 +8,16 @@ import { ordersServices } from "../../../services/orders-services";
 import { Logo } from "../../../components/components/Logo";
 import { CiMenuBurger, CiSearch } from "react-icons/ci";
 import { SearchInput } from "../../../components/components/Search-input";
-import { Colors, Sizes } from "../../../utils/helpers";
+import { Colors, Sizes, isAdmin } from "../../../utils/helpers";
 import { useNavigate } from "react-router-dom";
+import adminOrdersServices from "../../../services/admin/orders-services";
 
 const { Header } = Layout;
 
 export const DashboardHeader = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth?.user);
-  const isAdmin = user?.admin || false;
+  const admin = isAdmin(user);
 
   useEffect(() => {
     const fetchStoreData = async () => {
@@ -33,11 +34,17 @@ export const DashboardHeader = ({ isOpen, setIsOpen }) => {
       await shoppingCartServices.fetchUserShoppingCart(user?._id);
       await ordersServices.fetchUserOrdersByUser_id(user?._id);
     };
+    const fetchAdminAllOrders = async () => {
+      await adminOrdersServices.fetchAllOrders();
+    };
 
-    if (user) {
+    if (user && !admin) {
       fetchUserData();
     }
-  }, [user]);
+    if (admin) {
+      fetchAdminAllOrders();
+    }
+  }, [user, admin]);
 
   return (
     <Header>

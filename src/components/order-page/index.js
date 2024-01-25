@@ -98,7 +98,7 @@ export const Order = ({ order, products, onBack }) => {
       message.error(err.message);
     }
 
-    return actions.order.capture()
+    return actions.order.capture();
   };
 
   const handleCancel = ({orderID}) => {
@@ -117,6 +117,7 @@ export const Order = ({ order, products, onBack }) => {
           createOrder={createOrder}
           onApprove={onApprove}
           onCancel={handleCancel}
+          disabled
         />
       </>
     );
@@ -275,7 +276,7 @@ export const Order = ({ order, products, onBack }) => {
                   currency: "USD",
                 }}
               >
-                <ButtonWrapper showSpinner={false} />
+                <ButtonWrapper showSpinner={true} />
               </PayPalScriptProvider>
             </div>
           </div>

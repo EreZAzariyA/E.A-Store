@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import adminOrdersServices from "../../services/admin/orders-services";
 import { ordersServices } from "../../services/orders-services";
-import { calculateTotals, getShortID, isAdmin } from "../../utils/helpers";
+import { OrdersStatus, calculateTotals, getShortID, isAdmin } from "../../utils/helpers";
 import { Popconfirm, Space, Table, Typography } from "antd";
 import moment from "moment";
 import Timer from "../components/Timer";
 
 
 export const Orders = () => {
-  const [orders, setOrders] = useState([]);
+  const orders = useSelector((state) => state.orders);
   const user = useSelector((state) => state.auth?.user);
   const isAdminValidate = isAdmin(user);
 
@@ -20,20 +18,20 @@ export const Orders = () => {
     return moment().valueOf() < lastCancelDate;
   }
 
-  useEffect(() => {
-    if (isAdminValidate) {
-      adminOrdersServices.fetchAllOrders().then((allOrders) => {
-        setOrders(allOrders);
-      });
-    } else {
-      ordersServices.fetchUserOrdersByUser_id(user?._id).then((userOrders) => {
-        setOrders(userOrders);
-      })
+  const handleApprove = async (order_id, status) => {
+    try {
+      await ordersServices.updateOrderStatus(order_id, status);
+    } catch (err) {
+      console.log(err.message);
     }
-  }, [isAdminValidate, user]);
+  };
 
-  const handleDelete = () => {
-
+  const handleCancel = async (order_id, status) => {
+    try {
+      await ordersServices.updateOrderStatus(order_id, status);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   const columns = [
@@ -76,7 +74,14 @@ export const Orders = () => {
         const cancelAvailable = isCancelAvailable(targetDate);
 
         if (isAdminValidate) {
-
+          return (
+            <Space>
+              <Typography.Link onClick={() => handleApprove(record._id, OrdersStatus.SENT)}>Approve</Typography.Link>
+              <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record._id, OrdersStatus.CANCELLED)}>
+                <Typography.Link type="danger">Cancel</Typography.Link>
+              </Popconfirm>
+            </Space>
+          )
         } else {
           return (
             <>
@@ -86,7 +91,7 @@ export const Orders = () => {
                   <Timer targetDate={targetDate} />
                 </>
               )}
-              <Popconfirm title="Sure to cancel?" onConfirm={() => handleDelete(record)}>
+              <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record)}>
                 <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
               </Popconfirm>
             </>

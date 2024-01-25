@@ -1,11 +1,14 @@
 import axios from "axios";
 import config from "../../utils/config";
+import store from "../../redux/store";
+import { fetchAllOrdersAction } from "../../redux/slicers/orders-slicer";
 
 class AdminOrdersServices {
 
   async fetchAllOrders() {
     const response = await axios.get(config.urls.admin.fetchAllOrders);
     const orders = response.data;
+    store.dispatch(fetchAllOrdersAction(orders));
     return orders;
   };
 

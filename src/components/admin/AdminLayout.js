@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { DashboardHeader } from "../../layout/DashboardView/DashboardHeader";
 import { authServices } from "../../services/auth-services";
-import adminOrdersServices from "../../services/admin/orders-services";
+import { OrdersStatus } from "../../utils/helpers";
 import { Badge, Button, Layout, Menu } from "antd";
 import PieChartOutlined from "@ant-design/icons/PieChartOutlined";
 import AppstoreAddOutlined from "@ant-design/icons/AppstoreAddOutlined";
@@ -11,15 +12,16 @@ import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
 import UploadOutlined from "@ant-design/icons/UploadOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
 import ScheduleOutlined from "@ant-design/icons/ScheduleOutlined";
-import { OrdersStatus } from "../../utils/helpers";
 
 const { Content, Sider } = Layout;
 
 export const AdminLayout = () => {
+  const orders = useSelector((state) => state.orders);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [current, setCurrent] = useState('');
-  const [count, setCount] = useState(0);
+  const paddingOrders = [...orders]?.filter((o) => o.status === OrdersStatus.PENDING);
+  const count = paddingOrders.length
 
   useEffect(() => {
     const locationArray = pathname.split('/');
@@ -29,16 +31,6 @@ export const AdminLayout = () => {
   const logout = () => {
     authServices.logout();
   };
-
-  const getOrdersCount = async () => {
-    return adminOrdersServices.fetchAllOrders().then((allOrders) => {
-      setCount([...allOrders].filter((o) => o.status === OrdersStatus.PENDING).length);
-    });
-  };
-
-  useEffect(() => {
-    getOrdersCount();
-  }, []);
 
   const menu = () => {
     const items = [
