@@ -68,33 +68,34 @@ export const Orders = () => {
       key: 'price',
       render: (val) => (<span>${calculateTotals(val.products)}</span>)
     },
-  ];
-  if (isAdminValidate) {
-
-  } else {
-    columns.push({
+    {
       title: 'Actions',
       key: 'actions',
       render: (record) => {
         const targetDate = getTimeToCancel(record.createdAt);
         const cancelAvailable = isCancelAvailable(targetDate);
 
-        return (
-          <>
-            {cancelAvailable && (
-              <>
-                <span>Time to cancel</span>
-                <Timer targetDate={targetDate} />
-              </>
-            )}
-            <Popconfirm title="Sure to cancel?" onConfirm={() => handleDelete(record)}>
-              <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
-            </Popconfirm>
-          </>
-        )
+        if (isAdminValidate) {
+
+        } else {
+          return (
+            <>
+              {cancelAvailable && (
+                <>
+                  <span>Time to cancel</span>
+                  <Timer targetDate={targetDate} />
+                </>
+              )}
+              <Popconfirm title="Sure to cancel?" onConfirm={() => handleDelete(record)}>
+                <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
+              </Popconfirm>
+            </>
+          );
+        }
       }
-    })
-  }
+    },
+  ];
+
 
   return (
     <Space direction="vertical" className="w-100" >
