@@ -68,7 +68,11 @@ export const Orders = () => {
       key: 'price',
       render: (val) => (<span>${calculateTotals(val.products)}</span>)
     },
-    {
+  ];
+  if (isAdminValidate) {
+
+  } else {
+    columns.push({
       title: 'Actions',
       key: 'actions',
       render: (record) => {
@@ -89,9 +93,8 @@ export const Orders = () => {
           </>
         )
       }
-    },
-  ];
-
+    })
+  }
 
   return (
     <Space direction="vertical" className="w-100" >
