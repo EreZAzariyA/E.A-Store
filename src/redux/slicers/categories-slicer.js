@@ -16,10 +16,7 @@ const categoriesSlicer = createSlice({
     },
     updateCategoryAction(state, action) {
       const categoryIndex = state.findIndex((c) => c._id === action.payload?._id);
-      if (categoryIndex !== -1) {
-        state.splice(categoryIndex, 1);
-        state.push(action.payload);
-      }
+      state[categoryIndex] = action.payload;
       return state;
     },
     removeCategoryAction(state, action) {

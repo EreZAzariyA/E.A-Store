@@ -14,10 +14,7 @@ const productsSlicer = createSlice({
     },
     updateProductAction(state, action) {
       const productIndex = state.findIndex((p) => p._id === action.payload._id);
-      if (productIndex !== -1) {
-        state.splice(productIndex, 1);
-        state.push(action.payload);
-      }
+      state[productIndex] = action.payload;
       return state;
     },
     removeProductAction(state, action) {
