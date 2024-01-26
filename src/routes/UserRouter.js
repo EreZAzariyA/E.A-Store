@@ -17,6 +17,7 @@ import { PageNotFound } from "../components/components/PageNotFound";
 import { UserRoute } from "./user-router/index.js";
 import { SearchPage } from "../components/search-page/index.js";
 import { Orders } from "../components/orders/index.js";
+import { CustomersSupport } from "../components/customers-support/index.js";
 
 const UserRouter = () => (
   <Provider store={store}>
@@ -35,6 +36,8 @@ const UserRouter = () => (
           <Route path="search" element={<SearchPage />} />
           <Route path="my-cart" element={<UserRoute><UserCart /></UserRoute>} />
           <Route path="my-orders" element={<UserRoute><Orders /></UserRoute>} />
+
+          <Route path="customers-support" element={<CustomersSupport />} />
 
           <Route path="page-not-found" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to={'page-not-found'} replace />} />

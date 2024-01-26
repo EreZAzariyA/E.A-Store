@@ -3,12 +3,12 @@ import { DashboardHeader } from "./DashboardHeader";
 import { DashboardWrapper } from "./DashboardWrapper";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { AiOutlineShoppingCart, AiOutlineLogout, AiOutlineProfile } from "react-icons/ai";
-import { IoIosStarOutline } from "react-icons/io";
 import { Colors, Sizes } from "../../utils/helpers";
-import { VscAccount } from "react-icons/vsc";
 import { authServices } from "../../services/auth-services";
 import { useSelector } from "react-redux";
+import { AiOutlineShoppingCart, AiOutlineLogout, AiOutlineProfile } from "react-icons/ai";
+import { IoIosStarOutline } from "react-icons/io";
+import { VscAccount } from "react-icons/vsc";
 import { LiaShippingFastSolid } from "react-icons/lia";
 
 const { Content, Sider } = Layout;
@@ -94,7 +94,7 @@ export const DashboardView = () => {
           width={225}
           collapsed={!isOpen}
           collapsedWidth={0}
-          breakpoint="sm"
+          breakpoint="md"
           onBreakpoint={handleOnBreakpoint}
         >
           <Menu

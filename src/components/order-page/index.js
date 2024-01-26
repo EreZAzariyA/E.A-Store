@@ -117,7 +117,7 @@ export const Order = ({ order, products, onBack }) => {
           createOrder={createOrder}
           onApprove={onApprove}
           onCancel={handleCancel}
-          disabled
+          // disabled
         />
       </>
     );

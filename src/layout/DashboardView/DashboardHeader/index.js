@@ -49,30 +49,30 @@ export const DashboardHeader = ({ isOpen, setIsOpen }) => {
   return (
     <Header>
       <Row style={{width: '100%'}} justify={admin ? 'start' : 'space-between'} align={'middle'} wrap>
-        <Col span={2}>
+        <Col>
           <Logo />
         </Col>
 
         {!admin && (
           <>
-            <Col sm={{span: 0}} xs={{ span: 16 }}>
-              <Row justify={"end"}>
-                <Col sm={{span: 0}} xs={{ span: 4 }}>
+            <Col md={{ span: 0 }} xs={{ span: 16 }}>
+              <Row justify={"end"} align={'middle'}>
+                <Col md={{ span: 0 }} xs={{ span: 4 }} sm={{ span: 3 }}>
                   <Button type="link"><CiSearch color={Colors.ICON} size={Sizes.ICON} onClick={() => navigate('search')} /></Button>
                 </Col>
-                <Col sm={{span: 0}} xs={{ span: 4 }}>
+                <Col md={{ span: 0 }} xs={{ span: 4 }} sm={{ span: 3 }}>
                   <Button type="link"><CiMenuBurger color={Colors.ICON} size={Sizes.ICON} onClick={() => setIsOpen(!isOpen)} /></Button>
                 </Col>
               </Row>
             </Col>
 
-            <Col sm={{ span: 17 }} xs={{ span: 0 }}>
+            <Col md={{ span: 17 }} xs={{ span: 0 }}>
               <Row justify={"space-between"}>
-                <Col sm={{ span: 16 }} xs={{ span: 0 }} className="search">
+                <Col md={{ span: 16 }} sm={{ span: 0 }} className="search">
                   <SearchInput />
                 </Col>
 
-                <Col sm={{ span: 8 }} xs={{ span: 0 }} className="personal">
+                <Col md={{ span: 8 }} sm={{ span: 0 }} className="personal">
                   <PersonalArea />
                 </Col>
               </Row>
