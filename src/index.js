@@ -5,8 +5,10 @@ import './index.css';
 import './styles/global.css';
 import './styles/main.css';
 import './styles/dashboardView.css';
+import socketIo from './utils/socket';
 
 interceptorsService.createInterceptors();
+socketIo.connect();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 let isAdmin = false;

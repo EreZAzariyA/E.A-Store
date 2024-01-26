@@ -8,6 +8,12 @@ class SocketServices {
   constructor () {
     this.socketIo = new io(URL);
   };
+
+  updateCategory = () => {
+    this.socketIo.on('admin-update-category', (category) => {
+      console.log(category);
+    })
+  }
 };
 
 export const socketServices = new SocketServices();
