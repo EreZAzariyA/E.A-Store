@@ -7,7 +7,7 @@ import { UserCart } from "../components/user-cart";
 import { Favorites } from "../components/favorites";
 import { ProductPage } from "../components/product-page";
 import { CategoryPage } from "../components/category-page/index.js";
-import { SubCategoryPage } from "../components/subCategory-page";
+import { SubCategoryPage } from "../components/sub-category-page";
 
 import { PublicRoute } from "./public-router";
 import { AuthView } from "../layout/AuthView";

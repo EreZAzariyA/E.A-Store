@@ -16,12 +16,12 @@ import ScheduleOutlined from "@ant-design/icons/ScheduleOutlined";
 const { Content, Sider } = Layout;
 
 export const AdminLayout = () => {
-  const orders = useSelector((state) => state.orders);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [current, setCurrent] = useState('');
+  const orders = useSelector((state) => state.orders);
   const paddingOrders = [...orders]?.filter((o) => o.status === OrdersStatus.PENDING);
-  const count = paddingOrders.length
+  const count = paddingOrders.length;
 
   useEffect(() => {
     const locationArray = pathname.split('/');

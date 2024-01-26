@@ -22,7 +22,7 @@ const Steps = {
 export const Order = ({ order, products, onBack }) => {
   const user = useSelector((state) => state.auth?.user);
   const shoppingCart = useSelector((state) => state.shoppingCart);
-  const [isDetailsLock, setIsDetailsLock] = useState((shoppingCart?.order_details || order) ? true : false);
+  const [isDetailsLock, setIsDetailsLock] = useState((shoppingCart?.order_details) ? true : false);
   const [createdOrder, setCreatedOrder] = useState(null);
   const [step, setStep] = useState(null);
   const [form] = Form.useForm();
@@ -84,14 +84,16 @@ export const Order = ({ order, products, onBack }) => {
       order_details: {...data},
       products,
       user_id: user?._id,
-      status: OrdersStatus.SENT,
+      status: OrdersStatus.PENDING,
       shoppingCart_id: shoppingCart?._id,
       arrival_date: moment().add(5, 'days').valueOf()
     };
 
+    console.log(newOrder);
+
     try {
       const newCreatedOrder = await ordersServices.createOrder(newOrder);
-      shoppingCartServices.resetCart(shoppingCart?._id);
+      // shoppingCartServices.resetCart(shoppingCart?._id);
       setCreatedOrder(newCreatedOrder);
       setStep(Steps.COMPLETED);
     } catch (err) {

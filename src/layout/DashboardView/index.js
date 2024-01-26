@@ -1,4 +1,4 @@
-import { Button, Layout, Menu } from "antd";
+import { Badge, Button, Layout, Menu } from "antd";
 import { DashboardHeader } from "./DashboardHeader";
 import { DashboardWrapper } from "./DashboardWrapper";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -16,11 +16,14 @@ const { Content, Sider } = Layout;
 export const DashboardView = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth?.token);
+  const shoppingCartProducts = useSelector((state) => state.shoppingCart?.products);
   const [isOpen, setIsOpen] = useState(false);
+
+  const count = shoppingCartProducts?.length || 0;
 
   const items = [
     {
-      label: 'Cart',
+      label: <Badge offset={[100, 0]} count={count}>Cart</Badge>,
       key: 'my-cart',
       icon: <AiOutlineShoppingCart color={Colors.ICON} size={Sizes.ICON} />
     },

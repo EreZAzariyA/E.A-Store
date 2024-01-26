@@ -2,6 +2,7 @@ import axios from "axios";
 import config from "../utils/config";
 import store from "../redux/store";
 import { createOrderAction, fetchUserOrdersAction, updateOrderStatusAction } from "../redux/slicers/orders-slicer";
+import { fetchUserCartAction } from "../redux/slicers/cart-slicer";
 
 
 class OrdersServices {
@@ -15,9 +16,12 @@ class OrdersServices {
 
   createOrder = async (orderDetails) => {
     const response = await axios.post(config.urls.order.createOrder, orderDetails);
-    const createdOrder = response.data;
-    store.dispatch(createOrderAction(createdOrder));
-    return createdOrder;
+    // console.log(response);
+    const {order, shoppingCart} = response.data;
+    console.log({order, shoppingCart});
+    store.dispatch(createOrderAction(order));
+    store.dispatch(fetchUserCartAction(shoppingCart));
+    return order;
   };
 
   updateOrderStatus = async (order_id, status) => {
@@ -25,7 +29,7 @@ class OrdersServices {
     const updatedOrder = response.data;
     store.dispatch(updateOrderStatusAction({order_id: order_id, status: status}));
     return updatedOrder;
-  }
+  };
 };
 
 export const ordersServices = new OrdersServices();
