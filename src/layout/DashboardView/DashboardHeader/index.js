@@ -41,7 +41,7 @@ export const DashboardHeader = ({ isOpen, setIsOpen }) => {
     if (user && !admin) {
       fetchUserData();
     }
-    if (admin) {
+    if (user && admin) {
       fetchAdminAllOrders();
     }
   }, [user, admin]);
