@@ -1,11 +1,12 @@
 import { addCategoryAction, removeCategoryAction, updateCategoryAction } from "../slicers/categories-slicer";
 import { addProductAction, removeProductAction, updateProductAction } from "../slicers/products-slicer";
-import { updateSubCategoryAction } from "../slicers/subCategories-slicer";
+import { addSubCategoryAction, removeSubCategoryAction, updateSubCategoryAction } from "../slicers/subCategories-slicer";
 
 
 export const socketListeners = (socket, store) => {
   const { dispatch } = store;
 
+  // Products
   socket.on('admin-add-product', (product) => {
     dispatch(addProductAction(product));
   });
@@ -16,6 +17,7 @@ export const socketListeners = (socket, store) => {
     dispatch(removeProductAction(product_id));
   });
 
+  // Categories
   socket.on('admin-add-category', (category) => {
     dispatch(addCategoryAction(category));
   });
@@ -26,7 +28,14 @@ export const socketListeners = (socket, store) => {
     dispatch(removeCategoryAction(category_id));
   });
 
+  // Sub-Categories
+  socket.on('admin-add-subCategory', (subCategory) => {
+    dispatch(addSubCategoryAction(subCategory));
+  });
   socket.on('admin-update-subCategory', (subCategory) => {
     dispatch(updateSubCategoryAction(subCategory));
+  });
+  socket.on('admin-remove-subCategory', (subCategory_id) => {
+    dispatch(removeSubCategoryAction(subCategory_id));
   });
 };
