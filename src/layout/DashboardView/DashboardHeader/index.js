@@ -14,7 +14,7 @@ import adminOrdersServices from "../../../services/admin/orders-services";
 
 const { Header } = Layout;
 
-export const DashboardHeader = ({ isOpen, setIsOpen }) => {
+export const DashboardHeader = ({ sideBarHandler }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth?.user);
   const admin = isAdmin(user);
@@ -61,7 +61,7 @@ export const DashboardHeader = ({ isOpen, setIsOpen }) => {
                   <Button type="link"><CiSearch color={Colors.ICON} size={Sizes.ICON} onClick={() => navigate('search')} /></Button>
                 </Col>
                 <Col md={{ span: 0 }} xs={{ span: 4 }} sm={{ span: 3 }}>
-                  <Button type="link"><CiMenuBurger color={Colors.ICON} size={Sizes.ICON} onClick={() => setIsOpen(!isOpen)} /></Button>
+                  <Button type="link"><CiMenuBurger color={Colors.ICON} size={Sizes.ICON} onClick={() => sideBarHandler()} /></Button>
                 </Col>
               </Row>
             </Col>

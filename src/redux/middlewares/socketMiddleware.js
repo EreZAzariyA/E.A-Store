@@ -1,6 +1,7 @@
+import { socketListeners } from "./socket-listeners";
+
 export const socketMiddleware = (socket) => (store) => (next) => (action) => {
-  socket.on('admin-update-category', (category) => {
-    console.log(category);
-  })
+  socketListeners(socket, store);
+
   next(action);
 };

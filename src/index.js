@@ -5,10 +5,8 @@ import './index.css';
 import './styles/global.css';
 import './styles/main.css';
 import './styles/dashboardView.css';
-import socketIo from './utils/socket';
 
 interceptorsService.createInterceptors();
-socketIo.connect();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 let isAdmin = false;
@@ -17,7 +15,7 @@ if (process.env.REACT_APP_IS_ADMIN) {
 }
 
 if (isAdmin) {
-  import("./routes/AdminRouter").then((AdminRouter) => {
+  import("./routes/AdminRouter").then(({AdminRouter}) => {
     root.render(AdminRouter.default());
   });
 } else {

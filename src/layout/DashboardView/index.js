@@ -81,6 +81,10 @@ export const DashboardView = () => {
     ]
   });
 
+  const sideBarHandler = () => {
+    setIsOpen(!isOpen);
+  };
+
   const handleOnBreakpoint = (brake) => {
     if (!brake) {
       setIsOpen(false);
@@ -89,7 +93,9 @@ export const DashboardView = () => {
 
   return (
     <Layout className="layout main-layout">
-      <DashboardHeader isOpen={isOpen} setIsOpen={setIsOpen} />
+      <DashboardHeader
+        sideBarHandler={sideBarHandler}
+      />
       <Layout>
         <Sider
           trigger={null}
@@ -114,4 +120,4 @@ export const DashboardView = () => {
       </Layout>
     </Layout>
   );
-}
+};

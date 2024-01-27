@@ -1,7 +1,10 @@
 import { io } from "socket.io-client";
+import config from "./config";
+
+const URL = config.urls.socket;
 
 class SocketIo {
-  socket = new io('http://127.0.0.1:5000');
+  socket = new io(URL, {autoConnect: false});
 
   connect = () => {
     this.socket.connect();
