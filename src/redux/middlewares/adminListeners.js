@@ -1,8 +1,7 @@
 
 export const adminListeners = (socket, store) => {
-  const { dispatch } = store;
 
-  socket.on('user-create-order', (order) => {
+  socket.on('user-add-product', (order) => {
     console.log(order);
   });
 }
