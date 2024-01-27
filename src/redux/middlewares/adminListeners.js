@@ -1,7 +1,9 @@
+import { createOrderAction } from "../slicers/orders-slicer";
 
 export const adminListeners = (socket, store) => {
+  const { dispatch } = store;
 
-  socket.on('user-add-product', (order) => {
-    console.log(order);
+  socket.on('user-create-order', (order) => {
+    dispatch(createOrderAction(order));
   });
 }
