@@ -18,6 +18,8 @@ import { UserRoute } from "./user-router/index.js";
 import { SearchPage } from "../components/search-page/index.js";
 import { Orders } from "../components/orders/index.js";
 import { CustomersSupport } from "../components/customers-support/index.js";
+import socketIo from "../utils/socket.js";
+socketIo.connect();
 
 const UserRouter = () => (
   <Provider store={store}>
