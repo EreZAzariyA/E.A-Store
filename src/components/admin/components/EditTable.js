@@ -27,15 +27,24 @@ export const EditTable = ({columns, dataSource, type, handleAdd, onEditMode, ...
     }
   };
 
+  const duplicateHandler = async (record) => {
+
+  };
+
   columns.push({
     title: 'Actions',
     key: 'action',
-    width: 100,
     render: (_, record) => (
       <Row align={'middle'}>
         <Col>
           <Typography.Link onClick={() => onEditMode(record)}>
             Edit
+          </Typography.Link>
+        </Col>
+        <Divider type="vertical" />
+        <Col>
+          <Typography.Link onClick={() => duplicateHandler(record)}>
+            Duplicate
           </Typography.Link>
         </Col>
         <Divider type="vertical" />
