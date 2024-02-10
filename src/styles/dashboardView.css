@@ -1,33 +1,28 @@
 .layout {
   text-align: center;
+  min-height: 100%;
 }
 
-.layout.main-layout .site-layout {
+.layout .site-layout {
   padding: 0 20px 80px 20px;
-
   background: white;
+}
+.layout.admin-layout .site-layout {
+  padding: 10px;
+  height: 100%;
 }
 
 .layout .ant-layout-header {
   width: 100%;
   padding: 5px 0 5px 30px;
 
-  background: #edf1f4;
+  background: var(--lightBlue);
   height: min-content;
   line-height: 5px;
 
   position: sticky;
   top: 0;
   z-index: 10;
-}
-
-.layout.admin-layout .ant-layout-header {
-  padding: 10px;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }
 
 .layout .ant-layout-header .personal {
@@ -43,6 +38,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.layout.admin-layout .ant-layout-sider .ant-menu {
+  background: var(--lightBlue);
+}
+.layout.admin-layout .ant-layout-sider-trigger {
+  background: var(--lightBlue);
+  border-inline-end: 1px solid rgba(5, 5, 5, 0.06);
 }
 
 

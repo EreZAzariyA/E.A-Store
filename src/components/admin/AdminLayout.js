@@ -4,7 +4,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { DashboardHeader } from "../../layout/DashboardView/DashboardHeader";
 import { authServices } from "../../services/auth-services";
 import { OrdersStatus } from "../../utils/helpers";
-import { Badge, Button, Layout, Menu } from "antd";
+import { Badge, Button, Layout, Menu, Typography } from "antd";
 import PieChartOutlined from "@ant-design/icons/PieChartOutlined";
 import AppstoreAddOutlined from "@ant-design/icons/AppstoreAddOutlined";
 import TableOutlined from "@ant-design/icons/TableOutlined";
@@ -65,10 +65,9 @@ export const AdminLayout = () => {
         icon: <ScheduleOutlined />
       },
       {
-        label: <Button danger type="text">Logout</Button>,
+        label: <Typography.Text type="danger">Sign-Out</Typography.Text>,
         key: '/',
         icon: <LogoutOutlined />,
-        style: {'position': 'absolute', 'bottom': 0 },
         onClick: logout
       }
     ];
@@ -86,11 +85,11 @@ export const AdminLayout = () => {
   return (
     <Layout className="layout admin-layout">
       <DashboardHeader />
-      <Layout>
+      <Layout hasSider>
         <Sider theme="light" collapsible>
           {menu()}
         </Sider>
-        <Content style={{ overflow: 'auto' }}>
+        <Content className="site-layout">
           <Outlet />
         </Content>
       </Layout>
