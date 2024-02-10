@@ -1,20 +1,21 @@
 .layout {
   text-align: center;
   min-height: 100%;
+  background: var(--defaultWhite);
 }
 
 .layout .site-layout {
   padding: 0 20px 80px 20px;
-  background: white;
+  background: var(--defaultWhite);
 }
+
 .layout.admin-layout .site-layout {
   padding: 10px;
-  height: 100%;
 }
 
 .layout .ant-layout-header {
   width: 100%;
-  padding: 5px 0 5px 30px;
+  padding: 5px 0 5px 20px;
 
   background: var(--lightBlue);
   height: min-content;
@@ -23,6 +24,9 @@
   position: sticky;
   top: 0;
   z-index: 10;
+}
+.layout.admin-layout .ant-layout-header {
+  border-bottom: 1px solid rgba(5, 5, 5, 0.06);
 }
 
 .layout .ant-layout-header .personal {

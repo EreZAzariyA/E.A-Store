@@ -1,39 +1,20 @@
-import { adminProductsServices } from "../../../services/admin/products-services";
-import { adminCategoriesServices } from "../../../services/admin/categories-services";
-import { adminSubCategoriesServices } from "../../../services/admin/subCategories-services";
 import { ComponentsTypes } from "../../../utils/helpers";
-import { Form, Table, Typography, Popconfirm, message, Row, Col, Divider, Button } from "antd";
+import { Form, Table, Typography, Popconfirm, Row, Col, Divider, Button } from "antd";
 
-export const EditTable = ({columns, dataSource, type, handleAdd, onEditMode, ...rest}) => {
+export const EditTable = ({ columns, dataSource, type, handleAdd, onEditMode, removeHandler, ...rest }) => {
   const [ form ] = Form.useForm();
   const isCategoriesList = type === ComponentsTypes.CATEGORIES;
   const isSubCategoriesList = type === ComponentsTypes.SUB_CATEGORIES;
-  const componentName = isCategoriesList ? 'category' : isSubCategoriesList ? 'sub-category' : 'product';
-
-  const remove = async (record) => {
-    try {
-      if (isCategoriesList) {
-        await adminCategoriesServices.removeCategory(record._id)
-        message.success('Removed');
-      } else if (isSubCategoriesList) {
-        await adminSubCategoriesServices.removeSubCategory(record._id);
-        message.success('Removed');
-      } else {
-        await adminProductsServices.removeProduct(record._id);
-        message.success('Removed');
-      }
-    } catch (err) {
-      message.error(err.message);
-    }
-  };
+  const isBrandsList = type === ComponentsTypes.BRANDS;
+  const componentName = isCategoriesList ? 'category' : isSubCategoriesList ? 'sub-category' : isBrandsList ? 'brand' : 'product';
 
   const duplicateHandler = async (record) => {
-
   };
 
   columns.push({
     title: 'Actions',
     key: 'action',
+    width: 120,
     render: (_, record) => (
       <Row align={'middle'}>
         <Col>
@@ -51,7 +32,7 @@ export const EditTable = ({columns, dataSource, type, handleAdd, onEditMode, ...
         <Col>
           <Popconfirm
             title="Are you sure?"
-            onConfirm={() => remove(record)}
+            onConfirm={() => removeHandler(record._id)}
           >
             <Typography.Link>
               Delete
@@ -70,9 +51,8 @@ export const EditTable = ({columns, dataSource, type, handleAdd, onEditMode, ...
         columns={columns}
         dataSource={dataSource}
         rootClassName="editable-row"
-        scroll={{ x: 1200, y: 440 }}
       />
-      <Form.Item>
+      <Form.Item className="mt-20">
         <Button onClick={handleAdd}>Add {componentName}</Button>
       </Form.Item>
     </Form>

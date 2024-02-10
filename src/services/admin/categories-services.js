@@ -9,7 +9,7 @@ import config from "../../utils/config";
 
 class AdminCategoriesServices {
   addCategory = async (categoryToAdd) => {
-    const response = await axios.post(config.urls.admin.addCategory, categoryToAdd);
+    const response = await axios.post(config.urls.admin.categories.addCategory, categoryToAdd);
     const uploadedCategory = response.data;
     if (uploadedCategory) {
       store.dispatch(addCategoryAction(uploadedCategory));
@@ -18,14 +18,14 @@ class AdminCategoriesServices {
   };
 
   removeCategory = async (category_id) => {
-    const response = await axios.delete(config.urls.admin.removeCategory + category_id);
+    const response = await axios.delete(config.urls.admin.categories.removeCategory + category_id);
     const removedItem = response.data;
     store.dispatch(removeCategoryAction(category_id));
     return removedItem;
   };
 
   updateCategory = async (categoryToUpdate) => {
-    const response = await axios.put(config.urls.admin.updateCategory, categoryToUpdate);
+    const response = await axios.put(config.urls.admin.categories.updateCategory, categoryToUpdate);
     const updatedCategory = response.data;
     store.dispatch(updateCategoryAction(updatedCategory));
     return updatedCategory;

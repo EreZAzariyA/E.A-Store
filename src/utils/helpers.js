@@ -37,6 +37,7 @@ export const ComponentsTypes = {
   PRODUCTS: 'products',
   CATEGORIES: 'categories',
   SUB_CATEGORIES: 'sub_categories',
+  BRANDS: 'brands'
 }
 
 export const Brands = [

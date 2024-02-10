@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Brands, ComponentsTypes } from "../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
-import { Button, Col, Divider, Form, Input, InputNumber, Row, Select } from "antd"
+import { Button, Col, Divider, Form, Input, InputNumber, Row, Select, Typography } from "antd"
 
 export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const categories = useSelector((state) => state.categories);
   const allSubCategories = useSelector((state) => state.subCategories);
   const [form] = Form.useForm();
   const [subCategories, setSubCategories] = useState([]);
-
   const isProducts = type === ComponentsTypes.PRODUCTS;
   const isCategories = type === ComponentsTypes.CATEGORIES;
   const isSubCategories = type === ComponentsTypes.SUB_CATEGORIES;
-  const componentName = isCategories ? 'category' : isSubCategories ? 'sub-category' : 'product';
+  const isBrands = type === ComponentsTypes.BRANDS;
+  const componentName = isCategories ? 'category' : isSubCategories ? 'sub-category' : isBrands ? 'brand' : 'product';
 
-  const [initialValue, setInitialValue] = useState(isProducts ? {
+  const [initialValue, setInitialValue] = useState({
     name: record?.name || '',
     brand: record?.brand || '',
     description: record?.description || '',
@@ -24,15 +24,10 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     image_url: record?.image_url || '',
     price: record?.price || '',
     stock: record?.stock || '',
-    } : isCategories ? {
-      category: record?.category || '',
-      subCategories: record?.subCategories || [],
-      image_url: record?.image_url || '',
-    } : isSubCategories ? {
-      subCategory: record?.subCategory || '',
-      image_url: record?.image_url || ''
-    } : {}
-  );
+    category: record?.category || '',
+    subCategories: record?.subCategories || [],
+    subCategory: record?.subCategory || '',
+  });
 
   useEffect(() => {
     if (initialValue.category_id) {
@@ -81,7 +76,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     <Form {...formProps} labelWrap>
       <h3>Add {componentName}</h3>
 
-      <Button type="link" onClick={cancel}>Go back</Button>
+      <Typography.Link onClick={cancel}>Go Back</Typography.Link>
       <Divider />
 
       {isProducts && (
@@ -239,6 +234,25 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
             rules={[{ required: true, message: 'Image url is missing' }]}
           >
             <Input type="text" />
+          </Form.Item>
+        </>
+      )}
+      {isBrands && (
+        <>
+          <Form.Item
+            label={'Brand'}
+            name={'name'}
+            rules={[{ required: true, message: 'Brand name is missing' }]}
+          >
+            <Input type="text" />
+          </Form.Item>
+
+          <Form.Item
+            label="Image Url"
+            name={'image_url'}
+            rules={[{ required: true, message: 'Image url is missing' }]}
+          >
+            <Input type="url" />
           </Form.Item>
         </>
       )}

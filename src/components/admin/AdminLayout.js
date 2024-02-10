@@ -12,6 +12,7 @@ import DatabaseOutlined from "@ant-design/icons/DatabaseOutlined";
 import UploadOutlined from "@ant-design/icons/UploadOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
 import ScheduleOutlined from "@ant-design/icons/ScheduleOutlined";
+import ShopOutlined from "@ant-design/icons/ShopOutlined";
 
 const { Content, Sider } = Layout;
 
@@ -38,6 +39,11 @@ export const AdminLayout = () => {
         label: 'Dashboard',
         key: 'dashboard',
         icon: <PieChartOutlined />
+      },
+      {
+        label: 'Brands',
+        key: 'brands',
+        icon: <ShopOutlined />
       },
       {
         label: 'Products',

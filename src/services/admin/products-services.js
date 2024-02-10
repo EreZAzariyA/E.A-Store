@@ -9,7 +9,7 @@ import config from "../../utils/config";
 
 class AdminProductsServices {
   addProduct = async (productToUpload) => {
-    const response = await axios.post(config.urls.admin.addProduct, productToUpload);
+    const response = await axios.post(config.urls.admin.products.addProduct, productToUpload);
     const uploadedProduct = response.data;
     if (uploadedProduct) {
       store.dispatch(addProductAction(uploadedProduct));
@@ -18,14 +18,14 @@ class AdminProductsServices {
   };
 
   removeProduct = async (product_id) => {
-    const response = await axios.delete(config.urls.admin.removeProduct + product_id);
+    const response = await axios.delete(config.urls.admin.products.removeProduct + product_id);
     const removedItem = response.data;
     store.dispatch(removeProductAction(product_id));
     return removedItem;
   };
 
   updateProduct = async (productToUpdate) => {
-    const response = await axios.put(config.urls.admin.updateProduct, productToUpdate);
+    const response = await axios.put(config.urls.admin.products.updateProduct, productToUpdate);
     const updatedProduct = response.data;
     store.dispatch(updateProductAction(productToUpdate));
     return updatedProduct;

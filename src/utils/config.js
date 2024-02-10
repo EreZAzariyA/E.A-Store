@@ -8,19 +8,33 @@ class Config {
       products: "",
       categories: "",
       subCategories: "",
+      brands: ""
     },
     admin: {
       uploadImage: "",
-      addProduct: "",
-      removeProduct: "",
-      updateProduct: "",
-      addCategory: "",
-      removeCategory: "",
-      updateCategory: "",
-      addSubCategory: "",
-      removeSubCategory: "",
-      updateSubCategory: "",
-      fetchAllOrders: "",
+      products: {
+        addProduct: "",
+        removeProduct: "",
+        updateProduct: "",
+      },
+      categories: {
+        addCategory: "",
+        removeCategory: "",
+        updateCategory: "",
+      },
+      subCategories: {
+        addSubCategory: "",
+        removeSubCategory: "",
+        updateSubCategory: "",
+      },
+      brands: {
+        addBrand: "",
+        removeBrand: "",
+        updateBrand: ""
+      },
+      orders: {
+        fetchAllOrders: "",
+      }
     },
     shoppingCart: {
       fetchUserShoppingCart: "",
@@ -50,6 +64,7 @@ class Config {
         products: baseUrl + 'products/all',
         categories: baseUrl + 'categories/all',
         subCategories: baseUrl + 'sub-categories/all',
+        brands: baseUrl + 'brands/all',
       },
       shoppingCart: {
         fetchUserShoppingCart: baseUrl + 'shopping-carts/fetch-user-cart/',
@@ -68,20 +83,29 @@ class Config {
       },
       admin: {
         uploadImage: baseUrl + 'admin/image-upload',
-
-        addProduct: baseUrl + 'admin/add-product',
-        removeProduct: baseUrl + 'admin/remove-product/',
-        updateProduct: baseUrl + 'admin/update-product',
-
-        addCategory: baseUrl + 'admin/add-category',
-        removeCategory: baseUrl + 'admin/remove-category/',
-        updateCategory: baseUrl + 'admin/update-category',
-
-        addSubCategory: baseUrl + 'admin/add-sub-category',
-        removeSubCategory: baseUrl + 'admin/remove-sub-category/',
-        updateSubCategory: baseUrl + 'admin/update-sub-category',
-
-        fetchAllOrders: baseUrl + 'admin/fetch-orders'
+        orders: {
+          fetchAllOrders: baseUrl + 'admin/fetch-orders',
+        },
+        products: {
+          addProduct: baseUrl + 'admin/add-product',
+          removeProduct: baseUrl + 'admin/remove-product/',
+          updateProduct: baseUrl + 'admin/update-product',
+        },
+        categories: {
+          addCategory: baseUrl + 'admin/add-category',
+          removeCategory: baseUrl + 'admin/remove-category/',
+          updateCategory: baseUrl + 'admin/update-category',
+        },
+        subCategories: {
+          addSubCategory: baseUrl + 'admin/add-sub-category',
+          removeSubCategory: baseUrl + 'admin/remove-sub-category/',
+          updateSubCategory: baseUrl + 'admin/update-sub-category',
+        },
+        brands: {
+          addBrand: baseUrl + 'admin/add-brand',
+          removeBrand: baseUrl + 'admin/remove-brand/',
+          updateBrand: baseUrl + 'admin/update-brand',
+        },
       },
       socket: socketUrl,
     }

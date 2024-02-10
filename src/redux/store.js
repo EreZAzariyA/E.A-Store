@@ -8,6 +8,7 @@ import { middleware } from "./middlewares/middleware";
 import orderSlicer from "./slicers/orders-slicer";
 import { socketMiddleware } from "./middlewares/socketMiddleware";
 import socketIo from "../utils/socket";
+import brandsSlicer from "./slicers/brands-slicer";
 
 const io = socketIo.socket;
 
@@ -18,6 +19,7 @@ const store = configureStore({
     products: productsSlicer.reducer,
     categories: categoriesSlicer.reducer,
     subCategories: subCategoriesSlicer.reducer,
+    brands: brandsSlicer.reducer,
     orders: orderSlicer.reducer,
   },
   middleware: [...getDefaultMiddleware(), middleware, socketMiddleware(io)],

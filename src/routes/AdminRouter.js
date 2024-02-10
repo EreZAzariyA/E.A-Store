@@ -15,6 +15,7 @@ import { Login } from "../layout/AuthView/login";
 import { Register } from "../layout/AuthView/register";
 import store from "../redux/store";
 import { Orders } from "../components/orders";
+import { AdminBrands } from "../components/admin/admin-brands";
 
 const AdminRouter = () => (
   <Provider store={store}>
@@ -25,6 +26,7 @@ const AdminRouter = () => (
         <Route path="admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route path="/admin" element={<Navigate to={'dashboard'} replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="brands" element={<AdminBrands />} />
           <Route path="products" element={<ProductsTable />} />
           <Route path="categories" element={<CategoriesTable />} />
           <Route path="sub-categories" element={<SubCategoriesTable />} />

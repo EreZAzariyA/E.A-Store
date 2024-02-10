@@ -4,6 +4,7 @@ import { fetchProductsAction } from "../redux/slicers/products-slicer";
 import { fetchCategoriesAction } from "../redux/slicers/categories-slicer";
 import { fetchSubCategoriesAction } from "../redux/slicers/subCategories-slicer";
 import config from "../utils/config";
+import { fetchBrandsAction } from "../redux/slicers/brands-slicer";
 
 class StoreServices {
   fetchAllProducts = async () => {
@@ -37,6 +38,17 @@ class StoreServices {
     }
     const subCategories = store.getState().subCategories;
     return subCategories;
+  };
+
+  fetchAllBrands = async () => {
+    if (!store.getState().brands.length) {
+      const response = await axios.get(config.urls.store.brands);
+      const brands = response.data;
+      store.dispatch(fetchBrandsAction(brands));
+      return brands;
+    }
+    const brands = store.getState().brands;
+    return brands;
   };
 }
 

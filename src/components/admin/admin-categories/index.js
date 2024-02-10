@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
@@ -14,34 +14,38 @@ const Steps = {
 export const CategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const allCategories = useSelector((state) => (state.categories));
-  const [filterState, setFilterState] = useState({
-    category: ''
-  });
-  const categories = filtering();
 
   const [category, setCategory] = useState(null);
   const [step, setStep] = useState(null);
+  const [filterState, setFilterState] = useState({
+    category: ''
+  });
 
-
-  useEffect(() => {
-    if (step && step === Steps.ADD_CATEGORY) {
-      setCategory(null);
-    }
-  }, [step]);
-
-  function filtering() {
+  const filtering = () => {
     let filteredCategories = [...allCategories];
 
     if (filterState.category) {
-      filteredCategories.filter((c) => (c.category.toLowerCase().startsWith(filterState.category.toLowerCase())));
+      filteredCategories = filteredCategories.filter((c) => (c.category.toLowerCase().startsWith(filterState.category.toLowerCase())));
     }
 
+    filteredCategories = filteredCategories.sort((a, b) => (
+      new Date(b.updatedAt) - new Date(a.updatedAt)
+    ));
     return filteredCategories;
   };
+  const categories = filtering();
 
   const handleEditMode = (record) => {
     setStep(Steps.UPDATE_CATEGORY);
     setCategory(record);
+  };
+
+  const removeHandler = async (category_id) => {
+    try {
+      await adminCategoriesServices.removeCategory(category_id);
+    } catch (err) {
+      message.error(err);
+    }
   };
 
   const onFinish = async (values) => {
@@ -69,7 +73,7 @@ export const CategoriesTable = () => {
       key: 'category',
       title: 'Category',
       dataIndex: 'category',
-      sorter: (a, b) => (a.category.localeCompare(b.category)),
+      sorter: (a, b) => (new Date(b.updatedAt) - new Date(a.updatedAt)),
       editable: true,
       width: 120,
       fixed: 'left',
@@ -125,7 +129,8 @@ export const CategoriesTable = () => {
             <Input
               type="text"
               placeholder='Search category'
-              onChange={(val) => setFilterState({...filterState, category: val.target.value})}
+              allowClear
+              onChange={(val) => setFilterState({ ...filterState, category: (val.target.value) })}
             />
           </Space>
           <EditTable
@@ -136,6 +141,8 @@ export const CategoriesTable = () => {
             type={ComponentsTypes.CATEGORIES}
             handleAdd={() => setStep(Steps.ADD_CATEGORY)}
             onEditMode={handleEditMode}
+            removeHandler={removeHandler}
+            scroll={{ x: 1300, y: 440 }}
           />
         </>
       )}

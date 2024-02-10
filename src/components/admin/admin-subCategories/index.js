@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Input, Space, message } from "antd";
-import { useEffect, useState } from "react";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminSubCategoriesServices } from "../../../services/admin/subCategories-services";
 import { ComponentsTypes, getError } from "../../../utils/helpers";
+import { Input, Space, message } from "antd";
 
 const Steps = {
   ADD_SUBCATEGORY: "ADD_SUBCATEGORY",
@@ -13,32 +13,40 @@ const Steps = {
 
 export const SubCategoriesTable = () => {
   const products = useSelector((state) => (state.products));
-  const subCategories = useSelector((state) => (state.subCategories));
-  const [subCategory, setSubCategory] = useState(null);
-  const [filteredSubCategories, setFilteredSubCategories] = useState([]);
-  const [step, setStep] = useState(null);
+  const allSubCategories = useSelector((state) => (state.subCategories));
 
-  const [ filterState, setFilterState ] = useState({
+  const [subCategory, setSubCategory] = useState(null);
+  const [step, setStep] = useState(null);
+  const [filterState, setFilterState] = useState({
     subCategory: '',
   });
 
-  useEffect(() => {
-    if (filterState.subCategory) {
-      const subCategoryToSearch = filterState.subCategory.toLowerCase();
-      const filteredSubCategories = [...subCategories].filter((subC) => {
-        return subC.subCategory.toLowerCase().startsWith(subCategoryToSearch)
-      });
-      setFilteredSubCategories(filteredSubCategories);
-    } else {
-      setFilteredSubCategories(subCategories);
-    }
-  }, [filterState.subCategory, subCategories]);
+  const filtering = () => {
+    let filteredSubCategories = [...allSubCategories];
 
-  useEffect(() => {
-    if (step && step === Steps.ADD_SUBCATEGORY) {
-      setSubCategory(null);
+    if (filterState.subCategory) {
+      filteredSubCategories = filteredSubCategories.filter((p) => p.subCategory.startsWith(filterState.subCategory))
     }
-  }, [step]);
+
+    filteredSubCategories.sort((a, b) => (
+      new Date(b.updatedAt) - new Date(a.updatedAt)
+    ));
+    return filteredSubCategories;
+  };
+  const subCategories = filtering();
+
+  const handleEditMode = (record) => {
+    setStep(Steps.UPDATE_SUBCATEGORY);
+    setSubCategory(record);
+  };
+
+  const removeHandler = async (subCategory_id) => {
+    try {
+      await adminSubCategoriesServices.removeSubCategory(subCategory_id);
+    } catch (err) {
+      message.error(err);
+    }
+  };
 
   const onFinish = async (values) => {
     let newValue;
@@ -59,11 +67,6 @@ export const SubCategoriesTable = () => {
     } catch (error) {
       message.error(getError(error.message));
     }
-  };
-
-  const handleEditMode = (record) => {
-    setStep(Steps.UPDATE_SUBCATEGORY);
-    setSubCategory(record);
   };
 
   const columns = [
@@ -127,10 +130,12 @@ export const SubCategoriesTable = () => {
             columns={columns}
             loading={!subCategories}
             rowKey={'_id'}
-            dataSource={filteredSubCategories}
+            dataSource={subCategories}
             type={ComponentsTypes.SUB_CATEGORIES}
             handleAdd={() => setStep(Steps.ADD_SUBCATEGORY)}
             onEditMode={handleEditMode}
+            removeHandler={removeHandler}
+            scroll={{ x: 1300, y: 440 }}
           />
         </>
       )}

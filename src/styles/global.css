@@ -1,5 +1,6 @@
 :root {
-  --lightBlue: #edf1f4
+  --lightBlue: #edf1f4;
+  --defaultWhite: white;
 }
 
 .mt-5 {

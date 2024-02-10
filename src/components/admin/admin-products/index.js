@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminProductsServices } from "../../../services/admin/products-services";
@@ -13,33 +13,20 @@ const Steps = {
 };
 
 export const ProductsTable = () => {
-  const products = useSelector((state) => (state.products));
+  const allProducts = useSelector((state) => (state.products));
   const categories = useSelector((state) => (state.categories));
   const subCategories = useSelector((state) => (state.subCategories));
 
   const [product, setProduct] = useState(null);
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [step, setStep] = useState(null);
-
-  const [ filterState, setFilterState ] = useState({
+  const [filterState, setFilterState] = useState({
     name: '',
     category_id: '',
     subCategory_id: ''
   });
 
-  useEffect(() => {
-    const f = filtering();
-    setFilteredProducts(f);
-  }, [filterState, products]);
-
-  useEffect(() => {
-    if (step && step === Steps.ADD_PRODUCT) {
-      setProduct(null);
-    }
-  }, [step]);
-
   const filtering = () => {
-    let filteredProducts = [...products];
+    let filteredProducts = [...allProducts];
 
     if (filterState.name) {
       filteredProducts = filteredProducts?.filter((p) => p.name.startsWith(filterState.name))
@@ -51,12 +38,24 @@ export const ProductsTable = () => {
       filteredProducts = filteredProducts?.filter((p) => (p.subCategory_id === filterState.subCategory_id))
     }
 
+    filteredProducts.sort((a, b) => (
+      new Date(b.updatedAt) - new Date(a.updatedAt)
+    ));
     return filteredProducts;
   };
+  const products = filtering();
 
   const handleEditMode = (record) => {
     setStep(Steps.UPDATE_PRODUCT);
     setProduct(record);
+  };
+
+  const removeHandler = async (product_id) => {
+    try {
+      await adminProductsServices.removeProduct(product_id);
+    } catch (err) {
+      message.error(err);
+    }
   };
 
   const onFinish = async (values) => {
@@ -188,11 +187,14 @@ export const ProductsTable = () => {
 
           <EditTable
             rowKey={'_id'}
-            dataSource={filteredProducts}
+            loading={!products}
+            dataSource={products}
             columns={columns}
             handleAdd={() => setStep(Steps.ADD_PRODUCT)}
             type={ComponentsTypes.PRODUCTS}
             onEditMode={handleEditMode}
+            removeHandler={removeHandler}
+            scroll={{ x: 1300, y: 440 }}
           />
         </>
       )}
