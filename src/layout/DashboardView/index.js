@@ -98,6 +98,16 @@ export const DashboardView = () => {
       />
       <Layout>
         <Sider
+          style={{
+            overflow: 'auto',
+            height: '100vh',
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            zIndex: 9,
+            paddingTop: '65px'
+          }}
           trigger={null}
           theme="light"
           width={225}

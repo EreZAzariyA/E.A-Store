@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { interceptorsService } from './services/InterceptorsService';
-import './index.css';
+import './styles/style.css';
 import './styles/global.css';
 import './styles/main.css';
 import './styles/dashboardView.css';

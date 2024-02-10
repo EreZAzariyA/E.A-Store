@@ -1,16 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PersonalArea } from "./PersonalArea";
 import { useSelector } from "react-redux";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
 import { Button, Col, Layout, Row } from "antd";
 import { storeServices } from "../../../services/store-services";
 import { ordersServices } from "../../../services/orders-services";
-import { Logo } from "../../../components/components/Logo";
 import { CiMenuBurger, CiSearch } from "react-icons/ci";
 import { SearchInput } from "../../../components/components/Search-input";
 import { Colors, Sizes, isAdmin } from "../../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import adminOrdersServices from "../../../services/admin/orders-services";
+import { Logo } from "../../../components/components/Logo/Logo";
 
 const { Header } = Layout;
 
@@ -18,6 +18,7 @@ export const DashboardHeader = ({ sideBarHandler }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth?.user);
   const admin = isAdmin(user);
+  const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
     const fetchStoreData = async () => {
@@ -46,10 +47,23 @@ export const DashboardHeader = ({ sideBarHandler }) => {
     }
   }, [user, admin]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log('test');
+      const currentScroll = window.pageYOffset;
+      setIsSticky(currentScroll > 150);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <Header>
-      <Row style={{width: '100%'}} justify={admin ? 'start' : 'space-between'} align={'middle'} wrap>
-        <Col>
+    <Header className={isSticky ? "is-sticky" : ""}>
+      <Row justify={admin ? 'start' : 'space-between'} align={'middle'}>
+        <Col span={2}>
           <Logo />
         </Col>
 
