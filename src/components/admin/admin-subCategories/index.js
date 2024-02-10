@@ -25,7 +25,7 @@ export const SubCategoriesTable = () => {
     let filteredSubCategories = [...allSubCategories];
 
     if (filterState.subCategory) {
-      filteredSubCategories = filteredSubCategories.filter((p) => p.subCategory.startsWith(filterState.subCategory))
+      filteredSubCategories = filteredSubCategories.filter((p) => p.subCategory.toLowerCase().startsWith(filterState.subCategory.toLowerCase()))
     }
 
     filteredSubCategories.sort((a, b) => (

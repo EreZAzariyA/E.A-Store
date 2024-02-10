@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Brands, ComponentsTypes } from "../../../utils/helpers";
+import {ComponentsTypes } from "../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
 import { Button, Col, Divider, Form, Input, InputNumber, Row, Select, Typography } from "antd"
 
 export const AdminInsert = ({ type, onFinish, onBack, record }) => {
+  const brands = useSelector((state) => state.brands);
   const categories = useSelector((state) => state.categories);
   const allSubCategories = useSelector((state) => state.subCategories);
   const [form] = Form.useForm();
@@ -18,6 +19,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const [initialValue, setInitialValue] = useState({
     name: record?.name || '',
     brand: record?.brand || '',
+    brands: record?.brands || [],
     description: record?.description || '',
     category_id: record?.category_id || '',
     subCategory_id: record?.subCategory_id || '',
@@ -44,6 +46,24 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     }
   }, [allSubCategories, categories, initialValue.category_id]);
 
+  const fetchBrandsBySubCategory_id = (subCategory_id) => {
+    let fullBrandsList = [];
+    if (isProducts) {
+      const selectedSubCategory = subCategories.find((subC) => subC._id === subCategory_id)
+      if (selectedSubCategory) {
+        const brandsId = selectedSubCategory.brands;
+        fullBrandsList = [...brandsId].map((b) => {
+          const fullBrand = [...brands].find((brand) => brand._id === b);
+          return fullBrand;
+        });
+      }
+      return fullBrandsList;
+    }
+
+    return [];
+  };
+  const brandsBySubCategory = fetchBrandsBySubCategory_id(initialValue.subCategory_id);
+
   const cancel = () => {
     onBack();
     form.resetFields();
@@ -62,14 +82,6 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     initialValues: initialValue,
     className: "insert-form add-category",
     layout: "horizontal",
-    labelAlign: 'left',
-    labelCol: {
-      md: { span: 8 },
-      lg: { span: 7 },
-      xl: { span: 5 },
-      xxl: { span: 4 },
-    },
-    wrapperCol: {span: 24},
   };
 
   return (
@@ -90,28 +102,6 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
               type="text"
               placeholder="Product name"
             />
-          </Form.Item>
-
-          <Form.Item
-            label={'Brand'}
-            name={'brand'}
-            rules={[{ required: true, message: 'Brand is missing' }]}
-          >
-            <Select onChange={(val) => handleChange('brand', val)}>
-              <Select.Option key={''} disabled>Select brand</Select.Option>
-              {Brands.map((brand) => (
-                <Select.Option key={brand.name}>
-                  <Row align={"stretch"} justify={"center"}>
-                    <Col span={2}>
-                      {brand.name}
-                    </Col>
-                    <Col span={2}>
-                      <img src={brand.image_url} width={30} alt={brand.name + ' brand image'} />
-                    </Col>
-                  </Row>
-                </Select.Option>
-              ))}
-            </Select>
           </Form.Item>
 
           <Form.Item
@@ -140,6 +130,31 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
               <Select.Option key={''} value={''} disabled>Select sub category</Select.Option>
               {subCategories?.map((subC) => (
                 <Select.Option key={subC?._id}>{subC?.subCategory}</Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label={'Brand'}
+            name={'brand'}
+            rules={[{ required: true, message: 'Brand is missing' }]}
+          >
+            <Select
+              disabled={!initialValue.subCategory_id}
+              onChange={(val) => handleChange('brand', val)}
+            >
+              <Select.Option key={''} disabled>Select brand</Select.Option>
+              {brandsBySubCategory.map((brand) => (
+                <Select.Option key={brand.name}>
+                  <Row align={"stretch"} justify={"center"}>
+                    <Col span={2}>
+                      {brand.name}
+                    </Col>
+                    <Col span={2}>
+                      <img src={brand.image_url} width={30} alt={brand.name + ' brand image'} />
+                    </Col>
+                  </Row>
+                </Select.Option>
               ))}
             </Select>
           </Form.Item>
@@ -229,6 +244,33 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
           </Form.Item>
 
           <Form.Item
+            label={'Brands'}
+            name={'brands'}
+            rules={[{ required: true, message: 'Brands are missing' }]}
+          >
+            <Select
+              mode="multiple"
+              allowClear
+              style={{ width: '100%' }}
+              onChange={(val) => handleChange('brands', val)}
+            >
+              <Select.Option key={''} disabled>Select brands</Select.Option>
+              {brands.map((brand) => (
+                <Select.Option key={brand._id}>
+                  <Row align={"stretch"} justify={"center"} style={{width: '100px'}}>
+                    <Col span={12}>
+                      {brand.name}
+                    </Col>
+                    <Col span={12}>
+                      <img src={brand.image_url} style={{ objectFit: 'contain' }} height={25} width={50} alt={brand.name + ' brand image'} />
+                    </Col>
+                  </Row>
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
             label="Image Url"
             name={'image_url'}
             rules={[{ required: true, message: 'Image url is missing' }]}
@@ -252,7 +294,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
             name={'image_url'}
             rules={[{ required: true, message: 'Image url is missing' }]}
           >
-            <Input type="url" />
+            <Input type="text" />
           </Form.Item>
         </>
       )}
