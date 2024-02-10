@@ -1,8 +1,23 @@
-.sub-category-page .products-list {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: center;
+.sub-category-page {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
 
+.sub-category-page > * {
+  border: 1px solid black;
+}
+.sub-category-page header {
+  grid-column: span 6;
+}
+.sub-category-page aside {
+  grid-column: span 1;
+}
+.sub-category-page main {
+  grid-column: span 5;
+}
+
+
+.sub-category-page .products-list {
+  display: inline;
   overflow: auto;
 }

@@ -1,0 +1,100 @@
+.product-card {
+  width: 25%;
+  height: 450px;
+  padding: 10px 10px;
+
+  display: inline-block;
+  position: relative;
+
+  background: transparent;
+  border-left: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  cursor: pointer;
+}
+.product-card:last-child {
+  border-right: 1px solid lightgray;
+}
+
+.product-card .product-img {
+  width: 100%;
+}
+
+.product-card .product-img img {
+  object-fit: contain;
+  width: 100%;
+}
+
+.product-card .product-brand-fav-stat {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-card .product-brand-fav-stat .product-fav-and-stat {
+  width: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-card .product-brand img {
+  width: 50px;
+  height: 40px;
+  object-fit: contain;
+}
+
+
+.product-card .product-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  row-gap: 10px;
+  margin-top: 10px;
+}
+
+.product-card .product-details .sku {
+  font-weight: 600;
+}
+.product-card .product-details .product-description {
+  font-size: 14px;
+  color: black;
+  width: 100%;
+  height: max-content;
+
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+
+/* 
+.product-card .ant-card-body {
+  padding: 10px 5px;
+}
+.product-card .ant-card-body .ant-row {
+  height: 30px;
+}
+
+.product-card .ant-card-cover img {
+  height: 200px;
+  object-fit: contain;
+}
+.product-card .ant-card-cover img:hover {
+  cursor: pointer;
+}
+
+.product-card .brand-logo img {
+  width: 50px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.product-card .description-field {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+} */

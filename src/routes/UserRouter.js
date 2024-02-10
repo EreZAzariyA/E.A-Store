@@ -29,15 +29,15 @@ const UserRouter = () => (
         <Route element={<DashboardView />} >
           <Route path="/" element={<Navigate to={'home'} replace />} />
           <Route path="home" element={<Dashboard />} />
-          <Route path="favorites" element={<Favorites />} />
-          <Route path="categories/:category_id" element={<CategoryPage />} />
-          <Route path="categories/:category_id/sub-category" element={<p>SubCategoryPage</p>} />
-          <Route path="categories/:category_id/sub-category/:subCategoryId" element={<SubCategoryPage /> } />
-          <Route path="categories/:category_id/sub-category/:subCategoryId/product/:product_id" element={<ProductPage /> } />
+
+          <Route path="category/:category_id" element={<CategoryPage />} />
+          <Route path="category/:category_id/sub-category/:subCategoryId" element={<SubCategoryPage /> } />
+          <Route path="category/:category_id/sub-category/:subCategoryId/product/:product_id" element={<ProductPage /> } />
 
           <Route path="search" element={<SearchPage />} />
           <Route path="my-cart" element={<UserRoute><UserCart /></UserRoute>} />
           <Route path="my-orders" element={<UserRoute><Orders /></UserRoute>} />
+          <Route path="favorites" element={<Favorites />} />
 
           <Route path="customers-support" element={<CustomersSupport />} />
 

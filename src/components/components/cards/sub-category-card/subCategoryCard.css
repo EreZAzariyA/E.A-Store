@@ -1,0 +1,20 @@
+.sub-category-card {
+  cursor: pointer;
+}
+
+.sub-category-card .sub-category-img {
+  border: 1px solid lightgray;
+  border-radius: 60%;
+  width: 200px;
+  height: 180px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-category-card .sub-category-img img {
+  object-fit: contain;
+  width: 120px;
+}

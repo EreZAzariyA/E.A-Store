@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import { useSelector } from "react-redux";
-import { CategoryCard } from "./categoryCard";
+import { CategoryCard } from "../../components/cards/category-card";
 
 export const HomeCategoriesList = () => {
   const categories = useSelector((state) => (state.categories));
@@ -9,7 +9,7 @@ export const HomeCategoriesList = () => {
     <div className="categories-list-main-container">
       <div className="categories-list-inner-container">
         <div className="categories-list">
-          <Row align={"stretch"} justify={'space-evenly'} gutter={[0, 15]}>
+          <Row align={"stretch"} justify={'space-evenly'} gutter={[35, 80]}>
             {categories?.map((category) => (
               <Col key={category?._id}>
                 <CategoryCard category={category} />

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Col, Row } from "antd";
 import { useSelector } from "react-redux";
-import { SubCategoryCard } from "./subCategory-card";
+import { SubCategoryCard } from "../components/cards/sub-category-card";
 
 export const CategoryPage = () => {
   const { category_id } = useParams();
@@ -30,7 +30,7 @@ export const CategoryPage = () => {
     <div className="subCategories-list-main-container mt-10">
       <div className="subCategories-list-inner-container">
         <div className="subCategories-list">
-          <Row align={"stretch"} justify={'space-evenly'} gutter={[0, 15]}>
+          <Row align={"stretch"} justify={'space-evenly'} gutter={[15, 35]}>
             {subCategories.map((subCategory) => (
               <Col key={subCategory?._id}>
                 <SubCategoryCard subCategory={subCategory} />
