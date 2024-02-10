@@ -19,7 +19,8 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const [initialValue, setInitialValue] = useState({
     name: record?.name || '',
     brand: record?.brand || '',
-    brands: record?.brands || [],
+    brands: record.brands?.map((b) => (b._id)) || [],
+    secondaryBrands: record.secondaryBrands?.map((b) => (b._id)) || [],
     description: record?.description || '',
     category_id: record?.category_id || '',
     subCategory_id: record?.subCategory_id || '',
@@ -84,9 +85,11 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     layout: "horizontal",
   };
 
+  console.log(record);
+
   return (
     <Form {...formProps} labelWrap>
-      <h3>Add {componentName}</h3>
+      <h3>{record ? 'Update' : 'Add'} {componentName}</h3>
 
       <Typography.Link onClick={cancel}>Go Back</Typography.Link>
       <Divider />
@@ -255,14 +258,45 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
               onChange={(val) => handleChange('brands', val)}
             >
               <Select.Option key={''} disabled>Select brands</Select.Option>
-              {brands.map((brand) => (
-                <Select.Option key={brand._id}>
-                  <Row align={"stretch"} justify={"center"} style={{width: '100px'}}>
-                    <Col span={12}>
-                      {brand.name}
+              {brands.map((brand) => {
+                return (
+                  <Select.Option key={brand._id}>
+                    <Row align={"stretch"}>
+                      <Col>
+                        {brand.name}
+                      </Col>
+                      <Col>
+                        <img src={brand.image_url} style={{ objectFit: 'contain' }} height={25} width={50} alt={brand.name + ' brand image'} />
+                      </Col>
+                    </Row>
+                  </Select.Option>
+                )
+              })}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label={'Secondary Brands'}
+            name={'secondaryBrands'}
+          >
+            <Select
+              mode="multiple"
+              allowClear
+              style={{ width: '100%' }}
+              onChange={(val) => handleChange('secondaryBrands', val)}
+
+            >
+              <Select.Option key={''} disabled>Select secondary brands</Select.Option>
+              {[...brands, ...allSubCategories]
+                .map((item) => ({name: item.name || item.subCategory, ...item}))
+                .map((item) => (
+                <Select.Option key={item._id}>
+                  <Row align={"stretch"}>
+                    <Col>
+                      {item.name}
                     </Col>
-                    <Col span={12}>
-                      <img src={brand.image_url} style={{ objectFit: 'contain' }} height={25} width={50} alt={brand.name + ' brand image'} />
+                    <Col>
+                      <img src={item.image_url} style={{ objectFit: 'contain' }} height={25} width={50} alt={item.name + ' brand image'} />
                     </Col>
                   </Row>
                 </Select.Option>
