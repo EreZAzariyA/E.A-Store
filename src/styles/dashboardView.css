@@ -1,14 +1,11 @@
 .layout {
   text-align: center;
-  overflow: hidden;
-}
-
-.layout .ant-layout-content {
-  padding: 10px;
 }
 
 .layout.main-layout .site-layout {
-  padding: 0 20px;
+  padding: 0 20px 120px 20px;
+  height: 100vh;
+  overflow: auto;
 }
 
 .layout .ant-layout-header {
@@ -23,7 +20,7 @@
   top: 0;
   z-index: 10;
 }
-
+/* 
 .layout .ant-layout-header.is-sticky {
   position: fixed;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
@@ -38,7 +35,7 @@
   to {
     transform: translateY(0);
   }
-}
+} */
 
 .layout.admin-layout .ant-layout-header {
   padding: 10px;

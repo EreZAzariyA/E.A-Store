@@ -76,7 +76,7 @@ export const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="product-card">
+    <div className="product-card" onClick={() => navigate(`product/${product._id}`)}>
       <div className="product-img">
         <img src={product.image_url} alt={`${product.name}-img`} />
       </div>
@@ -109,93 +109,40 @@ export const ProductCard = ({ product }) => {
           <img src={brand.image_url} alt={brand.name + ' image'} />
         </div>
       </div>
-      <div className="product-details muted-text">
+      <div className="product-details">
         <div className="sku">SKU: {getShortID(product._id)}</div>
+        <span className="product-name">{product.name}</span>
         <div className="product-description">
-          <span>{product.description}</span>
+          <span className="muted-text">{product.description}</span>
+        </div>
+      </div>
+        <div className="product-price">
+          <span>${product.price || 0}</span>
+        </div>
+      <div className="product-card-footer">
+        <div className="cart-btn">
+          {inCart ? (
+              <Tooltip title='Remove from cart'>
+                <Button type="primary" style={{ background: 'red' }} onClick={removeProductHandler}>
+                  <DeleteOutlined style={{ fontSize: '16px' }} />
+                </Button>
+              </Tooltip>
+            ) : (
+              <Tooltip title='Add to cart'>
+                <Button type="primary" style={{ background: 'orange' }} onClick={addProductHandler}>
+                  <ShoppingCartOutlined style={{ fontSize: '16px' }} />
+                </Button>
+              </Tooltip>
+            )}
+        </div>
+        <div className="buy-now-btn">
+          <Tooltip title='Buy now'>
+            <Button type="primary" style={{ background: 'green' }}>
+              Buy now
+            </Button>
+          </Tooltip>
         </div>
       </div>
     </div>
   )
 };
-
-// return (
-//   <Card
-//     className="card product-card"
-//     cover={
-//       <img
-//         alt={''}
-//         loading="lazy"
-//         src={product.image_url}
-//         onClick={() => navigate(`product/${product._id}`)}
-//       />
-//     }
-//   >
-//     <Row justify={'space-between'} align={'middle'}>
-//       <Col>
-//         <div className="brand-logo">
-//           <img src={brand.image_url} alt={brand.name + ' image'} />
-//         </div>
-//       </Col>
-
-//       <Col>
-//         <Row gutter={5}>
-
-//           <Col>
-//           <Tooltip title='Compare to other brands'>
-//             <Button shape="circle" size="small">
-//               <BarChartOutlined />
-//             </Button>
-//           </Tooltip>
-//           </Col>
-//         </Row>
-//       </Col>
-//     </Row>
-
-//     <Row>
-//       <Col>
-//         <p>
-//           <span>ID: {getShortID(product._id)}</span>
-//         </p>
-//       </Col>
-//     </Row>
-
-//     <Row style={{ height: '70px' }}>
-//       <Col>
-//         <p className="description-field">{product.description}</p>
-//       </Col>
-//     </Row>
-
-//     <Row justify={'end'}>
-//       <Col>
-//         <p>${product.price}</p>
-//       </Col>
-//     </Row>
-//     <CustomDivider />
-
-//     <Row justify={'start'} gutter={[10, 10]} className="mt-10">
-//       <Col>
-//         {inCart ? (
-//           <Tooltip title='Remove from cart'>
-//             <Button type="primary" style={{ background: 'red' }} onClick={removeProductHandler}>
-//               <DeleteOutlined style={{ fontSize: '16px' }} />
-//             </Button>
-//           </Tooltip>
-//         ) : (
-//           <Tooltip title='Add to cart'>
-//             <Button type="primary" style={{ background: 'orange' }} onClick={addProductHandler}>
-//               <ShoppingCartOutlined style={{ fontSize: '16px' }} />
-//             </Button>
-//           </Tooltip>
-//         )}
-//       </Col>
-//       <Col>
-//         <Tooltip title='Buy now'>
-//           <Button type="primary" style={{ background: 'green' }}>
-//             Buy now
-//           </Button>
-//         </Tooltip>
-//       </Col>
-//     </Row>
-//   </Card>
-// );

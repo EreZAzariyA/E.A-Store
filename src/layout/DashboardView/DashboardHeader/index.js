@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { PersonalArea } from "./PersonalArea";
 import { useSelector } from "react-redux";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
@@ -18,7 +18,6 @@ export const DashboardHeader = ({ sideBarHandler }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth?.user);
   const admin = isAdmin(user);
-  const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
     const fetchStoreData = async () => {
@@ -47,21 +46,22 @@ export const DashboardHeader = ({ sideBarHandler }) => {
     }
   }, [user, admin]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      console.log('test');
-      const currentScroll = window.pageYOffset;
-      setIsSticky(currentScroll > 150);
-    };
+  // const [isSticky, setIsSticky] = useState(false);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScroll = window.pageYOffset;
+  //     setIsSticky(currentScroll > 150);
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   return (
-    <Header className={isSticky ? "is-sticky" : ""}>
+    // <Header className={isSticky ? "is-sticky" : ""}>
+    <Header>
       <Row justify={admin ? 'start' : 'space-between'} align={'middle'}>
         <Col span={2}>
           <Logo />
