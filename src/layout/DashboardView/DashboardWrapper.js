@@ -69,6 +69,7 @@ export const DashboardWrapper = () => {
   return (
     <>
       <Menu
+        disabledOverflow
         mode="horizontal"
         selectedKeys={[current]}
         style={{ background: 'transparent' }}
@@ -76,12 +77,12 @@ export const DashboardWrapper = () => {
         className="top-menu-navbar"
       />
 
-      {pathOptions.length > 0 &&
+      {pathOptions.length > 0 && (
         <Breadcrumb
           separator=">"
           items={[{title: <Link to={'/'}>Home</Link>}, ...pathOptions]}
         />
-      }
+      )}
     </>
   );
 };

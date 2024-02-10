@@ -3,16 +3,16 @@
 }
 
 .layout.main-layout .site-layout {
-  padding: 0 20px 120px 20px;
-  height: 100vh;
-  overflow: auto;
+  padding: 0 20px 80px 20px;
+
+  background: white;
 }
 
 .layout .ant-layout-header {
   width: 100%;
   padding: 5px 0 5px 30px;
 
-  background: white;
+  background: #edf1f4;
   height: min-content;
   line-height: 5px;
 
@@ -20,22 +20,6 @@
   top: 0;
   z-index: 10;
 }
-/* 
-.layout .ant-layout-header.is-sticky {
-  position: fixed;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  animation: slideDown 0.35s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-} */
 
 .layout.admin-layout .ant-layout-header {
   padding: 10px;
@@ -63,6 +47,9 @@
 
 
 @media (max-width: 765px) {
+  .layout .ant-layout-header {
+    padding: 5px 15px 5px 30px;
+  }
   .layout .ant-layout-header p {
     line-height: normal;
   }

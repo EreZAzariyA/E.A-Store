@@ -21,14 +21,12 @@ export const Carousel = ({items = [], selectedItems = [], onItemSelect}) => {
     if (counter > 0){
       counter --;
       slideImage();
-      console.log(counter);
     }
   };
   const next = () => {
     if (counter <= (images.length / 2)){
       counter ++;
       slideImage();
-      console.log(counter);
     };
   };
 
@@ -43,7 +41,6 @@ export const Carousel = ({items = [], selectedItems = [], onItemSelect}) => {
       <div className="images-container">
         {[...items, ...items, ...items || []].map((item, index) => {
           const isSelected = selectedItems.filter((i) => i === item.name)[0];
-          console.log(isSelected);
 
           return (
             <div className={`image-carousel ${isSelected ? 'active' : ''}`} key={index} onClick={() => onItemSelect(item.name)}>

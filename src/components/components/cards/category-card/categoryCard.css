@@ -33,4 +33,5 @@
 .category-card .category-name {
   position: absolute;
   top: 100px;
+  text-transform: capitalize;
 }

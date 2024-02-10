@@ -2,22 +2,23 @@ import { Brands } from "../../../utils/helpers";
 import { Carousel } from "../../components/carousel";
 import "./HeadFilter.css";
 
-export const HeadFilter = ({filterState, handleFilterChange}) => {
+export const HeadFilter = ({selectedBrands, handleFilterChange}) => {
   const brands = [...Brands];
 
   const onBrandSelect = (brand) => {
-    const isSelected = filterState.selectedBrands.find((b) => b === brand);
+    const isSelected = selectedBrands.find((b) => b === brand);
+
     if (isSelected) {
-      handleFilterChange('selectedBrands', filterState.selectedBrands.filter((b) => b !== brand))
+      handleFilterChange(selectedBrands.filter((b) => b !== brand));
     } else {
-      handleFilterChange('selectedBrands', [...filterState.selectedBrands, brand]);
+      handleFilterChange([...selectedBrands, brand]);
     }
   };
 
   return (
     <div className="head-filter-container">
       <div className="brands-filter">
-        <Carousel items={brands} selectedItems={filterState.selectedBrands} onItemSelect={onBrandSelect} />
+        <Carousel items={brands} selectedItems={selectedBrands} onItemSelect={onBrandSelect} />
       </div>
     </div>
   );

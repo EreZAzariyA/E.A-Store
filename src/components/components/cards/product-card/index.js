@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Col, Row, Tooltip, message } from "antd";
+import { Button, Tooltip, message } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
-import "./productCard.css";
 import { Brands, HeartIcon, RedHeartIcon, getShortID } from "../../../../utils/helpers";
 import { shoppingCartServices } from "../../../../services/shoppingCart-services";
-import { CustomDivider } from "../../Divider";
+import "./productCard.css";
 
 export const ProductCard = ({ product }) => {
   const user = useSelector((state) => state.auth?.user);

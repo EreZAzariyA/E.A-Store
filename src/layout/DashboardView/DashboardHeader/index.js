@@ -46,30 +46,16 @@ export const DashboardHeader = ({ sideBarHandler }) => {
     }
   }, [user, admin]);
 
-  // const [isSticky, setIsSticky] = useState(false);
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const currentScroll = window.pageYOffset;
-  //     setIsSticky(currentScroll > 150);
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
   return (
-    // <Header className={isSticky ? "is-sticky" : ""}>
     <Header>
       <Row justify={admin ? 'start' : 'space-between'} align={'middle'}>
-        <Col span={2}>
+        <Col span={4}>
           <Logo />
         </Col>
 
         {!admin && (
           <>
-            <Col md={{ span: 0 }} xs={{ span: 16 }}>
+            <Col md={{ span: 0 }} xs={{ span: 18 }}>
               <Row justify={"end"} align={'middle'}>
                 <Col md={{ span: 0 }} xs={{ span: 4 }} sm={{ span: 3 }}>
                   <Button type="link"><CiSearch color={Colors.ICON} size={Sizes.ICON} onClick={() => navigate('search')} /></Button>
@@ -80,13 +66,13 @@ export const DashboardHeader = ({ sideBarHandler }) => {
               </Row>
             </Col>
 
-            <Col md={{ span: 17 }} xs={{ span: 0 }}>
+            <Col md={{ span: 18 }} xs={{ span: 0 }}>
               <Row justify={"space-between"}>
-                <Col md={{ span: 16 }} sm={{ span: 0 }} className="search">
+                <Col md={{ span: 18 }} className="search">
                   <SearchInput />
                 </Col>
 
-                <Col md={{ span: 8 }} sm={{ span: 0 }} className="personal">
+                <Col md={{ span: 6 }} className="personal">
                   <PersonalArea />
                 </Col>
               </Row>

@@ -9,24 +9,22 @@ import { useState } from "react";
 export const SubCategoryPage = () => {
   const { subCategoryId } = useParams();
   const allProducts = useSelector((state) => state.products);
-  const [filterState, setFilterState] = useState({
-    selectedBrands: [],
-    ranges: {
-      from: 0,
-      to: 0
-    },
-  });
-
-  const allProductsBySubCategory = allProducts?.filter((product) => (
+  const allProductsBySubCategory = allProducts.filter((product) => (
     product.subCategory_id === subCategoryId
   ));
+
+  const [filterState, setFilterState] = useState({
+    selectedBrands: [],
+    ranges: [],
+  });
+
   let products = [...allProductsBySubCategory];
 
   if (filterState.selectedBrands.length) {
     products = [...products].filter((p) => filterState.selectedBrands.includes(p.brand))
   }
-  if (filterState.ranges.from || filterState.ranges.to) {
-    products = [...products].filter((p) => p.price >= filterState.ranges.from && p.price <= filterState.ranges.to);
+  if (filterState.ranges.length || filterState.ranges.length === 2) {
+    products = [...products].filter((p) => p.price >= filterState.ranges[0] && p.price <= filterState.ranges[1]);
   }
 
   const handleFilterChange = (name, value) => {
@@ -36,10 +34,17 @@ export const SubCategoryPage = () => {
   return (
     <div className="sub-category-page mt-10">
       <header>
-        <HeadFilter filterState={filterState} handleFilterChange={handleFilterChange} />
+        <HeadFilter
+          selectedBrands={filterState.selectedBrands}
+          handleFilterChange={(values) => handleFilterChange('selectedBrands', values)}
+        />
       </header>
       <aside>
-        <SideFilter products={allProductsBySubCategory} filterState={filterState} handleFilterChange={handleFilterChange} />
+        <SideFilter
+          products={allProductsBySubCategory}
+          ranges={filterState.ranges}
+          handleFilterChange={(values) => handleFilterChange('ranges', values)}
+        />
       </aside>
       <main>
         <div className="products-list">
