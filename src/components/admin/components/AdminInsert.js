@@ -85,8 +85,6 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     layout: "horizontal",
   };
 
-  console.log(record);
-
   return (
     <Form {...formProps} labelWrap>
       <h3>{record ? 'Update' : 'Add'} {componentName}</h3>
