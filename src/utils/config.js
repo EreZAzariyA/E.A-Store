@@ -122,7 +122,7 @@ class Config {
 
 class DevelopmentConfig extends Config {
   constructor() {
-    super("http://188.191.147.24:5000/api/", process.env.REACT_APP_SOCKET_URL);
+    super("http://127.0.0.1:5000/api/", process.env.REACT_APP_SOCKET_URL);
   };
 }
 
