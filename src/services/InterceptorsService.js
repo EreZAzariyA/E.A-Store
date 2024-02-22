@@ -8,7 +8,7 @@ class InterceptorsService {
 
   createInterceptors = () => {
     axios.interceptors.request.use((request) => {
-      if(store.getState().auth?.token) {
+      if (store.getState().auth?.token) {
         request.headers = {
           authorization: "Bearer " + store.getState().auth.token,
         };

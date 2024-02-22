@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { shoppingCartServices } from "../../../../services/shoppingCart-services";
+import { HeartIcon, RedHeartIcon, getShortID } from "../../../../utils/helpers";
 import { Button, Tooltip, message } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
-import { Brands, HeartIcon, RedHeartIcon, getShortID } from "../../../../utils/helpers";
-import { shoppingCartServices } from "../../../../services/shoppingCart-services";
 import "./productCard.css";
 
 export const ProductCard = ({ product }) => {
@@ -15,7 +15,8 @@ export const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const brand = Brands.find((b) => b.name === product.brand);
+  const brands = useSelector((state) => (state.brands));
+  const brand = brands.find((b) => b.name === product.brand);
 
   useEffect(() => {
     if (shoppingCart) {
@@ -105,7 +106,7 @@ export const ProductCard = ({ product }) => {
           </div>
         </div>
         <div className="product-brand">
-          <img src={brand.image_url} alt={brand.name + ' image'} />
+          <img src={brand?.image_url} alt={brand?.name + ' image'} />
         </div>
       </div>
       <div className="product-details">

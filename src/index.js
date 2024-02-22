@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 let isAdmin = false;
 if (process.env.REACT_APP_IS_ADMIN) {
-  isAdmin = JSON.parse(process.env.REACT_APP_IS_ADMIN);
+  isAdmin = null
 }
 
 if (isAdmin) {

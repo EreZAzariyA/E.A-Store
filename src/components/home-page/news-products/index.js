@@ -1,29 +1,39 @@
-import { useSelector } from "react-redux";
 import { ProductCard } from "../../components/cards/product-card";
 import "./NewsProducts.css";
+import { useEffect, useState } from "react";
+import { storeServices } from "../../../services/store-services";
+import { Spin } from "antd";
+import { isArrayAndNotEmpty } from "../../../utils/helpers";
 
 export const NewsProducts = () => {
-  const products = useSelector((state) => state.products);
-  const newsProducts = [...products].sort((a, b) => {
-    return new Date(b.createdAt) - new Date(a.createdAt)
-  });
-  const tenNewestProducts = [...newsProducts].slice(0, 10);
+  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    storeServices.fetchNewestProducts().then((res) => {
+      if (res && isArrayAndNotEmpty(res)) {
+        setProducts(res);
+      }
+      setIsLoading(false);
+    });
+  }, []);
 
-  return (
-    <div className="news-products-main-container">
-      <div className="news-products-inner-container">
+  if (!isLoading) {
+    return (
+      <div className="news-products-main-container">
+        <div className="news-products-inner-container">
 
-        <h3 className="page-title">
-          <span>New</span>
-        </h3>
+          <h3 className="page-title">
+            <span>New</span>
+          </h3>
 
-        <div className="products-list">
-          {[...tenNewestProducts].map((product, index) => (
-            <ProductCard product={product} key={index || product._id} />
-          ))}
+          <div className="products-list">
+            {products.map((product, index) => (
+              <ProductCard product={product} key={index || product._id} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } return <Spin />
 };

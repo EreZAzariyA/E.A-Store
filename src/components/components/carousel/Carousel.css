@@ -1,5 +1,27 @@
 .carousel-container {
   height: 50px;
+  width: auto;
+
+  border-radius: 8px;
+  border: 1px solid lightgray;
+}
+
+.carousel-container img {
+  width: 60px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.carousel-container .active {
+  border: 2px solid blue;
+  border-radius: 5px;
+  transition: 200ms;
+}
+
+
+
+/* .carousel-container {
+  height: 50px;
   width: 100%;
   padding: 0px 10px;
 
@@ -24,7 +46,7 @@
 }
 
 .carousel-container .images-container .image-carousel {
-  width: 120px;
+  width: max-content;
   transition: 500ms;
 
   border: 1px solid lightgray;
@@ -46,4 +68,4 @@
   width: 60px;
   height: 40px;
   object-fit: contain;
-}
+} */

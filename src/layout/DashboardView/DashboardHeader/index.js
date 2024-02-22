@@ -11,7 +11,6 @@ import { Colors, Sizes, isAdmin } from "../../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import adminOrdersServices from "../../../services/admin/orders-services";
 import { Logo } from "../../../components/components/Logo/Logo";
-import { adminBrandsServices } from "../../../services/admin/brands-services";
 
 const { Header } = Layout;
 
@@ -25,6 +24,7 @@ export const DashboardHeader = ({ sideBarHandler }) => {
       await storeServices.fetchAllProducts();
       await storeServices.fetchAllCategories();
       await storeServices.fetchAllSubCategories();
+      await storeServices.fetchAllBrands();
     };
 
     fetchStoreData();
@@ -34,11 +34,9 @@ export const DashboardHeader = ({ sideBarHandler }) => {
     const fetchUserData = async () => {
       await shoppingCartServices.fetchUserShoppingCart(user?._id);
       await ordersServices.fetchUserOrdersByUser_id(user?._id);
-      await storeServices.fetchAllBrands();
     };
     const fetchAdminRequiredData = async () => {
       await adminOrdersServices.fetchAllOrders();
-      await storeServices.fetchAllBrands();
     };
 
     if (user && !admin) {

@@ -40,17 +40,6 @@ export const ComponentsTypes = {
   BRANDS: 'brands'
 }
 
-export const Brands = [
-  {
-    name: "Apple",
-    image_url: "https://afi4nnu0d31evx7v.public.blob.vercel-storage.com/brands/Apple-xo4vJctgqKqEutE4QNtD7rA4NqaXRJ.png"
-  },
-  {
-    name: "JBL",
-    image_url: "https://afi4nnu0d31evx7v.public.blob.vercel-storage.com/brands/JBL-6DJhJ5ajBIceNjvHuHtHBBG1OsER1J.png"
-  },
-]
-
 export const numberWithCommas = (x, number = 2) => {
   const formattedNumber = parseFloat(x).toFixed(number);
   return formattedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -140,3 +129,11 @@ export function toCapitalize(text) {
 export const getShortID = (id) => {
   return id.slice(0, id.length / 2)
 }
+
+export const isArray = (arr) => (Array.isArray(arr));
+export const isArrayAndNotEmpty = (arr) => (Array.isArray(arr) && arr.length > 0);
+
+export const validateString = (str) => {
+  const regex = /^\s*$/;
+  return regex.test(str);
+};

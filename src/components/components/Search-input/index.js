@@ -1,26 +1,30 @@
-import { Col, Row, Select } from "antd"
 import { useState } from "react";
-import { useSelector } from "react-redux";
-
+import { storeServices } from "../../../services/store-services";
+import { isArrayAndNotEmpty, validateString } from "../../../utils/helpers";
+import { Col, Row, Select } from "antd"
 
 export const SearchInput = () => {
-  const products = useSelector((state) => state.products);
   const [data, setData] = useState([]);
   const [value, setValue] = useState();
 
-  const handleSearch = (newValue) => {
-    if (!newValue || newValue.length === 0) setData([]);
-    const pro = [...products || []].filter((p) => p.name.toLowerCase().startsWith(newValue.toLowerCase()));
-    const mappedProducts = pro.map((product) => ({
-      value: product.name,
-      text: product.name,
-      ...product
-    }))
-    setData(mappedProducts);
-  };
+  const handleSearch = async (searchValue) => {
+    if (searchValue && !validateString(searchValue)) {
+      try {
+        const pro = await storeServices.searchProducts(searchValue);
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
+        if (pro && isArrayAndNotEmpty(pro)) {
+          const mappedProducts = pro.map((product) => ({
+            value: product.name,
+            text: product.name,
+            ...product
+          }));
+
+          setData(mappedProducts);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -32,16 +36,16 @@ export const SearchInput = () => {
       placeholder={'Search Products By Name Or ID'}
       defaultActiveFirstOption={false}
       onSearch={handleSearch}
-      onChange={handleChange}
+      onChange={(val) => setValue(val)}
     >
       {data.map((d) => (
         <Select.Option key={d.value}>
-          <Row justify={'space-between'} align={'middle'}>
-            <Col span={20}>
+          <Row justify={'start'} align={'middle'} style={{ textAlign: 'left'}}>
+            <Col span={18}>
               {d.text}
             </Col>
-            <Col span={4}>
-              <img src={d.image_url} alt="" width={50} height={50} />
+            <Col span={6}>
+              <img src={d.image_url} alt="" width={70} height={70} />
             </Col>
           </Row>
         </Select.Option>

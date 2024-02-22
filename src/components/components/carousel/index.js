@@ -1,63 +1,47 @@
 import "./Carousel.css";
-import { GrNext, GrPrevious } from "react-icons/gr";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
-export const Carousel = ({items = [], selectedItems = [], onItemSelect}) => {
-  let counter = 0;
-
-  const images = document.querySelectorAll('.image-carousel')
-  // images.forEach((slide, index) => {
-  //   slide.style.left = `${index * 100}%`
-  // });
-
-  const slideImage = () => {
-    images.forEach(
-      (e) => {
-        e.style.transform = `translateX(-${counter * 100}px)`
-      }
-    )
-  };
-
-  const prev = () => {
-    if (counter > 0){
-      counter --;
-      slideImage();
+export const CustomCarousel = ({ items = [], selectedItems = [], onItemSelect }) => {
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 500 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 500, min: 0 },
+      items: 1
     }
-  };
-  const next = () => {
-    if (counter <= (images.length / 2)){
-      counter ++;
-      slideImage();
-    };
   };
 
   return (
-    <div className="carousel-container">
-      <div className="carousel-btn prev-btn">
-        <button onClick={() => prev()}>
-          <GrPrevious />
-        </button>
-      </div>
-
-      <div className="images-container">
-        {[...items, ...items, ...items || []].map((item, index) => {
-          const isSelected = selectedItems.filter((i) => i === item.name)[0];
+      <Carousel
+        responsive={responsive}
+        swipeable={false}
+        draggable={false}
+        showDots={false}
+        infinite={false}
+        keyBoardControl={true}
+        containerClass="carousel-container"
+      >
+        {items.map((item) => {
+          const isActive = selectedItems.includes(item._id);
 
           return (
-            <div className={`image-carousel ${isSelected ? 'active' : ''}`} key={index} onClick={() => onItemSelect(item.name)}>
-              <div className="image">
-                <img src={item.image_url} alt="img" />
-              </div>
-              <div className="name">{item.name}</div>
+            <div className={isActive ? 'active' : ''} key={item._id} onClick={() => onItemSelect(item)}>
+              <img src={item.image_url} alt="img" />
             </div>
           )
         })}
-      </div>
-
-      <div className="carousel-btn next-btn">
-        <button onClick={() => next()}>
-          <GrNext />
-        </button>
-      </div>
-    </div>
+      </Carousel>
   );
 };

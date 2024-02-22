@@ -5,7 +5,11 @@ class Config {
       login: ""
     },
     store: {
-      products: "",
+      products: {
+        all: "",
+        newest: "",
+        search: "",
+      },
       categories: "",
       subCategories: "",
       brands: ""
@@ -61,7 +65,11 @@ class Config {
         login: baseUrl + 'auth/login',
       },
       store: {
-        products: baseUrl + 'products/all',
+        products: {
+          all: baseUrl + 'products/all',
+          newest: baseUrl + 'products/newest',
+          search: baseUrl + 'products/search/',
+        },
         categories: baseUrl + 'categories/all',
         subCategories: baseUrl + 'sub-categories/all',
         brands: baseUrl + 'brands/all',
@@ -114,7 +122,7 @@ class Config {
 
 class DevelopmentConfig extends Config {
   constructor() {
-    super("http://127.0.0.1:5000/api/", process.env.REACT_APP_SOCKET_URL);
+    super("http://188.191.147.24:5000/api/", process.env.REACT_APP_SOCKET_URL);
   };
 }
 

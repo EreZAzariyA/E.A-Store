@@ -59,8 +59,8 @@ export const DashboardView = () => {
         icon: <IoIosStarOutline color={Colors.ICON} size={Sizes.ICON}/>
       },
       {
-        label: <Button type="link" danger>Logout</Button>,
-        key: 'logout',
+        label: <Button type="link" danger>Sign-Out</Button>,
+        key: 'sign-out',
         onClick: () => authServices.logout(),
         icon: <AiOutlineLogout color={Colors.DANGER} size={Sizes.ICON} />,
         style: {
@@ -96,18 +96,18 @@ export const DashboardView = () => {
       <DashboardHeader
         sideBarHandler={sideBarHandler}
       />
-      <Layout>
+      <Layout hasSider>
         <Sider
-          style={{
-            overflow: 'auto',
-            height: '100vh',
-            position: 'fixed',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            zIndex: 9,
-            paddingTop: '65px'
-          }}
+          // style={{
+          //   overflow: 'auto',
+          //   height: '100vh',
+          //   position: 'fixed',
+          //   left: 0,
+          //   top: 0,
+          //   bottom: 0,
+          //   zIndex: 9,
+          //   paddingTop: '65px'
+          // }}
           trigger={null}
           theme="light"
           width={225}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AddToCartButton } from "../components/AddToCartButton";
-import { Brands, numberWithCommas } from "../../utils/helpers";
+import { numberWithCommas } from "../../utils/helpers";
 import { Col, Image, InputNumber, Row, Spin } from "antd";
 import { FcPaid, FcInTransit } from "react-icons/fc";
 import "./productPage.css";
@@ -14,7 +14,8 @@ export const ProductPage = () => {
   const products = useSelector((state) => state.products);
   const product = [...products].find((pro) => pro._id === product_id);
   const isInCart = shoppingCart?.products.find((p) => p.product_id === product._id);
-  const brand = Brands.find((b) => b.name === product?.brand);
+  const brands = useSelector((state) => (state.brands));
+  const brand = brands.find((b) => b.name === product?.brand);
   const [amount, setAmount] = useState(1);
   let isAvailable = false;
 
