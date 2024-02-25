@@ -8,11 +8,8 @@ import './styles/dashboardView.css';
 
 interceptorsService.createInterceptors();
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const isAdmin = JSON.parse(process.env.REACT_APP_IS_ADMIN) || false;
 
-let isAdmin = false;
-if (process.env.REACT_APP_IS_ADMIN) {
-  isAdmin = null
-}
 
 if (isAdmin) {
   import("./routes/AdminRouter").then((AdminRouter) => {

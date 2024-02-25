@@ -3,7 +3,7 @@ import { acceptedImageFile } from '../../../utils/helpers';
 import InboxOutlined from '@ant-design/icons/InboxOutlined';
 import { useState } from 'react';
 
-const { Dragger } = Upload
+const { Dragger } = Upload;
 
 export const UploadImage = () => {
   const [fileList, setFileList] = useState([]);
@@ -32,6 +32,7 @@ export const UploadImage = () => {
       onChange={handleChange}
       onRemove={(file) => console.log(fileList)}
       fileList={fileList}
+      listType='picture'
     >
       <p className="ant-upload-drag-icon">
         <InboxOutlined />

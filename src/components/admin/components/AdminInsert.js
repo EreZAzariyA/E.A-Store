@@ -19,8 +19,8 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const [initialValue, setInitialValue] = useState({
     name: record?.name || '',
     brand: record?.brand || '',
-    brands: record.brands?.map((b) => (b._id)) || [],
-    secondaryBrands: record.secondaryBrands?.map((b) => (b._id)) || [],
+    brands: record?.brands ? record.brands.map((b) => (b._id)) : [],
+    secondaryBrands: record?.secondaryBrands ? record.secondaryBrands.map((b) => (b._id)) : [],
     description: record?.description || '',
     category_id: record?.category_id || '',
     subCategory_id: record?.subCategory_id || '',
@@ -50,9 +50,12 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const fetchBrandsBySubCategory_id = (subCategory_id) => {
     let fullBrandsList = [];
     if (isProducts) {
-      const selectedSubCategory = subCategories.find((subC) => subC._id === subCategory_id)
+      const selectedSubCategory = subCategories.find((subC) => subC._id === subCategory_id);
+
       if (selectedSubCategory) {
         const brandsId = selectedSubCategory.brands;
+        console.log(brandsId);
+
         fullBrandsList = [...brandsId].map((b) => {
           const fullBrand = [...brands].find((brand) => brand._id === b);
           return fullBrand;
@@ -64,6 +67,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     return [];
   };
   const brandsBySubCategory = fetchBrandsBySubCategory_id(initialValue.subCategory_id);
+  console.log(brandsBySubCategory);
 
   const cancel = () => {
     onBack();
@@ -129,8 +133,8 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
               value={initialValue.subCategory_id}
             >
               <Select.Option key={''} value={''} disabled>Select sub category</Select.Option>
-              {subCategories?.map((subC) => (
-                <Select.Option key={subC?._id}>{subC?.subCategory}</Select.Option>
+              {subCategories.map((subC) => (
+                <Select.Option key={subC._id}>{subC.subCategory}</Select.Option>
               ))}
             </Select>
           </Form.Item>
@@ -146,13 +150,13 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
             >
               <Select.Option key={''} disabled>Select brand</Select.Option>
               {brandsBySubCategory.map((brand) => (
-                <Select.Option key={brand.name}>
+                <Select.Option key={brand?.name}>
                   <Row align={"stretch"} justify={"center"}>
                     <Col span={2}>
-                      {brand.name}
+                      {brand?.name}
                     </Col>
                     <Col span={2}>
-                      <img src={brand.image_url} width={30} alt={brand.name + ' brand image'} />
+                      <img src={brand?.image_url} width={30} alt={brand?.name + ' brand image'} />
                     </Col>
                   </Row>
                 </Select.Option>
