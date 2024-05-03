@@ -99,23 +99,8 @@ export const DashboardView = () => {
       <DashboardHeader
         sideBarHandler={sideBarHandler}
       />
-      <Layout
-        hasSider
-        style={{
-          marginLeft: 200,
-        }}
-      >
+      <Layout hasSider>
         <Sider
-          style={{
-            overflow: 'auto',
-            height: '100vh',
-            position: 'fixed',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            zIndex: 9,
-            paddingTop: '65px'
-          }}
           trigger={null}
           theme="light"
           width={242}
@@ -124,13 +109,7 @@ export const DashboardView = () => {
           breakpoint="md"
           onBreakpoint={handleOnBreakpoint}
         >
-          <div
-            style={{
-              border: '1px solid lightgray',
-              borderRadius: '5px',
-              height: '100%',
-              margin: '0 10px 0 10px',
-            }}>
+          <div>
             <Menu
               items={items}
               mode="inline"

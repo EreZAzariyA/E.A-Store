@@ -3,3 +3,9 @@
   border-radius: 10px;
   padding: 10px;
 }
+
+@media (max-width: 500px) {
+  .side-filter-container .filter.brands-filter {
+    display: none;
+  }
+}

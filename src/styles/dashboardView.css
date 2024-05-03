@@ -40,3 +40,9 @@
     line-height: normal;
   }
 }
+
+@media (max-width: 500px) {
+  .top-menu-navbar {
+    display: none;
+  }
+}
