@@ -1,16 +1,12 @@
 .layout {
   text-align: center;
-  min-height: 100%;
   background: var(--defaultWhite);
+  height: 100vh;
 }
 
 .layout .site-layout {
-  padding: 60px 20px 80px 20px;
-  background: var(--defaultWhite);
-}
-
-.layout.admin-layout .site-layout {
   padding: 10px;
+  overflow: auto;
 }
 
 .layout .ant-layout-header {
@@ -20,10 +16,6 @@
   background: var(--lightBlue);
   height: min-content;
   line-height: 5px;
-
-  position: fixed;
-  top: 0;
-  z-index: 10;
 }
 
 .layout.admin-layout .ant-layout-header {

@@ -99,7 +99,12 @@ export const DashboardView = () => {
       <DashboardHeader
         sideBarHandler={sideBarHandler}
       />
-      <Layout hasSider>
+      <Layout
+        hasSider
+        style={{
+          marginLeft: 200,
+        }}
+      >
         <Sider
           style={{
             overflow: 'auto',

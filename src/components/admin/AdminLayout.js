@@ -4,7 +4,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { DashboardHeader } from "../../layout/DashboardView/DashboardHeader";
 import { authServices } from "../../services/auth-services";
 import { OrdersStatus } from "../../utils/helpers";
-import { Badge, Button, Layout, Menu, Typography } from "antd";
+import { Badge, Layout, Menu, Typography } from "antd";
 import PieChartOutlined from "@ant-design/icons/PieChartOutlined";
 import AppstoreAddOutlined from "@ant-design/icons/AppstoreAddOutlined";
 import TableOutlined from "@ant-design/icons/TableOutlined";
@@ -92,7 +92,10 @@ export const AdminLayout = () => {
     <Layout className="layout admin-layout">
       <DashboardHeader />
       <Layout hasSider>
-        <Sider theme="light" collapsible>
+        <Sider
+          collapsible
+          theme="light"
+        >
           {menu()}
         </Sider>
         <Content className="site-layout">

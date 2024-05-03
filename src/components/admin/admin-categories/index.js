@@ -146,7 +146,6 @@ export const CategoriesTable = () => {
             handleAdd={() => setStep(Steps.ADD_CATEGORY)}
             onEditMode={handleEditMode}
             removeHandler={removeHandler}
-            scroll={{ x: 1300, y: 440 }}
           />
         </>
       )}

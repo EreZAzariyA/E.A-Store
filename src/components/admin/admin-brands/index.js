@@ -97,7 +97,6 @@ export const AdminBrands = () => {
             removeHandler={removeHandler}
             type={ComponentsTypes.BRANDS}
             onEditMode={handleEditMode}
-            scroll={{ x: 400, y: 440 }}
           />
         </>
       )}

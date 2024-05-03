@@ -187,7 +187,6 @@ export const ProductsTable = () => {
             type={ComponentsTypes.PRODUCTS}
             onEditMode={handleEditMode}
             removeHandler={removeHandler}
-            scroll={{ x: 1300, y: 440 }}
           />
         </>
       )}
