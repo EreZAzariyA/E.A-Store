@@ -119,7 +119,7 @@ export const Order = ({ order, products, onBack }) => {
           createOrder={createOrder}
           onApprove={onApprove}
           onCancel={handleCancel}
-          // disabled
+          disabled={!isDetailsLock}
         />
       </>
     );
@@ -135,8 +135,8 @@ export const Order = ({ order, products, onBack }) => {
             <Button type="link" onClick={onBack}>Back to previous page</Button>
           </div>
 
-          <div className={`order-form ${isDetailsLock ? 'locked' : ''}`}>
-            <p className="order-form-title">Shopping Details</p>
+          <div className={`order-form ${isDetailsLock ? 'locked' : ''} box`}>
+            <div className="order-form-title">Shopping Details</div>
             {!isDetailsLock && (
               <Form
                 form={form}
@@ -144,7 +144,7 @@ export const Order = ({ order, products, onBack }) => {
                 initialValues={initialValues}
                 onFinish={onFinish}
               >
-                <Row wrap justify={'center'} align={'top'} gutter={[30, 10]}>
+                <Row wrap justify={'center'} align={'top'} gutter={[10, 10]}>
                   <Col span={6}>
                     <Form.Item
                       label="First Name"
@@ -264,11 +264,11 @@ export const Order = ({ order, products, onBack }) => {
             )}
           </div>
 
-          <div className="order-summary">
+          <div className="order-summary box">
             <OrderSummary products={products} />
           </div>
 
-          <div className="payment">
+          <div className="payment box">
             <div className="paypal-buttons">
               <PayPalScriptProvider
                 options={{

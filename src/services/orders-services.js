@@ -4,7 +4,6 @@ import store from "../redux/store";
 import { createOrderAction, fetchUserOrdersAction, updateOrderStatusAction } from "../redux/slicers/orders-slicer";
 import { fetchUserCartAction } from "../redux/slicers/cart-slicer";
 
-
 class OrdersServices {
 
   fetchUserOrdersByUser_id = async (user_id) => {
@@ -16,7 +15,6 @@ class OrdersServices {
 
   createOrder = async (orderDetails) => {
     const response = await axios.post(config.urls.order.createOrder, orderDetails);
-    // console.log(response);
     const {order, shoppingCart} = response.data;
     console.log({order, shoppingCart});
     store.dispatch(createOrderAction(order));

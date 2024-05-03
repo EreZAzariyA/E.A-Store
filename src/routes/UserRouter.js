@@ -18,6 +18,7 @@ import { UserRoute } from "./user-router/index.js";
 import { SearchPage } from "../components/search-page/index.js";
 import { Orders } from "../components/orders/index.js";
 import { CustomersSupport } from "../components/customers-support/index.js";
+import OrderDetails from "../components/orders/order-details/index.js";
 
 const UserRouter = () => (
   <Provider store={store}>
@@ -35,6 +36,7 @@ const UserRouter = () => (
           <Route path="search" element={<SearchPage />} />
           <Route path="my-cart" element={<UserRoute><UserCart /></UserRoute>} />
           <Route path="my-orders" element={<UserRoute><Orders /></UserRoute>} />
+          <Route path="my-orders/:order_id" element={<UserRoute><OrderDetails /></UserRoute>} />
           <Route path="favorites" element={<Favorites />} />
 
           <Route path="customers-support" element={<CustomersSupport />} />

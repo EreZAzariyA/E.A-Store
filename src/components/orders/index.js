@@ -4,7 +4,7 @@ import { OrdersStatus, calculateTotals, getShortID, isAdmin } from "../../utils/
 import { Popconfirm, Space, Table, Typography } from "antd";
 import moment from "moment";
 import Timer from "../components/Timer";
-
+import { Link } from "react-router-dom";
 
 export const Orders = () => {
   const orders = useSelector((state) => state.orders);
@@ -16,11 +16,11 @@ export const Orders = () => {
   };
   const isCancelAvailable = (lastCancelDate) => {
     return moment().valueOf() < lastCancelDate;
-  }
+  };
 
-  const handleApprove = async (order_id) => {
+  const handleApprove = async (order_id, status) => {
     try {
-      await ordersServices.updateOrderStatus(order_id, OrdersStatus.SENT);
+      await ordersServices.updateOrderStatus(order_id, status);
     } catch (err) {
       console.log(err.message);
     }
@@ -68,11 +68,11 @@ export const Orders = () => {
     if (!isOptionsAvailable) {
       return (
         <p>Order {record.status?.toLowerCase()}</p>
-      );
+      )
     }
     return (
       <Space>
-        <Typography.Link onClick={() => handleApprove(record._id)}>Approve</Typography.Link>
+        <Typography.Link onClick={() => handleApprove(record._id, OrdersStatus.SENT)}>Approve</Typography.Link>
         <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record._id)}>
           <Typography.Link type="danger">Cancel</Typography.Link>
         </Popconfirm>
@@ -85,7 +85,9 @@ export const Orders = () => {
       title: 'Order ID',
       key: 'order_id',
       dataIndex: '_id',
-      render: (val) => (getShortID(val))
+      render: (val) => (
+        <Link to={`${val}`}>{getShortID(val)}</Link>
+      )
     },
     {
       title: 'Order Date',

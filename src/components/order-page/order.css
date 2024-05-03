@@ -7,17 +7,16 @@
 .order-page .go-back {
   align-self: flex-start;
   margin-left: 6%;
-  padding-bottom: 5px;
 }
 
-.order-page > div:not(.go-back) {
+.order-page .box {
   margin-top: 20px;
   width: 85%;
   height: auto;
   border: 1px solid rgba(211, 211, 211, 0.5);
   border-radius: 8px;
   background-color: white;
-  padding: 0 10px;
+  padding: 5px 10px;
 }
 
 .order-page .order-form-title {
@@ -29,7 +28,5 @@
 
 .order-page div.payment .paypal-buttons {
   max-width: 750px;
-  min-height: 200px;
   margin: auto;
-  padding: 20px 0;
 }
