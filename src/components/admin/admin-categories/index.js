@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminCategoriesServices } from "../../../services/admin/categories-services";
 import { ComponentsTypes } from "../../../utils/helpers";
 import { Input, Space, message } from "antd";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Steps = {
   ADD_CATEGORY: "ADD_CATEGORY",

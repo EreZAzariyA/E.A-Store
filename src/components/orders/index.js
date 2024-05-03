@@ -26,9 +26,9 @@ export const Orders = () => {
     }
   };
 
-  const handleCancel = async (order_id, status) => {
+  const handleCancel = async (order_id) => {
     try {
-      await ordersServices.updateOrderStatus(order_id, status);
+      await ordersServices.updateOrderStatus(order_id, OrdersStatus.CANCELLED);
     } catch (err) {
       console.log(err.message);
     }
@@ -39,32 +39,26 @@ export const Orders = () => {
     const isOptionsAvailable = record.status === OrdersStatus.PENDING;
     const cancelAvailable = isCancelAvailable(targetDate) || isOptionsAvailable;
     const orderIsSent = record.status === OrdersStatus.SENT;
-    const orderIsCanceled = record.status === OrdersStatus.CANCELLED;
+    const canceled = record.status === OrdersStatus.CANCELLED;
 
     if (isAdminValidate) {
       return <AdminPanel record={record} isOptionsAvailable={isOptionsAvailable} />
     } else {
       return (
         <>
-          {!orderIsCanceled && (
+          {canceled && 'Order Canceled'}
+          {!canceled && !orderIsSent && cancelAvailable && (
             <>
-              {!orderIsSent && (
-                <>
-                  {cancelAvailable && (
-                    <>
-                      <span>Time To Cancel</span>
-                      <Timer targetDate={targetDate} />
-                    </>
-                  )}
-                  <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record)}>
-                    <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
-                  </Popconfirm>
-                </>
-              )}
-              {orderIsSent && `Arrival Date: ${moment(record?.arrival_date).format('LL')} `}
+              <span>Time To Cancel</span>
+              <Timer targetDate={targetDate} />
             </>
           )}
-          {orderIsCanceled && 'Order Canceled'}
+          {orderIsSent && `Arrival Date: ${moment(record?.arrival_date).format('LL')} `}
+          {isOptionsAvailable && (
+            <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record._id)}>
+              <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
+            </Popconfirm>
+          )}
         </>
       );
     }
@@ -81,7 +75,7 @@ export const Orders = () => {
     return (
       <Space>
         <Typography.Link onClick={() => handleApprove(record._id, OrdersStatus.SENT)}>Approve</Typography.Link>
-        <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record._id, OrdersStatus.CANCELLED)}>
+        <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record._id)}>
           <Typography.Link type="danger">Cancel</Typography.Link>
         </Popconfirm>
       </Space>
