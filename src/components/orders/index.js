@@ -18,9 +18,9 @@ export const Orders = () => {
     return moment().valueOf() < lastCancelDate;
   }
 
-  const handleApprove = async (order_id, status) => {
+  const handleApprove = async (order_id) => {
     try {
-      await ordersServices.updateOrderStatus(order_id, status);
+      await ordersServices.updateOrderStatus(order_id, OrdersStatus.SENT);
     } catch (err) {
       console.log(err.message);
     }
@@ -65,16 +65,14 @@ export const Orders = () => {
   };
 
   const AdminPanel = ({record, isOptionsAvailable}) => {
-    console.log(isOptionsAvailable);
-
     if (!isOptionsAvailable) {
       return (
         <p>Order {record.status?.toLowerCase()}</p>
-      )
+      );
     }
     return (
       <Space>
-        <Typography.Link onClick={() => handleApprove(record._id, OrdersStatus.SENT)}>Approve</Typography.Link>
+        <Typography.Link onClick={() => handleApprove(record._id)}>Approve</Typography.Link>
         <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record._id)}>
           <Typography.Link type="danger">Cancel</Typography.Link>
         </Popconfirm>
