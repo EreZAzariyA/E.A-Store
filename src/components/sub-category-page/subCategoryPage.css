@@ -13,19 +13,17 @@
   grid-row: span 2;
 }
 
-/* @media (max-width: 765px) {
-  .sub-category-page aside {
-    grid-column: span 3;
-  }
-  .sub-category-page header,
-  .sub-category-page main {
-    grid-column: span 3;
-  }
+/* .sub-category-page main .products-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill ,minmax(300px, 1fr));
+  justify-items: center;
 } */
 
-
-.sub-category-page .products-list {
-  display: grid;
-  grid-template-columns: repeat( auto-fill ,minmax(300px, 1fr));
-  justify-items: center;
+@media (max-width: 550px) {
+  .sub-category-page header,
+  .sub-category-page aside,
+  .sub-category-page main {
+    grid-column: span 6;
+  }
 }
+

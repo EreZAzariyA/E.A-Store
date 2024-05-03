@@ -1,13 +1,18 @@
 import { Slider } from "antd";
 import "./SideFilter.css";
 
-export const SideFilter = ({ products, ranges, handleFilterChange }) => {
+export const SideFilter = ({ products, ranges, handleFilterChange, brandsFilter }) => {
   const maxPrice = [...products || []].reduce((a, b) => {
     return a.price > b.price ? a : b;
   }, 0);
   const minPrice = [...products || []].reduce((a, b) => {
     return a.price < b.price ? a : b;
   }, 0);
+
+  const marks = {
+    [minPrice.price]: minPrice.price,
+    [maxPrice.price]: maxPrice.price,
+  };
 
   return (
     <div className="side-filter-container">
@@ -17,6 +22,7 @@ export const SideFilter = ({ products, ranges, handleFilterChange }) => {
           <span>Price Range</span>
         </div>
         <Slider
+          marks={marks}
           range
           min={minPrice.price}
           max={maxPrice.price}
@@ -24,7 +30,9 @@ export const SideFilter = ({ products, ranges, handleFilterChange }) => {
           onChange={(values) => handleFilterChange(values)}
         />
       </div>
-      <div className="filter"></div>
+      <div className="filter brands-filter">
+        {brandsFilter}
+      </div>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import "./AuthView.css";
 
 const { Content } = Layout;
 
-export const AuthView = () =>  (
+export const AuthView = () => (
   <>
     <div id="auth-bg"></div>
     <Layout className="layout auth-layout">

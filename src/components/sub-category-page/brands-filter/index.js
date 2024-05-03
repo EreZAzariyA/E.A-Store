@@ -1,15 +1,14 @@
 import { CustomCarousel } from "../../components/carousel";
 import "./BrandsFilter.css";
 
-export const BrandsFilter = ({withBrandsFilter, withSecondaryBrandsFilter, brands, secondaryBrands, selectedBrands, selectedSecondaryBrands, handleFilterChange}) => {
-
+export const BrandsFilter = ({withBrandsFilter, withSecondaryBrandsFilter, brands, secondaryBrands, selectedBrands, selectedSecondaryBrands, handleFilterChange, isVertical}) => {
   const onBrandSelect = (brand) => {
-    const isSelected = selectedBrands.find((b) => b === brand._id);
+    const isSelected = selectedBrands.find((b) => b === brand.name);
 
     if (isSelected) {
-      handleFilterChange('selectedBrands', selectedBrands.filter((b) => b !== brand._id));
+      handleFilterChange('selectedBrands', selectedBrands.filter((b) => b !== brand.name));
     } else {
-      handleFilterChange('selectedBrands', [...selectedBrands, brand._id]);
+      handleFilterChange('selectedBrands', [...selectedBrands, brand.name]);
     }
   };
 
@@ -31,6 +30,7 @@ export const BrandsFilter = ({withBrandsFilter, withSecondaryBrandsFilter, brand
             items={brands}
             selectedItems={selectedBrands}
             onItemSelect={onBrandSelect}
+            isVertical={isVertical}
           />
         </div>
       )}
@@ -41,6 +41,7 @@ export const BrandsFilter = ({withBrandsFilter, withSecondaryBrandsFilter, brand
             items={secondaryBrands}
             selectedItems={selectedSecondaryBrands}
             onItemSelect={onSecondaryBrandSelect}
+            isVertical={isVertical}
           />
         </div>
       )}

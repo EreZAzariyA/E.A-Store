@@ -67,18 +67,20 @@
   height: min-content;
 }
 
+.cart-product-card .right .field.description-field p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
+}
 
 @media (max-width: 768px) {
   .cart-product-card .ant-card-body {
     flex-direction: column;
   }
 
-  .cart-product-card .right .field.description-field p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-  }
 
   .cart-product-card .right .field.prices-fields {
     flex-direction: column;

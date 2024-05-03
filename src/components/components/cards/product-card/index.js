@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { shoppingCartServices } from "../../../../services/shoppingCart-services";
@@ -10,48 +9,46 @@ import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import "./productCard.css";
 
 export const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth?.user);
   const shoppingCart = useSelector((state) => state.shoppingCart);
-  const navigate = useNavigate();
-  const [inCart, setInCart] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   const brands = useSelector((state) => (state.brands));
   const brand = brands.find((b) => b.name === product.brand);
 
-  useEffect(() => {
-    if (shoppingCart) {
-      const isInCart = shoppingCart.products.some((pro) => (
-        pro.product_id === product._id
-      ));
-      setInCart(isInCart);
+  let isInCart = false;
+  let isFavorite = false;
+  if (shoppingCart) {
+    const inCart = shoppingCart.products.some((pro) => (
+      pro.product_id === product._id
+    ));
+    isInCart = inCart;
 
-      const isInFavorites = shoppingCart.favorites.some((pro) => (
-        pro === product._id
-      ));
-      setIsFavorite(isInFavorites);
-    } else {
-      setInCart(false);
-      setIsFavorite(false);
-    }
-  }, [shoppingCart, product]);
+    const isInFavorites = shoppingCart.favorites.some((pro) => (
+      pro === product._id
+    ));
+    isFavorite = isInFavorites
+  } else {
+    isInCart = false;
+    isFavorite = false;
+  }
 
   const addProductHandler = async () => {
     if (!user) {
       navigate('/auth/login');
-      return;
-    }
-    try {
-      await shoppingCartServices.addProductToCart(product._id, shoppingCart._id, 1);
-      setInCart(true);
-    } catch (err) {
-      message.error(err.message);
+    } else {
+      try {
+        await shoppingCartServices.addProductToCart(product._id, shoppingCart._id, 1);
+        isInCart = true;
+      } catch (err) {
+        message.error(err.message);
+      }
     }
   };
 
   const removeProductHandler = async () => {
     try {
       await shoppingCartServices.removeProductFromCart(shoppingCart._id, product._id);
-      setInCart(false);
+      isInCart = false;
     } catch (err) {
       message.error(err.message);
     }
@@ -60,24 +57,24 @@ export const ProductCard = ({ product }) => {
   const favoritesHandler = async (name) => {
     if (!user) {
       navigate('/auth/login');
-      return;
-    }
-    try {
-      if (name === 'remove') {
-        await shoppingCartServices.removeProductFromFavorites(shoppingCart._id, product._id);
-        setIsFavorite(false);
-        return;
+    } else {
+      try {
+        if (name === 'remove') {
+          await shoppingCartServices.removeProductFromFavorites(shoppingCart._id, product._id);
+          isFavorite = false;
+          return;
+        }
+        await shoppingCartServices.addProductToFavorites(product._id, shoppingCart._id);
+        isFavorite = true;
+      } catch (err) {
+        message.error(err.message);
       }
-      await shoppingCartServices.addProductToFavorites(product._id, shoppingCart._id);
-      setIsFavorite(true);
-    } catch (err) {
-      message.error(err.message);
     }
   };
 
   return (
-    <div className="product-card" onClick={() => navigate(`product/${product._id}`)}>
-      <div className="product-img">
+    <div className="product-card">
+      <div className="product-img" onClick={() => navigate(`product/${product._id}`)}>
         <img src={product.image_url} alt={`${product.name}-img`} />
       </div>
       <div className="product-brand-fav-stat">
@@ -121,7 +118,7 @@ export const ProductCard = ({ product }) => {
         </div>
       <div className="product-card-footer">
         <div className="cart-btn">
-          {inCart ? (
+          {isInCart ? (
               <Tooltip title='Remove from cart'>
                 <Button type="primary" style={{ background: 'red' }} onClick={removeProductHandler}>
                   <DeleteOutlined style={{ fontSize: '16px' }} />

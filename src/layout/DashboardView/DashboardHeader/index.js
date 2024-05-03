@@ -31,37 +31,53 @@ export const DashboardHeader = ({ sideBarHandler }) => {
   }, []);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      await shoppingCartServices.fetchUserShoppingCart(user?._id);
-      await ordersServices.fetchUserOrdersByUser_id(user?._id);
+    const fetchUserData = async (user_id) => {
+      await shoppingCartServices.fetchUserShoppingCart(user_id);
+      await ordersServices.fetchUserOrdersByUser_id(user_id);
     };
     const fetchAdminRequiredData = async () => {
       await adminOrdersServices.fetchAllOrders();
     };
 
-    if (user && !admin) {
-      fetchUserData();
+    if (user && user._id && !admin) {
+      fetchUserData(user._id);
     }
-    if (user && admin) {
+    if (user && user._id && admin) {
       fetchAdminRequiredData();
     }
   }, [user, admin]);
 
   return (
+    // <div className="header">
+    //   <div className="left-container">
+    //     <Logo />
+    //   </div>
+
+    //   {!admin && (
+    //     <div className="right-container">
+    //       <div className="mobile">
+    //         mob
+    //       </div>
+    //       <div className="desktop">
+    //         desktop
+    //       </div>
+    //     </div>
+    //   )}
+    // </div>
     <Header>
       <Row justify={admin ? 'start' : 'space-between'} align={'middle'}>
-        <Col span={4}>
+        <Col>
           <Logo />
         </Col>
 
         {!admin && (
           <>
-            <Col md={{ span: 0 }} xs={{ span: 18 }}>
+            <Col md={{ span: 0 }} xs={{ span: 4 }}>
               <Row justify={"end"} align={'middle'}>
-                <Col md={{ span: 0 }} xs={{ span: 4 }} sm={{ span: 3 }}>
+                <Col span={12}>
                   <Button type="link"><CiSearch color={Colors.ICON} size={Sizes.ICON} onClick={() => navigate('search')} /></Button>
                 </Col>
-                <Col md={{ span: 0 }} xs={{ span: 4 }} sm={{ span: 3 }}>
+                <Col span={12}>
                   <Button type="link"><CiMenuBurger color={Colors.ICON} size={Sizes.ICON} onClick={() => sideBarHandler()} /></Button>
                 </Col>
               </Row>

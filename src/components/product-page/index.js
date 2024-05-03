@@ -42,7 +42,7 @@ export const ProductPage = () => {
               <Image preview={false} src={product.image_url} alt={product.name + ' img'} />
             </div>
             <div className="brand-img">
-              <Image preview={false} src={brand.image_url} alt={brand.name + ' img'} />
+              <Image preview={false} src={brand?.image_url} alt={brand?.name + ' img'} />
             </div>
           </Col>
 

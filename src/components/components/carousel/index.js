@@ -2,7 +2,7 @@ import "./Carousel.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-export const CustomCarousel = ({ items = [], selectedItems = [], onItemSelect }) => {
+export const CustomCarousel = ({ items = [], selectedItems = [], onItemSelect, isVertical }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -30,14 +30,20 @@ export const CustomCarousel = ({ items = [], selectedItems = [], onItemSelect })
         draggable={false}
         showDots={false}
         infinite={false}
-        keyBoardControl={true}
-        containerClass="carousel-container"
+        keyBoardControl={isVertical ? false : true}
+        centerMode={isVertical ? true : false}
+        containerClass={`carousel-container ${isVertical ? 'vertical' : ''}`}
+        itemClass={`carousel-item ${isVertical ? 'vertical' : ''}`}
+        arrows={isVertical ? false : true}
       >
         {items.map((item) => {
-          const isActive = selectedItems.includes(item._id);
+          const isActive = selectedItems.includes(item.name);
 
           return (
             <div className={isActive ? 'active' : ''} key={item._id} onClick={() => onItemSelect(item)}>
+              {isVertical && (
+                <div className="brand-name">{item.name}</div>
+              )}
               <img src={item.image_url} alt="img" />
             </div>
           )

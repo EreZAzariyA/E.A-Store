@@ -15,7 +15,7 @@
 
 .layout .ant-layout-header {
   width: 100%;
-  padding: 5px 0 5px 20px;
+  padding: 5px 15px 5px 15px;
 
   background: var(--lightBlue);
   height: min-content;
@@ -23,25 +23,15 @@
 
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 99999999;
 }
+
 .layout.admin-layout .ant-layout-header {
   border-bottom: 1px solid rgba(5, 5, 5, 0.06);
 }
 
 .layout .ant-layout-header .personal {
   max-width: 150px;
-}
-
-
-.layout .top-menu-navbar {
-  text-align: justify;
-}
-
-.layout .top-menu-navbar .ant-menu-title-content span {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .layout.admin-layout .ant-layout-sider .ant-menu {
@@ -54,9 +44,6 @@
 
 
 @media (max-width: 765px) {
-  .layout .ant-layout-header {
-    padding: 5px 15px 5px 30px;
-  }
   .layout .ant-layout-header p {
     line-height: normal;
   }

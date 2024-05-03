@@ -39,7 +39,10 @@ export const DashboardView = () => {
       alignItems: 'center',
       textAlign: 'justify'
     }
-    i.onClick = () => navigate(i.key);
+    i.onClick = () => {
+      navigate(i.key);
+      setIsOpen(!isOpen);
+    };
   });
   items.push({
     label: 'Account',
@@ -98,30 +101,39 @@ export const DashboardView = () => {
       />
       <Layout hasSider>
         <Sider
-          // style={{
-          //   overflow: 'auto',
-          //   height: '100vh',
-          //   position: 'fixed',
-          //   left: 0,
-          //   top: 0,
-          //   bottom: 0,
-          //   zIndex: 9,
-          //   paddingTop: '65px'
-          // }}
+          style={{
+            overflow: 'auto',
+            height: '100vh',
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            zIndex: 9,
+            paddingTop: '65px'
+          }}
           trigger={null}
           theme="light"
-          width={225}
+          width={242}
           collapsed={!isOpen}
           collapsedWidth={0}
           breakpoint="md"
           onBreakpoint={handleOnBreakpoint}
         >
-          <Menu
-            items={items}
-            mode="inline"
-            theme="light"
-            style={{ textAlign: 'justify', height: '100%', fontSize: 14 }}
-          />
+          <div
+            style={{
+              border: '1px solid lightgray',
+              borderRadius: '5px',
+              height: '100%',
+              margin: '0 10px 0 10px',
+            }}>
+            <Menu
+              items={items}
+              mode="inline"
+              theme="light"
+              style={{ textAlign: 'justify', height: '100%', fontSize: 14 }}
+            />
+
+          </div>
         </Sider>
         <Content className="site-layout">
           <DashboardWrapper />
