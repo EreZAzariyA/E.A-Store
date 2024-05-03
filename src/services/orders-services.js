@@ -25,10 +25,10 @@ class OrdersServices {
   };
 
   updateOrderStatus = async (order_id, status) => {
-    const response = await axios.put(config.urls.order.updateOrderStatus, {order_id, status});
-    const updatedOrder = response.data;
-    store.dispatch(updateOrderStatusAction({order_id: order_id, status: status}));
-    return updatedOrder;
+    const response = await axios.put(config.urls.order.updateOrderStatus + order_id, { status });
+    const updatedOrderStatus = response.data;
+    store.dispatch(updateOrderStatusAction({order_id: order_id, status: updatedOrderStatus}));
+    return updatedOrderStatus;
   };
 };
 

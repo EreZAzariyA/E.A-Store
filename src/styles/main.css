@@ -54,3 +54,8 @@
   grid-template-columns: repeat(auto-fill ,minmax(300px, 1fr));
   justify-items: center;
 }
+
+.insert-form {
+  width: min(100% - 20%, 500px);
+  margin: auto;
+}

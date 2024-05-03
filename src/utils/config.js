@@ -87,7 +87,7 @@ class Config {
       order: {
         fetchUserOrders: baseUrl + 'orders/user-orders/',
         createOrder: baseUrl + 'orders/create-order',
-        updateOrderStatus: baseUrl + 'orders/update-order-status'
+        updateOrderStatus: baseUrl + 'orders/update-order-status/'
       },
       admin: {
         uploadImage: baseUrl + 'admin/image-upload',

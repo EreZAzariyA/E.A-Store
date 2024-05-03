@@ -14,7 +14,7 @@ export const EditTable = ({ columns, dataSource, type, handleAdd, onEditMode, re
   columns.push({
     title: 'Actions',
     key: 'action',
-    width: 120,
+    width: 200,
     render: (_, record) => (
       <Row align={'middle'}>
         <Col>

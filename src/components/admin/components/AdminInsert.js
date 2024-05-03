@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {ComponentsTypes } from "../../../utils/helpers";
+import {ComponentsTypes, isArrayAndNotEmpty } from "../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
 import { Button, Col, Divider, Form, Input, InputNumber, Row, Select, Typography } from "antd"
 
@@ -53,11 +53,11 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
       const selectedSubCategory = subCategories.find((subC) => subC._id === subCategory_id);
 
       if (selectedSubCategory) {
-        const brandsId = selectedSubCategory.brands;
-        console.log(brandsId);
+        const brands = selectedSubCategory.brands;
+        console.log(brands);
 
-        fullBrandsList = [...brandsId].map((b) => {
-          const fullBrand = [...brands].find((brand) => brand._id === b);
+        fullBrandsList = [...brands].map((b) => {
+          const fullBrand = [...brands].find((brand) => brand._id === b._id);
           return fullBrand;
         });
       }
@@ -67,7 +67,6 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     return [];
   };
   const brandsBySubCategory = fetchBrandsBySubCategory_id(initialValue.subCategory_id);
-  console.log(brandsBySubCategory);
 
   const cancel = () => {
     onBack();
@@ -78,6 +77,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     setInitialValue({...initialValue, [name]: value });
     if (name === 'category_id') {
       form.setFieldValue('subCategory_id', '');
+      form.setFieldValue('brand', '');
     }
   };
 
@@ -149,7 +149,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
               onChange={(val) => handleChange('brand', val)}
             >
               <Select.Option key={''} disabled>Select brand</Select.Option>
-              {brandsBySubCategory.map((brand) => (
+              {isArrayAndNotEmpty(brandsBySubCategory) && brandsBySubCategory.map((brand) => (
                 <Select.Option key={brand?.name}>
                   <Row align={"stretch"} justify={"center"}>
                     <Col span={2}>

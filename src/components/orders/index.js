@@ -34,6 +34,60 @@ export const Orders = () => {
     }
   };
 
+  const actionsPanel = (record) => {
+    const targetDate = getTimeToCancel(record.createdAt);
+    const isOptionsAvailable = record.status === OrdersStatus.PENDING;
+    const cancelAvailable = isCancelAvailable(targetDate) || isOptionsAvailable;
+    const orderIsSent = record.status === OrdersStatus.SENT;
+    const orderIsCanceled = record.status === OrdersStatus.CANCELLED;
+
+    if (isAdminValidate) {
+      return <AdminPanel record={record} isOptionsAvailable={isOptionsAvailable} />
+    } else {
+      return (
+        <>
+          {!orderIsCanceled && (
+            <>
+              {!orderIsSent && (
+                <>
+                  {cancelAvailable && (
+                    <>
+                      <span>Time To Cancel</span>
+                      <Timer targetDate={targetDate} />
+                    </>
+                  )}
+                  <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record)}>
+                    <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
+                  </Popconfirm>
+                </>
+              )}
+              {orderIsSent && `Arrival Date: ${moment(record?.arrival_date).format('LL')} `}
+            </>
+          )}
+          {orderIsCanceled && 'Order Canceled'}
+        </>
+      );
+    }
+  };
+
+  const AdminPanel = ({record, isOptionsAvailable}) => {
+    console.log(isOptionsAvailable);
+
+    if (!isOptionsAvailable) {
+      return (
+        <p>Order {record.status?.toLowerCase()}</p>
+      )
+    }
+    return (
+      <Space>
+        <Typography.Link onClick={() => handleApprove(record._id, OrdersStatus.SENT)}>Approve</Typography.Link>
+        <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record._id, OrdersStatus.CANCELLED)}>
+          <Typography.Link type="danger">Cancel</Typography.Link>
+        </Popconfirm>
+      </Space>
+    );
+  };
+
   const columns = [
     {
       title: 'Order ID',
@@ -69,47 +123,7 @@ export const Orders = () => {
     {
       title: 'Actions',
       key: 'actions',
-      render: (record) => {
-        const targetDate = getTimeToCancel(record.createdAt);
-        const cancelAvailable = isCancelAvailable(targetDate);
-        const orderIsSent = record.status === OrdersStatus.SENT;
-        const orderIsCanceled = record.status === OrdersStatus.CANCELLED;
-
-        if (isAdminValidate) {
-          return (
-            <Space>
-              <Typography.Link onClick={() => handleApprove(record._id, OrdersStatus.SENT)}>Approve</Typography.Link>
-              <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record._id, OrdersStatus.CANCELLED)}>
-                <Typography.Link type="danger">Cancel</Typography.Link>
-              </Popconfirm>
-            </Space>
-          )
-        } else {
-          return (
-            <>
-              {!orderIsCanceled && (
-                <>
-                  {!orderIsSent && (
-                    <>
-                      {cancelAvailable && (
-                        <>
-                          <span>Time To Cancel</span>
-                          <Timer targetDate={targetDate} />
-                        </>
-                      )}
-                      <Popconfirm title="Sure to cancel?" onConfirm={() => handleCancel(record)}>
-                        <Typography.Link disabled={!cancelAvailable}>Cancel Order</Typography.Link>
-                      </Popconfirm>
-                    </>
-                  )}
-                  {orderIsSent && `Arrival Date: ${moment(record?.arrival_date).format('LL')} `}
-                </>
-              )}
-              {orderIsCanceled && 'Order Canceled'}
-            </>
-          );
-        }
-      }
+      render: actionsPanel
     },
   ];
 

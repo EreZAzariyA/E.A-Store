@@ -137,3 +137,8 @@ export const validateString = (str) => {
   const regex = /^\s*$/;
   return regex.test(str);
 };
+
+export const toLowerCase = (str) => {
+  const string = String(str).toLowerCase();
+  return string;
+};

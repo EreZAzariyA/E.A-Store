@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminCategoriesServices } from "../../../services/admin/categories-services";
 import { ComponentsTypes } from "../../../utils/helpers";
 import { Input, Space, message } from "antd";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const Steps = {
   ADD_CATEGORY: "ADD_CATEGORY",
@@ -14,11 +15,13 @@ const Steps = {
 export const CategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const allCategories = useSelector((state) => (state.categories));
+  const {hash} = useLocation();
+  const searchRoute = hash.substring(1);
 
   const [category, setCategory] = useState(null);
   const [step, setStep] = useState(null);
   const [filterState, setFilterState] = useState({
-    category: ''
+    category: searchRoute || ''
   });
 
   const filtering = () => {
@@ -130,6 +133,7 @@ export const CategoriesTable = () => {
               type="text"
               placeholder='Search category'
               allowClear
+              value={filterState.category}
               onChange={(val) => setFilterState({ ...filterState, category: (val.target.value) })}
             />
           </Space>

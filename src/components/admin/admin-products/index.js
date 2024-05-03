@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminProductsServices } from "../../../services/admin/products-services";
-import { ComponentsTypes } from "../../../utils/helpers";
+import { ComponentsTypes, toLowerCase } from "../../../utils/helpers";
 import { Input, Select, Space, message } from "antd";
 
 const Steps = {
@@ -29,7 +29,7 @@ export const ProductsTable = () => {
     let filteredProducts = [...allProducts];
 
     if (filterState.name) {
-      filteredProducts = filteredProducts?.filter((p) => p.name.startsWith(filterState.name))
+      filteredProducts = filteredProducts?.filter((p) => p.name.startsWith(filterState.name) || p._id.startsWith(filterState.name))
     }
     if (filterState.category_id) {
       filteredProducts = filteredProducts?.filter((p) => (p.category_id === filterState.category_id))
@@ -95,7 +95,7 @@ export const ProductsTable = () => {
       render: (value) => {
         const category = categories?.find((c) => (c._id === value));
         return (
-          <Link to={`/admin/all-categories/${category?._id}`}>{category?.category}</Link>
+          <Link to={`/admin/categories/#${toLowerCase(category?.category)}`}>{category?.category}</Link>
         )
       },
       sorter: (a, b) => (a.category_id > b.category_id)
@@ -114,17 +114,10 @@ export const ProductsTable = () => {
       sorter: (a, b) => (a.subCategory_id.localeCompare(b.subCategory_id)),
     },
     {
-      title: 'Description',
-      key: 'description',
-      dataIndex: 'description',
-      render: (text) => (
-        <p className="long-text-field">{text}</p>
-      ),
-    },
-    {
       title: 'Image URL',
       key: 'image_url',
       dataIndex: 'image_url',
+      width: 220,
       render: (text) => (
         <p className="long-text-field">{text}</p>
       ),
@@ -133,7 +126,7 @@ export const ProductsTable = () => {
       title: 'Stock',
       key: 'stock',
       dataIndex: 'stock',
-      width: 100,
+      width: 80,
       inputType: 'number'
     },
     {
