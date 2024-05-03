@@ -5,7 +5,7 @@
 }
 
 .layout .site-layout {
-  padding: 0 20px 80px 20px;
+  padding: 60px 20px 80px 20px;
   background: var(--defaultWhite);
 }
 
@@ -21,9 +21,9 @@
   height: min-content;
   line-height: 5px;
 
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 99999999;
+  z-index: 10;
 }
 
 .layout.admin-layout .ant-layout-header {

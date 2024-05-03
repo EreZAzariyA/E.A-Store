@@ -48,22 +48,6 @@ export const DashboardHeader = ({ sideBarHandler }) => {
   }, [user, admin]);
 
   return (
-    // <div className="header">
-    //   <div className="left-container">
-    //     <Logo />
-    //   </div>
-
-    //   {!admin && (
-    //     <div className="right-container">
-    //       <div className="mobile">
-    //         mob
-    //       </div>
-    //       <div className="desktop">
-    //         desktop
-    //       </div>
-    //     </div>
-    //   )}
-    // </div>
     <Header>
       <Row justify={admin ? 'start' : 'space-between'} align={'middle'}>
         <Col>

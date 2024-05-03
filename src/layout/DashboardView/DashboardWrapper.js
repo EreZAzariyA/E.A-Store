@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, Menu } from "antd";
 import { useSelector } from "react-redux";
-import { Colors, Sizes, toCapitalize } from "../../utils/helpers";
-import { BiSupport } from "react-icons/bi";
+import { toCapitalize } from "../../utils/helpers";
 
 export const DashboardWrapper = () => {
   const location = useLocation();
@@ -25,7 +24,7 @@ export const DashboardWrapper = () => {
     });
 
     const locationArray = location.pathname.split('/').filter((path) => path !== '' && path !== 'home');
-    const [,, categoryIdPath] = locationArray;
+    const [ , , categoryIdPath] = locationArray;
     setCurrent(categoryIdPath);
 
     const options = [];
@@ -50,9 +49,9 @@ export const DashboardWrapper = () => {
 
   const items = [
     {
-      label: <span><BiSupport color={Colors.ICON} size={Sizes.TOP_MENU_ICON} style={{ marginRight: '5px'}} />Customers-Support</span>,
+      label: 'Customers-Support',
       key: 'customers-support',
-      onClick: () => navigate('/customers-support')
+      onClick: () => navigate('/customers-support'),
     },
     {
       label: <span>Business Relations</span>,
@@ -72,7 +71,7 @@ export const DashboardWrapper = () => {
         disabledOverflow
         mode="horizontal"
         selectedKeys={[current]}
-        style={{ background: 'transparent' }}
+        style={{ background: 'transparent', textAlign: 'left' }}
         items={items}
         className="top-menu-navbar"
       />
