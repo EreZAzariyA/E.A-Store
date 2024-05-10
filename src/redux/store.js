@@ -7,6 +7,9 @@ import subCategoriesSlicer from "./slicers/subCategories-slicer";
 import { middleware } from "./middlewares/middleware";
 import orderSlicer from "./slicers/orders-slicer";
 import brandsSlicer from "./slicers/brands-slicer";
+import { socketMiddleware } from "./middlewares/socket-middleware";
+import socketIo from "../services/socket";
+const socket = socketIo.socket;
 
 const store = configureStore({
   reducer: {
@@ -18,7 +21,7 @@ const store = configureStore({
     brands: brandsSlicer.reducer,
     orders: orderSlicer.reducer,
   },
-  middleware: [...getDefaultMiddleware(), middleware],
+  middleware: [...getDefaultMiddleware(), middleware, socketMiddleware(socket)],
 });
 
 export default store;
