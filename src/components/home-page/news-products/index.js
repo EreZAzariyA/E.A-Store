@@ -6,34 +6,35 @@ import { Spin } from "antd";
 import { isArrayAndNotEmpty } from "../../../utils/helpers";
 
 export const NewsProducts = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    storeServices.fetchNewestProducts().then((res) => {
+    const fetchNewestProducts = async () => {
+      const res = await storeServices.fetchNewestProducts();
       if (res && isArrayAndNotEmpty(res)) {
         setProducts(res);
       }
       setIsLoading(false);
-    });
+    };
+
+    fetchNewestProducts();
   }, []);
 
-  if (!isLoading) {
-    return (
-      <div className="news-products-main-container">
-        <div className="news-products-inner-container">
+  return (
+    <div className="news-products-main-container">
+      <div className="news-products-inner-container">
 
-          <h3 className="page-title">
-            <span>New</span>
-          </h3>
+        <h3 className="page-title">
+          <span>New</span>
+        </h3>
 
-          <div className="products-list">
-            {products.map((product, index) => (
-              <ProductCard product={product} key={index || product._id} />
-            ))}
-          </div>
+        <div className="products-list">
+          {isLoading ? <Spin /> : products.map((product, index) => (
+            <ProductCard product={product} key={index || product._id} />
+          ))}
         </div>
       </div>
-    );
-  } return <Spin />
+    </div>
+  );
 };

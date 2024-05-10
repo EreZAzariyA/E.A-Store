@@ -4,9 +4,7 @@ import "./homePage.css";
 import { useDispatch } from "react-redux";
 import socketIo from "../../services/socket";
 import { useEffect } from "react";
-import { addCategoryAction } from "../../redux/slicers/categories-slicer";
-import { notification } from "antd";
-
+import { addCategoryAction, removeCategoryAction, updateCategoryAction } from "../../redux/slicers/categories-slicer";
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
@@ -15,14 +13,24 @@ export const Dashboard = () => {
   useEffect(() => {
     const onAdminAddCategory = (category) => {
       dispatch(addCategoryAction(category));
-      notification.info({
-        message: `Admin added new category "${category.category}"`
-      });
     };
+
+    const onAdminUpdateCategory = (updatedCategory) => {
+      dispatch(updateCategoryAction(updatedCategory));
+    };
+
+    const onAdminRemoveCategory = (category_id) => {
+      dispatch(removeCategoryAction(category_id));
+    };
+
     socket.on('admin-add-category', onAdminAddCategory);
+    socket.on('admin-remove-category', onAdminRemoveCategory);
+    socket.on('admin-update-category', onAdminUpdateCategory);
 
     return () => {
       socket.off('admin-add-category', onAdminAddCategory);
+      socket.off('admin-remove-category', onAdminRemoveCategory);
+      socket.off('admin-update-category', onAdminUpdateCategory);
     }
   }, []);
 
