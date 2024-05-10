@@ -1,7 +1,7 @@
 .layout {
   text-align: center;
   background: var(--defaultWhite);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .layout .site-layout {

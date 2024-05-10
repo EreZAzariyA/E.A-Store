@@ -5,7 +5,7 @@ import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminProductsServices } from "../../../services/admin/products-services";
 import { ComponentsTypes, toLowerCase } from "../../../utils/helpers";
-import { Input, Select, Space, message } from "antd";
+import { Col, Input, Row, Select, Space, message } from "antd";
 
 const Steps = {
   ADD_PRODUCT: "ADD_PRODUCT",
@@ -20,9 +20,9 @@ export const ProductsTable = () => {
   const [product, setProduct] = useState(null);
   const [step, setStep] = useState(null);
   const [filterState, setFilterState] = useState({
-    name: '',
-    category_id: '',
-    subCategory_id: ''
+    name: null,
+    category_id: null,
+    subCategory_id: null
   });
 
   const filtering = () => {
@@ -53,6 +53,7 @@ export const ProductsTable = () => {
   const removeHandler = async (product_id) => {
     try {
       await adminProductsServices.removeProduct(product_id);
+      message.info('Product removed successfully...');
     } catch (err) {
       message.error(err);
     }
@@ -83,7 +84,7 @@ export const ProductsTable = () => {
       title: 'Name',
       key: 'name',
       dataIndex: 'name',
-      width: 150,
+      width: 200,
       fixed: 'left',
       sorter: (a, b) => (a.name.localeCompare(b.name))
     },
@@ -108,7 +109,7 @@ export const ProductsTable = () => {
       render: (value) => {
         const subCategory = subCategories?.find((subC) => (subC._id === value));
         return (
-          <p>{subCategory?.subCategory}</p>
+          <span>{subCategory?.subCategory}</span>
         )
       },
       sorter: (a, b) => (a.subCategory_id.localeCompare(b.subCategory_id)),
@@ -119,7 +120,7 @@ export const ProductsTable = () => {
       dataIndex: 'image_url',
       width: 220,
       render: (text) => (
-        <p className="long-text-field">{text}</p>
+        <span className="long-text-field">{text}</span>
       ),
     },
     {
@@ -143,40 +144,38 @@ export const ProductsTable = () => {
     <Space direction="vertical" className="w-100">
       {!step && (
         <>
-          <Space align="center" wrap>
-            <Input
-              allowClear
-              type="text"
-              placeholder="Search product"
-              onChange={(val) => setFilterState({...filterState, name: val.target.value})}
-            />
-
-            <Select
-              allowClear
-              onClear={() => setFilterState({...filterState, category_id: ''})}
-              style={{width: '200px'}}
-              value={filterState.category_id}
-              onSelect={(val) => setFilterState({...filterState, category_id: val })}
-            >
-              <Select.Option key={''} disabled>Select category</Select.Option>
-              {categories?.map((category) => (
-                <Select.Option key={category._id}>{category.category}</Select.Option>
-              ))}
-            </Select>
-
-            <Select
-              allowClear
-              onClear={() => setFilterState({...filterState, subCategory_id: ''})}
-              style={{width: '200px'}}
-              value={filterState.subCategory_id}
-              onSelect={(val) => setFilterState({...filterState, subCategory_id: val })}
-            >
-              <Select.Option key={''} disabled>Select sub-category</Select.Option>
-              {subCategories?.map((subCategory) => (
-                <Select.Option key={subCategory._id}>{subCategory.subCategory}</Select.Option>
-              ))}
-            </Select>
-          </Space>
+          <Row align={'middle'} justify={'start'} gutter={[20, 10]}>
+            <Col>
+              <Input
+                allowClear
+                type="text"
+                placeholder="Search product"
+                onChange={(val) => setFilterState({...filterState, name: val.target.value})}
+              />
+            </Col>
+            <Col>
+              <Select
+                allowClear
+                onClear={() => setFilterState({...filterState, category_id: ''})}
+                style={{width: '200px'}}
+                value={filterState.category_id}
+                onSelect={(val) => setFilterState({...filterState, category_id: val })}
+                placeholder={"Select category"}
+                options={categories?.map((category) => ({label: category.category, key: category._id}))}
+              />
+            </Col>
+            <Col>
+              <Select
+                allowClear
+                onClear={() => setFilterState({...filterState, subCategory_id: ''})}
+                style={{ width: '200px' }}
+                value={filterState.subCategory_id}
+                placeholder="Select sub-category"
+                onSelect={(val) => setFilterState({...filterState, subCategory_id: val })}
+                options={subCategories?.map((subCategory) => ({ label: subCategory.subCategory, key: subCategory._id }))}
+              />
+            </Col>
+          </Row>
 
           <EditTable
             rowKey={'_id'}
@@ -187,6 +186,7 @@ export const ProductsTable = () => {
             type={ComponentsTypes.PRODUCTS}
             onEditMode={handleEditMode}
             removeHandler={removeHandler}
+            scroll={{ x: 1300 }}
           />
         </>
       )}

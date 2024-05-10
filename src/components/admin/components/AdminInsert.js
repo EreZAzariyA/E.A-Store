@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {ComponentsTypes, isArrayAndNotEmpty } from "../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
-import { Button, Col, Divider, Form, Input, InputNumber, Row, Select, Typography } from "antd"
+import { Button, Col, Divider, Form, Input, InputNumber, Row, Select, Space, Typography } from "antd"
 
 export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const brands = useSelector((state) => state.brands);
@@ -91,9 +91,12 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
 
   return (
     <Form {...formProps} labelWrap>
-      <h3>{record ? 'Update' : 'Add'} {componentName}</h3>
-
-      <Typography.Link onClick={cancel}>Go Back</Typography.Link>
+      <Typography.Title
+        level={4}
+        style={{ lineHeight: 0 }}
+      >
+        {record ? 'Update' : 'Add'} {componentName}
+      </Typography.Title>
       <Divider />
 
       {isProducts && (
@@ -335,7 +338,10 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
         </>
       )}
 
-      <Button htmlType="submit">{record ? 'Update' : 'Add'} {componentName}</Button>
+      <Space>
+        <Button htmlType="submit">{record ? 'Update' : 'Add'} {componentName}</Button>
+        <Button danger onClick={onBack}>{record ? 'Cancel' : 'Back'}</Button>
+      </Space>
     </Form>
   );
 };

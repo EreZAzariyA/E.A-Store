@@ -78,7 +78,7 @@ export const CategoriesTable = () => {
       dataIndex: 'category',
       sorter: (a, b) => (new Date(b.updatedAt) - new Date(a.updatedAt)),
       editable: true,
-      width: 120,
+      width: 200,
       fixed: 'left',
     },
     {
@@ -88,7 +88,7 @@ export const CategoriesTable = () => {
       editable: true,
       width: 200,
       render: (text) => (
-        <p className="long-text-field">{text}</p>
+        <span className="long-text-field">{text}</span>
       ),
     },
     {
@@ -96,9 +96,9 @@ export const CategoriesTable = () => {
       title: 'Sub-Categories',
       dataIndex: 'subCategories',
       render: (subCategories) => {
-        return <p>{ subCategories?.length || 0}</p>
+        return <span>{ subCategories?.length || 0}</span>
       },
-      width: 160,
+      width: 135,
     },
     {
       key: 'products',
@@ -106,7 +106,7 @@ export const CategoriesTable = () => {
       shouldUpdate: false,
       render: (_, record) => {
         const productsLength = [...products].filter((p) => (p.category_id === record._id)).length;
-        return <p>{ productsLength ?? 0}</p>
+        return <span>{ productsLength ?? 0}</span>
       },
       sorter: (a, b) => {
         const aLength = [...products].filter((p) => (p.category_id === a._id)).length;
@@ -146,6 +146,7 @@ export const CategoriesTable = () => {
             handleAdd={() => setStep(Steps.ADD_CATEGORY)}
             onEditMode={handleEditMode}
             removeHandler={removeHandler}
+            scroll={{ x: 600, y: 400 }}
           />
         </>
       )}

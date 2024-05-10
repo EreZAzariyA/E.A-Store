@@ -41,11 +41,6 @@ export const AdminLayout = () => {
         icon: <PieChartOutlined />
       },
       {
-        label: 'Brands',
-        key: 'brands',
-        icon: <ShopOutlined />
-      },
-      {
         label: 'Products',
         key: 'products',
         icon: <AppstoreAddOutlined />
@@ -54,6 +49,11 @@ export const AdminLayout = () => {
         label: 'Categories',
         key: 'categories',
         icon: <DatabaseOutlined />
+      },
+      {
+        label: 'Brands',
+        key: 'brands',
+        icon: <ShopOutlined />
       },
       {
         label: 'Sub-Categories',

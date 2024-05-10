@@ -51,7 +51,6 @@ export const EditTable = ({ columns, dataSource, type, handleAdd, onEditMode, re
         columns={columns}
         dataSource={dataSource}
         rootClassName="editable-row"
-        scroll={{ x: 1300, y: 400 }}
       />
       <Form.Item className="mt-20">
         <Button onClick={handleAdd}>Add {componentName}</Button>

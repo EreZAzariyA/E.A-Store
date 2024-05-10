@@ -6,7 +6,6 @@ import { adminBrandsServices } from "../../../services/admin/brands-services";
 import { Input, Space, message } from "antd";
 import { useSelector } from "react-redux";
 
-
 const Steps = {
   NEW_BRAND: 'NEW_BRAND',
   UPDATE_BRAND: 'UPDATE_BRAND'
@@ -73,7 +72,7 @@ export const AdminBrands = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: 100,
+      width: 50,
     }
   ];
 
