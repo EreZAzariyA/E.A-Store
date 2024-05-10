@@ -27,7 +27,7 @@ class AdminProductsServices {
   updateProduct = async (productToUpdate) => {
     const response = await axios.put(config.urls.admin.products.updateProduct, productToUpdate);
     const updatedProduct = response.data;
-    store.dispatch(updateProductAction(productToUpdate));
+    store.dispatch(updateProductAction(updatedProduct));
     return updatedProduct;
   };
 }
