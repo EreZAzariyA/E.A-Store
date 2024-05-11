@@ -122,15 +122,15 @@ class Config {
 
 class DevelopmentConfig extends Config {
   constructor() {
-    super("http://127.0.0.1:5000/api/", process.env.REACT_APP_SOCKET_URL);
+    super(process.env.REACT_APP_BASE_URL, process.env.REACT_APP_SOCKET_URL);
   };
-}
+};
 
 class ProductionConfig extends Config {
   constructor() {
     super(process.env.REACT_APP_BASE_URL, process.env.REACT_APP_SOCKET_URL);
   };
-}
+};
 
 const config = process.env.NODE_ENV === "development" ? new DevelopmentConfig() : new ProductionConfig();
 export default config;
