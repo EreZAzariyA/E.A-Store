@@ -34,8 +34,6 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     subCategory: record?.subCategory || '',
   });
 
-  console.log(record);
-
   useEffect(() => {
     if (initialValue.category_id) {
       const selectedCategory = categories.find((c) => c._id === initialValue.category_id);
@@ -318,7 +316,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
         <Checkbox onChange={(e) => handleChange('uploadedFile', e.target.checked)} />
       </Form.Item>
 
-      {initialValue.uploadedFile && initialValue.image_url && (
+      {initialValue.uploadedFile && (
         <Form.Item>
           <UploadImage
             count={1}
