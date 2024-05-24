@@ -49,6 +49,7 @@ class Config {
       removeProductFromCart: "",
       removeProductFromFavorites: "",
       resetCart: "",
+      buyNow: ""
     },
     order: {
       fetchUserOrders: "",
@@ -82,7 +83,8 @@ class Config {
         addProductToFavorites: baseUrl + 'shopping-carts/add-product-to-favorites/',
         removeProductFromCart: baseUrl + 'shopping-carts/remove-product-from-cart/',
         removeProductFromFavorites: baseUrl + 'shopping-carts/remove-product-from-favorites/',
-        resetCart: baseUrl + 'shopping-carts/reset-shopping-cart/'
+        resetCart: baseUrl + 'shopping-carts/reset-shopping-cart/',
+        buyNow: baseUrl + 'shopping-carts/buy-now/'
       },
       order: {
         fetchUserOrders: baseUrl + 'orders/user-orders/',

@@ -103,6 +103,13 @@ class ShoppingCartServices {
     }
     return updatedShoppingCart;
   };
+
+  onBuyNow = async (user_id, details) => {
+    const response = await axios.post(config.urls.shoppingCart.buyNow + user_id, details);
+    console.log(response.data);
+    const { shoppingCart, product } = response.data;
+    return { shoppingCart, product };
+  };
 }
 
 export const shoppingCartServices = new ShoppingCartServices();
