@@ -51,14 +51,14 @@ export const AdminLayout = () => {
         icon: <DatabaseOutlined />
       },
       {
-        label: 'Brands',
-        key: 'brands',
-        icon: <ShopOutlined />
-      },
-      {
         label: 'Sub-Categories',
         key: 'sub-categories',
         icon: <TableOutlined />
+      },
+      {
+        label: 'Brands',
+        key: 'brands',
+        icon: <ShopOutlined />
       },
       {
         label: 'Upload-Image',

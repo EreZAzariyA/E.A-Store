@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {ComponentsTypes, isArrayAndNotEmpty } from "../../../utils/helpers";
+import {ComponentsTypes, isArray, isArrayAndNotEmpty } from "../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
-import { Button, Col, Divider, Form, Input, InputNumber, Row, Select, Space, Typography } from "antd"
+import { Button, Checkbox, Col, Divider, Form, Input, InputNumber, Row, Select, Space, Typography, message } from "antd"
+import { UploadImage } from "./UploadImage";
 
 export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const brands = useSelector((state) => state.brands);
@@ -25,12 +26,15 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     category_id: record?.category_id || '',
     subCategory_id: record?.subCategory_id || '',
     image_url: record?.image_url || '',
+    uploadedFile: record?.uploadedFile || record?.image_url ? true : false,
     price: record?.price || '',
     stock: record?.stock || '',
     category: record?.category || '',
     subCategories: record?.subCategories || [],
     subCategory: record?.subCategory || '',
   });
+
+  console.log(record);
 
   useEffect(() => {
     if (initialValue.category_id) {
@@ -50,11 +54,10 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   const fetchBrandsBySubCategory_id = (subCategory_id) => {
     let fullBrandsList = [];
     if (isProducts) {
-      const selectedSubCategory = subCategories.find((subC) => subC._id === subCategory_id);
+      const selectedSubCategory = subCategories.find((subC) => subC?._id === subCategory_id);
 
       if (selectedSubCategory) {
         const brands = selectedSubCategory.brands;
-        console.log(brands);
 
         fullBrandsList = [...brands].map((b) => {
           const fullBrand = [...brands].find((brand) => brand._id === b._id);
@@ -68,22 +71,19 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
   };
   const brandsBySubCategory = fetchBrandsBySubCategory_id(initialValue.subCategory_id);
 
-  const cancel = () => {
-    onBack();
-    form.resetFields();
-  };
-
   const handleChange = (name, value) => {
     setInitialValue({...initialValue, [name]: value });
     if (name === 'category_id') {
       form.setFieldValue('subCategory_id', '');
       form.setFieldValue('brand', '');
+    } else if (name === 'image_url') {
+      form.setFieldValue(name, value);
     }
   };
 
   const formProps = {
     form: form,
-    onFinish: onFinish,
+    onFinish,
     initialValues: initialValue,
     className: "insert-form add-category",
     layout: "horizontal",
@@ -176,14 +176,6 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
           </Form.Item>
 
           <Form.Item
-            label={'Image url'}
-            name={'image_url'}
-            rules={[{ required: true, message: 'Image url is missing' }]}
-          >
-            <Input placeholder="https://www.image_url"/>
-          </Form.Item>
-
-          <Form.Item
             label={'Stock'}
             name={'stock'}
             rules={[{ required: true, message: 'Stock is missing' }]}
@@ -230,14 +222,6 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
                 return <Select.Option key={subCategory._id}>{subCategory.subCategory}</Select.Option>
               })}
             </Select>
-          </Form.Item>
-
-          <Form.Item
-            label="Image Url"
-            name={'image_url'}
-            rules={[{ required: true, message: 'Image url is missing' }]}
-          >
-            <Input type="text" />
           </Form.Item>
         </>
       )}
@@ -308,14 +292,6 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
               ))}
             </Select>
           </Form.Item>
-
-          <Form.Item
-            label="Image Url"
-            name={'image_url'}
-            rules={[{ required: true, message: 'Image url is missing' }]}
-          >
-            <Input type="text" />
-          </Form.Item>
         </>
       )}
       {isBrands && (
@@ -327,15 +303,30 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
           >
             <Input type="text" />
           </Form.Item>
-
-          <Form.Item
-            label="Image Url"
-            name={'image_url'}
-            rules={[{ required: true, message: 'Image url is missing' }]}
-          >
-            <Input type="text" />
-          </Form.Item>
         </>
+      )}
+
+      <Form.Item
+        label={'Image url'}
+        name={'image_url'}
+        rules={[{ required: true, message: 'Image url is missing' }]}
+      >
+        <Input placeholder="https://www.image_url"/>
+      </Form.Item>
+
+      <Form.Item name={'uploadedFile'} valuePropName="checked" label="Upload file">
+        <Checkbox onChange={(e) => handleChange('uploadedFile', e.target.checked)} />
+      </Form.Item>
+
+      {initialValue.uploadedFile && initialValue.image_url && (
+        <Form.Item>
+          <UploadImage
+            count={1}
+            compType={type}
+            imageUrl={initialValue.image_url}
+            setImageUrl={(url) => handleChange('image_url', url)}
+          />
+        </Form.Item>
       )}
 
       <Space>

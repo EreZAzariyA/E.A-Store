@@ -3,8 +3,8 @@ import config from "../utils/config";
 
 
 class StorageServices {
-  uploadImage = async (file) => {
-    const response = await axios.post(config.urls.admin.uploadImage, {file: file});
+  uploadImage = async (file, type) => {
+    const response = await axios.post(config.urls.admin.uploadImage + `/${type?.toLowerCase()}`, file);
     const imageUrl = response.data;
     return imageUrl;
   };
