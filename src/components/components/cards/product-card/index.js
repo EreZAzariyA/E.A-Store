@@ -13,7 +13,7 @@ export const ProductCard = ({ product }) => {
   const user = useSelector((state) => state.auth?.user);
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const brands = useSelector((state) => (state.brands));
-  const brand = brands.find((b) => b.name === product.brand);
+  const brand = brands.find((b) => b._id === product.brand_id);
   const isAvailable = product?.stock > 0;
 
   let isInCart = false;

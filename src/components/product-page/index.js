@@ -15,7 +15,7 @@ export const ProductPage = () => {
   const product = [...products].find((pro) => pro._id === product_id);
   const isInCart = shoppingCart?.products.find((p) => p.product_id === product._id);
   const brands = useSelector((state) => (state.brands));
-  const brand = brands.find((b) => b.name === product?.brand);
+  const brand = brands.find((b) => b._id === product?.brand_id);
   const [amount, setAmount] = useState(1);
   let isAvailable = false;
 
