@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AddToCartButton } from "../components/AddToCartButton";
 import { numberWithCommas } from "../../utils/helpers";
-import { Col, Image, InputNumber, Row, Spin, Tooltip } from "antd";
+import { Col, Image, InputNumber, Row, Spin } from "antd";
 import { FcPaid, FcInTransit } from "react-icons/fc";
 import "./productPage.css";
 import { RemoveFromCartButton } from "../components/RemoveFromCartButton";

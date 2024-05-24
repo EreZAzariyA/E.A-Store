@@ -39,6 +39,7 @@ export const ProductCard = ({ product }) => {
     } else {
       try {
         await shoppingCartServices.addProductToCart(product._id, shoppingCart._id, 1);
+        message.success('Product added to your shopping cart');
         isInCart = true;
       } catch (err) {
         message.error(err.message);
