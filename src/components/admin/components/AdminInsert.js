@@ -19,7 +19,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
 
   const [initialValue, setInitialValue] = useState({
     name: record?.name || '',
-    brand: record?.brand || '',
+    brand_id: record?.brand_id || '',
     brands: record?.brands ? record.brands.map((b) => (b._id)) : [],
     secondaryBrands: record?.secondaryBrands ? record.secondaryBrands.map((b) => (b._id)) : [],
     description: record?.description || '',
@@ -143,16 +143,16 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
 
           <Form.Item
             label={'Brand'}
-            name={'brand'}
+            name={'brand_id'}
             rules={[{ required: true, message: 'Brand is missing' }]}
           >
             <Select
               disabled={!initialValue.subCategory_id}
-              onChange={(val) => handleChange('brand', val)}
+              onChange={(val) => handleChange('brand_id', val)}
             >
               <Select.Option key={''} disabled>Select brand</Select.Option>
               {isArrayAndNotEmpty(brandsBySubCategory) && brandsBySubCategory.map((brand) => (
-                <Select.Option key={brand?.name}>
+                <Select.Option key={brand?._id}>
                   <Row align={"stretch"} justify={"center"}>
                     <Col span={2}>
                       {brand?.name}
