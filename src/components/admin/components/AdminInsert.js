@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {ComponentsTypes, isArray, isArrayAndNotEmpty } from "../../../utils/helpers";
+import {ComponentsTypes, isArrayAndNotEmpty } from "../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
-import { Button, Checkbox, Col, Divider, Form, Input, InputNumber, Row, Select, Space, Typography, message } from "antd"
+import { Button, Checkbox, Col, Divider, Form, Input, InputNumber, Row, Select, Space, Typography } from "antd"
 import { UploadImage } from "./UploadImage";
 
 export const AdminInsert = ({ type, onFinish, onBack, record }) => {
