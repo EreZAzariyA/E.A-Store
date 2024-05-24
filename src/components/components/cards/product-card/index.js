@@ -74,7 +74,7 @@ export const ProductCard = ({ product }) => {
 
   return (
     <div className="product-card">
-      <div className="product-img" onClick={() => navigate(`product/${product._id}`)}>
+      <div className="product-img" onClick={() => navigate(`/category/${product?.category_id}/sub-category/${product?.subCategory_id}/product/${product?._id}`)}>
         <img src={product.image_url} alt={`${product.name}-img`} />
       </div>
       <div className="product-brand-fav-stat">
@@ -134,7 +134,7 @@ export const ProductCard = ({ product }) => {
         </div>
         <div className="buy-now-btn">
           <Tooltip title='Buy now'>
-            <Button type="primary" style={{ background: 'green' }}>
+            <Button disabled type="primary">
               Buy now
             </Button>
           </Tooltip>
