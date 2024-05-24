@@ -14,6 +14,7 @@ export const ProductCard = ({ product }) => {
   const shoppingCart = useSelector((state) => state.shoppingCart);
   const brands = useSelector((state) => (state.brands));
   const brand = brands.find((b) => b.name === product.brand);
+  const isAvailable = product?.stock > 0;
 
   let isInCart = false;
   let isFavorite = false;
@@ -125,8 +126,8 @@ export const ProductCard = ({ product }) => {
                 </Button>
               </Tooltip>
             ) : (
-              <Tooltip title='Add to cart'>
-                <Button type="primary" style={{ background: 'orange' }} onClick={addProductHandler}>
+              <Tooltip title={isAvailable ? 'Add to cart' : 'This product is unavailable'}>
+                <Button disabled={!isAvailable} type="primary" style={{ background: 'orange' }} onClick={addProductHandler}>
                   <ShoppingCartOutlined style={{ fontSize: '16px' }} />
                 </Button>
               </Tooltip>

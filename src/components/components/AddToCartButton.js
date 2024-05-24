@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { shoppingCartServices } from "../../services/shoppingCart-services";
 import { NotificationConfig, NotificationMessages } from "../../utils/helpers";
-import { notification } from "antd";
+import { Button, Tooltip, notification } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons"
 
 export const AddToCartButton = ({isDisabled, product, shoppingCart_id, amount}) => {
@@ -29,12 +29,15 @@ export const AddToCartButton = ({isDisabled, product, shoppingCart_id, amount}) 
   };
 
   return (
-    <button
-      disabled={isDisabled}
-      onClick={onClickHandler}
-      className={`add-to-cart-btn ${isDisabled ? 'not-allowed' : ''}`}
-    >
-      <ShoppingCartOutlined style={{ fontSize: '25px'}} /> Add To Cart
-    </button>
+    <Tooltip title={isDisabled ? 'We Sorry, this product is unavailable right now' : ''}>
+      <Button
+        type="text"
+        disabled={isDisabled}
+        onClick={onClickHandler}
+        className={`add-to-cart-btn ${isDisabled ? 'not-allowed' : ''}`}
+      >
+        <ShoppingCartOutlined style={{ fontSize: '25px'}} /> Add To Cart
+      </Button>
+    </Tooltip>
   );
 };
