@@ -1,7 +1,7 @@
 .categories-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   justify-items: center;
-  gap: 5px;
+  column-gap: 50px;
   row-gap: 70px;
 }

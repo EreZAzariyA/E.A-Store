@@ -37,7 +37,7 @@ export const CustomCarousel = ({ items = [], selectedItems = [], onItemSelect, i
         arrows={isVertical ? false : true}
       >
         {items.map((item) => {
-          const isActive = selectedItems.includes(item.name);
+          const isActive = selectedItems.includes(item._id);
 
           return (
             <div className={isActive ? 'active' : ''} key={item._id} onClick={() => onItemSelect(item)}>

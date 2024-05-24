@@ -3,12 +3,12 @@ import "./BrandsFilter.css";
 
 export const BrandsFilter = ({withBrandsFilter, withSecondaryBrandsFilter, brands, secondaryBrands, selectedBrands, selectedSecondaryBrands, handleFilterChange, isVertical}) => {
   const onBrandSelect = (brand) => {
-    const isSelected = selectedBrands.find((b) => b === brand.name);
+    const isSelected = selectedBrands.find((b) => b === brand._id);
 
     if (isSelected) {
-      handleFilterChange('selectedBrands', selectedBrands.filter((b) => b !== brand.name));
+      handleFilterChange('selectedBrands', selectedBrands.filter((b) => b !== brand._id));
     } else {
-      handleFilterChange('selectedBrands', [...selectedBrands, brand.name]);
+      handleFilterChange('selectedBrands', [...selectedBrands, brand._id]);
     }
   };
 

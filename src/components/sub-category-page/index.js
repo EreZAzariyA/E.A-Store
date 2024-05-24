@@ -28,7 +28,7 @@ export const SubCategoryPage = () => {
   let products = [...allProductsBySubCategory];
 
   if (filterState.selectedBrands.length) {
-    products = [...products].filter((p) => filterState.selectedBrands.includes(p.brand))
+    products = [...products].filter((p) => filterState.selectedBrands.includes(p.brand_id))
   }
   if (filterState.selectedSecondaryBrands.length) {
     products = [...products].filter((p) => filterState.selectedSecondaryBrands.includes(p.brand))
