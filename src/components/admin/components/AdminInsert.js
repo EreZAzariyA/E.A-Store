@@ -26,13 +26,14 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
     category_id: record?.category_id || '',
     subCategory_id: record?.subCategory_id || '',
     image_url: record?.image_url || '',
-    uploadedFile: record?.uploadedFile || record?.image_url ? true : false,
     price: record?.price || '',
     stock: record?.stock || '',
     category: record?.category || '',
     subCategories: record?.subCategories || [],
     subCategory: record?.subCategory || '',
   });
+
+  const [uploadFile, setUploadFile] = useState(false);
 
   useEffect(() => {
     if (initialValue.category_id) {
@@ -313,10 +314,10 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
       </Form.Item>
 
       <Form.Item name={'uploadedFile'} valuePropName="checked" label="Upload file">
-        <Checkbox onChange={(e) => handleChange('uploadedFile', e.target.checked)} />
+        <Checkbox onChange={(e) => setUploadFile(e.target.checked)} />
       </Form.Item>
 
-      {initialValue.uploadedFile && (
+      {uploadFile && (
         <Form.Item>
           <UploadImage
             count={1}
