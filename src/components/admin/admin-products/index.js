@@ -60,7 +60,6 @@ export const ProductsTable = () => {
   };
 
   const onFinish = async (values) => {
-    console.log(values);
     let newValue = '';
     let successMessage = '';
     try {
