@@ -1,8 +1,8 @@
-import { Button, Image, Upload, message } from 'antd';
-import { ALLOWED_TYPES, MessagesTypes, acceptedImageFile, getBase64 } from '../../../utils/helpers';
+import { Image, Upload } from 'antd';
+import { acceptedImageFile } from '../../../utils/helpers';
 import InboxOutlined from '@ant-design/icons/InboxOutlined';
 import { useState } from 'react';
-import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { storageServices } from '../../../services/storage-services';
 
 const { Dragger } = Upload;
