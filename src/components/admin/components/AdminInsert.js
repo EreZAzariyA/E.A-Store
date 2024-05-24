@@ -313,7 +313,7 @@ export const AdminInsert = ({ type, onFinish, onBack, record }) => {
         <Input placeholder="https://www.image_url"/>
       </Form.Item>
 
-      <Form.Item name={'uploadedFile'} valuePropName="checked" label="Upload file">
+      <Form.Item valuePropName="checked" label="Upload file">
         <Checkbox onChange={(e) => setUploadFile(e.target.checked)} />
       </Form.Item>
 
