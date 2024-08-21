@@ -4,7 +4,8 @@ import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminSubCategoriesServices } from "../../../services/admin/subCategories-services";
 import { ComponentsTypes, getError } from "../../../utils/helpers";
-import { Input, Space, message } from "antd";
+import { Space, message } from "antd";
+import { Filters } from "../components/Filters";
 
 const Steps = {
   ADD_SUBCATEGORY: "ADD_SUBCATEGORY",
@@ -117,14 +118,12 @@ export const SubCategoriesTable = () => {
     <Space direction="vertical" className="w-100">
       {!step && (
         <>
-          <Space align="center" wrap>
-            <Input
-              allowClear
-              type="text"
-              placeholder='Search sub-category'
-              onChange={(val) => setFilterState({...filterState, subCategory: val.target.value})}
-            />
-          </Space>
+          <Filters
+            subCategory
+            handleFilterChange={(val) => {
+              setFilterState({ ...filterState, subCategory: val });
+            }}
+          />
 
           <EditTable
             columns={columns}

@@ -3,8 +3,9 @@ import { EditTable } from "../components/EditTable";
 import { ComponentsTypes } from "../../../utils/helpers";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminBrandsServices } from "../../../services/admin/brands-services";
-import { Input, Space, message } from "antd";
+import { Space, message } from "antd";
 import { useSelector } from "react-redux";
+import { Filters } from "../components/Filters";
 
 const Steps = {
   NEW_BRAND: 'NEW_BRAND',
@@ -80,14 +81,13 @@ export const AdminBrands = () => {
     <Space direction="vertical" className="w-100">
       {!step && (
         <>
-          <Space>
-            <Input
-              type="text"
-              placeholder='Search brand'
-              allowClear
-              onChange={(val) => setFilterState({...filterState, name: val.target.value})}
-            />
-          </Space>
+          <Filters
+            brand
+            handleFilterChange={(val) => {
+              setFilterState({ ...filterState, name: val });
+            }}
+          />
+
           <EditTable
             rowKey={'_id'}
             dataSource={brands}
