@@ -4,8 +4,9 @@ import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminCategoriesServices } from "../../../services/admin/categories-services";
 import { ComponentsTypes } from "../../../utils/helpers";
-import { Input, Space, message } from "antd";
+import { Space, message } from "antd";
 import { useLocation } from "react-router-dom";
+import { Filters } from "../components/Filters";
 
 const Steps = {
   ADD_CATEGORY: "ADD_CATEGORY",
@@ -15,7 +16,7 @@ const Steps = {
 export const CategoriesTable = () => {
   const products = useSelector((state) => (state.products));
   const allCategories = useSelector((state) => (state.categories));
-  const {hash} = useLocation();
+  const { hash } = useLocation();
   const searchRoute = hash.substring(1);
 
   const [category, setCategory] = useState(null);
@@ -128,15 +129,13 @@ export const CategoriesTable = () => {
     <Space direction="vertical" className="w-100">
       {!step && (
         <>
-          <Space>
-            <Input
-              type="text"
-              placeholder='Search category'
-              allowClear
-              value={filterState.category}
-              onChange={(val) => setFilterState({ ...filterState, category: (val.target.value) })}
-            />
-          </Space>
+          <Filters
+            category
+            handleFilterChange={(val) => {
+              setFilterState({ ...filterState, category: val });
+            }}
+          />
+
           <EditTable
             loading={!categories}
             rowKey={'_id'}
