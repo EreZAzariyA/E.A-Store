@@ -6,6 +6,7 @@ import { Button, Tooltip, message } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
+import { useState } from "react";
 import "./productCard.css";
 
 export const ProductCard = ({ product }) => {
@@ -15,6 +16,7 @@ export const ProductCard = ({ product }) => {
   const brands = useSelector((state) => (state.brands));
   const brand = brands.find((b) => b._id === product.brand_id);
   const isAvailable = product?.stock > 0;
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   let isInCart = false;
   let isFavorite = false;
@@ -78,68 +80,92 @@ export const ProductCard = ({ product }) => {
     <div className="product-card">
       <div className="product-img" onClick={() => navigate(`/category/${product?.category_id}/sub-category/${product?.subCategory_id}/product/${product?._id}`)}>
         <img src={product.image_url} alt={`${product.name}-img`} />
+        <div className={`stock-badge ${!isAvailable ? 'out-of-stock' : ''}`}>
+          {isAvailable ? 'In Stock' : 'Out of Stock'}
+        </div>
       </div>
-      <div className="product-brand-fav-stat">
-        <div className="product-fav-and-stat">
-          <div className="fav">
-            {isFavorite ? (
-              <Tooltip title='Remove from favourites'>
-                <Button shape="circle" size="small" onClick={() => favoritesHandler('remove')}>
-                  <RedHeartIcon />
+
+      <div className="product-content">
+        <div className="product-header">
+          <div className="product-brand">
+            <img src={brand?.image_url} alt={brand?.name + ' image'} />
+            <span className="product-brand-name">{brand?.name}</span>
+          </div>
+          <div className="product-actions">
+            <div className="fav">
+              {isFavorite ? (
+                <Tooltip title='Remove from favourites'>
+                  <Button shape="circle" size="small" className="fav-btn active" onClick={() => favoritesHandler('remove')}>
+                    <RedHeartIcon />
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Tooltip title='Add to favourites'>
+                  <Button shape="circle" size="small" className="fav-btn" onClick={() => favoritesHandler('add')}>
+                    <HeartIcon />
+                  </Button>
+                </Tooltip>
+              )}
+            </div>
+            <div className="statistic">
+              <Tooltip title='Compare to other brands'>
+                <Button shape="circle" size="small">
+                  <BarChartOutlined />
                 </Button>
               </Tooltip>
-            ) : (
-              <Tooltip title='Add to favourites'>
-                <Button shape="circle" size="small" onClick={() => favoritesHandler('add')}>
-                  <HeartIcon />
-                </Button>
-              </Tooltip>
+            </div>
+          </div>
+        </div>
+
+        <div className="product-details">
+          <h3 className="product-name">{product.name}</h3>
+          <div className="product-sku">SKU: {getShortID(product._id)}</div>
+          <div className="product-description-container">
+            <p className={`product-description ${isDescriptionExpanded ? 'expanded' : ''}`}>
+              {product.description}
+            </p>
+            {product.description && product.description.length > 100 && (
+              <button
+                className="description-toggle"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsDescriptionExpanded(!isDescriptionExpanded);
+                }}
+              >
+                {isDescriptionExpanded ? 'Show Less' : 'Show More'}
+              </button>
             )}
           </div>
-          <div className="statistic">
-            <Tooltip title='Compare to other brands'>
-              <Button shape="circle" size="small">
-                <BarChartOutlined />
-              </Button>
-            </Tooltip>
+        </div>
+
+        <div className="product-footer">
+          <div className="product-price">
+            <span className="currency">$</span>{product.price || 0}
           </div>
-        </div>
-        <div className="product-brand">
-          <img src={brand?.image_url} alt={brand?.name + ' image'} />
-        </div>
-      </div>
-      <div className="product-details">
-        <div className="sku">SKU: {getShortID(product._id)}</div>
-        <span className="product-name">{product.name}</span>
-        <div className="product-description">
-          <span className="muted-text">{product.description}</span>
-        </div>
-      </div>
-        <div className="product-price">
-          <span>${product.price || 0}</span>
-        </div>
-      <div className="product-card-footer">
-        <div className="cart-btn">
-          {isInCart ? (
-              <Tooltip title='Remove from cart'>
-                <Button type="primary" style={{ background: 'red' }} onClick={removeProductHandler}>
-                  <DeleteOutlined style={{ fontSize: '16px' }} />
+          <div className="product-cart-actions">
+            <div className="cart-btn">
+              {isInCart ? (
+                  <Tooltip title='Remove from cart'>
+                    <Button type="primary" className="remove-btn" onClick={removeProductHandler}>
+                      <DeleteOutlined />
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title={isAvailable ? 'Add to cart' : 'This product is unavailable'}>
+                    <Button disabled={!isAvailable} type="primary" onClick={addProductHandler}>
+                      <ShoppingCartOutlined />
+                    </Button>
+                  </Tooltip>
+                )}
+            </div>
+            <div className="buy-now-btn">
+              <Tooltip title='Buy now'>
+                <Button disabled type="primary">
+                  Buy Now
                 </Button>
               </Tooltip>
-            ) : (
-              <Tooltip title={isAvailable ? 'Add to cart' : 'This product is unavailable'}>
-                <Button disabled={!isAvailable} type="primary" style={{ background: 'orange' }} onClick={addProductHandler}>
-                  <ShoppingCartOutlined style={{ fontSize: '16px' }} />
-                </Button>
-              </Tooltip>
-            )}
-        </div>
-        <div className="buy-now-btn">
-          <Tooltip title='Buy now'>
-            <Button disabled type="primary">
-              Buy now
-            </Button>
-          </Tooltip>
+            </div>
+          </div>
         </div>
       </div>
     </div>

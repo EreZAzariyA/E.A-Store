@@ -7,38 +7,48 @@
 }
 
 .add-to-cart-btn {
-  background-color: orange;
-  padding: 15px;
-  width: 70%;
-  font-size: 18px;
-  border: 1px solid rgb(114, 84, 29);
-  border-radius: 5px;
-  font-family: "Fira Sans";
-
+  background: var(--primary-color);
+  color: white;
+  padding: 12px 24px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 .add-to-cart-btn:hover {
-  background-color: rgb(255, 184, 52);
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
 }
 .remove-from-cart-btn {
-  background-color: red;
-  padding: 15px;
+  background: var(--error-color);
+  color: white;
+  padding: 12px 24px;
   width: 70%;
-  font-size: 18px;
-  border: 1px solid rgb(158, 5, 5);
-  border-radius: 5px;
-  font-family: "Fira Sans";
-
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 .remove-from-cart-btn:hover {
-  background-color: rgb(251, 54, 54);
+  background: #ff4d4f;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
 }
 
 .not-allowed:hover {
@@ -46,16 +56,23 @@
 }
 
 .muted-text {
-  color: #818181;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
 .products-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill ,minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
   justify-items: center;
+  padding: 20px 0;
 }
 
 .insert-form {
   width: min(100% - 20%, 500px);
   margin: auto;
+  padding: 24px;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
 }

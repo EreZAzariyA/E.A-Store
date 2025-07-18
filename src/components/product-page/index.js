@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AddToCartButton } from "../components/AddToCartButton";
 import { numberWithCommas } from "../../utils/helpers";
-import { Col, Image, InputNumber, Row, Spin } from "antd";
+import { Image, InputNumber, Spin } from "antd";
 import { FcPaid, FcInTransit } from "react-icons/fc";
 import "./productPage.css";
 import { RemoveFromCartButton } from "../components/RemoveFromCartButton";
@@ -24,63 +24,86 @@ export const ProductPage = () => {
 
     return (
       <div className="product-page-container">
-        <Row>
-          <div className="product-name">
-            <span>{product.name}</span>
-          </div>
-        </Row>
-        <Row>
+        <div className="product-page-header">
+          <h1 className="product-name">{product.name}</h1>
           <div className="product-id">
-            <span>ID: </span>{product._id}
+            <span>Product ID: </span>{product._id}
           </div>
-        </Row>
+        </div>
 
-        <br /><br />
-        <Row align={'top'} gutter={[20, 0]} justify={"space-between"}>
-          <Col md={{ span:10 }}>
-            <div className="product-img">
-              <Image preview={false} src={product.image_url} alt={product.name + ' img'} />
+        <div className="product-page-content">
+          <div className="product-image-section">
+            <div className="product-image-container">
+              <Image preview={true} src={product.image_url} alt={product.name + ' img'} />
             </div>
-            <div className="brand-img">
+            <div className="brand-section">
               <Image preview={false} src={brand?.image_url} alt={brand?.name + ' img'} />
+              <div className="brand-info">
+                <p className="brand-label">Brand</p>
+                <h4 className="brand-name">{brand?.name}</h4>
+              </div>
             </div>
-          </Col>
+          </div>
 
-          <Col md={{ span: 12 }} xs={{ span: 24 }}>
-            <div className="product-details">
+          <div className="product-details-section">
+            <div className="product-price-section">
               <div className="product-price">
-                ${numberWithCommas(product.price) || 0}
+                <span className="currency">$</span>{numberWithCommas(product.price) || 0}
               </div>
-              <div className="product-availability">
-                Branches availability:
-                <br />
-                <span>
-                  {isAvailable ? 'This product is available ✅' : 'This product is unavailable ❌'}
-                </span>
+            </div>
+
+            <div className="product-availability">
+              <h3>Availability</h3>
+              <div className={`availability-badge ${isAvailable ? 'in-stock' : 'out-of-stock'}`}>
+                {isAvailable ? (
+                  <>
+                    <span>✅</span>
+                    <span>In Stock</span>
+                  </>
+                ) : (
+                  <>
+                    <span>❌</span>
+                    <span>Out of Stock</span>
+                  </>
+                )}
               </div>
-              <div className="product-delivery-options">
-                Pick up and delivery options
-                <ul>
-                  <li><FcPaid /> Collection from a branch</li>
-                  <li><FcInTransit /> Delivery to the customer's home</li>
-                </ul>
-              </div>
-              <div className="quantity">
-                Quantity:
-                <div className="d-flex justify-space-between align-items-center">
-                  <InputNumber disabled={!isAvailable} size="small" min={1} max={10} defaultValue={isInCart?.amount || amount} onChange={(val) => setAmount(val)} />
+            </div>
+
+            <div className="product-delivery-options">
+              <h3>Delivery Options</h3>
+              <ul className="delivery-options-list">
+                <li><FcPaid /> Collection from store</li>
+                <li><FcInTransit /> Home delivery available</li>
+              </ul>
+            </div>
+
+            <div className="product-description">
+              <h3>Description</h3>
+              <p>{product.description}</p>
+            </div>
+
+            <div className="quantity-section">
+              <h3>Quantity</h3>
+              <div className="quantity-controls">
+                <InputNumber
+                  disabled={!isAvailable}
+                  min={1}
+                  max={10}
+                  defaultValue={isInCart?.amount || amount}
+                  onChange={(val) => setAmount(val)}
+                />
+                <div className="action-buttons">
                   {!isInCart && (
                     <AddToCartButton isDisabled={!isAvailable} product={product} shoppingCart_id={shoppingCart?._id} amount={amount} />
                   )}
                   {isInCart && (
                     <RemoveFromCartButton shoppingCart_id={shoppingCart?._id} product={product} />
                   )}
-                  <span>c</span>
                 </div>
               </div>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   } else <Spin />

@@ -2,11 +2,14 @@ import { Button, Form, Input, message } from "antd";
 import { authServices } from "../../../services/auth-services";
 import { Link, useNavigate } from "react-router-dom";
 import { MessagesTypes, getError } from "../../../utils/helpers";
+import { useState } from "react";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const onFinish = async (credentials) => {
+    setLoading(true);
     authServices.login(credentials).then((res) => {
       if (res) {
         message.success(MessagesTypes.LOGGED_IN_SUCCESSFULLY);
@@ -14,6 +17,8 @@ export const Login = () => {
       }
     }).catch((err) => {
       message.error(getError(err));
+    }).finally(() => {
+      setLoading(false);
     });
   };
 
@@ -32,14 +37,16 @@ export const Login = () => {
     <div className="auth-form-main-container">
       <div className="auth-form-inner-container">
         <Form onFinish={onFinish} {...formItemLayout}>
+          <h1 className="auth-form-title">Welcome Back</h1>
           <Form.Item
             label={'Email'}
             name={'email'}
             rules={[
               { required: true, message: 'Please enter your email' },
+              { type: 'email', message: 'Please enter a valid email' }
             ]}
           >
-            <Input type="email" />
+            <Input type="email" placeholder="Enter your email" />
           </Form.Item>
 
           <Form.Item
@@ -50,11 +57,23 @@ export const Login = () => {
               { min: 6, message: 'Password must be at least 6 characters long' }
             ]}
           >
-            <Input.Password />
+            <Input.Password placeholder="Enter your password" />
           </Form.Item>
 
-          <Button htmlType="submit">Sign-in</Button>
-          <p>D`ont have account? <Link to={'/auth/register'}>Register</Link></p>
+          <Button htmlType="submit" loading={loading}>Sign In</Button>
+          <p>Don't have an account? <Link to={'/auth/register'}>Register</Link></p>
+          <Button
+            type="text"
+            onClick={() => navigate('/')}
+            style={{
+              width: '100%',
+              marginTop: '16px',
+              color: '#64748b',
+              textDecoration: 'underline'
+            }}
+          >
+            Continue as Guest
+          </Button>
         </Form>
       </div>
     </div>

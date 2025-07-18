@@ -1,0 +1,107 @@
+/* Professional utility classes */
+.professional-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
+}
+
+.professional-card:hover {
+  box-shadow: var(--card-hover);
+  transform: translateY(-2px);
+}
+
+.professional-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.professional-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.professional-btn-secondary {
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.professional-btn-secondary:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.professional-input {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.professional-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* Enhanced Antd component overrides */
+.ant-btn-primary {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.ant-btn-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.ant-card {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
+}
+
+.ant-card:hover {
+  box-shadow: var(--card-hover);
+  transform: translateY(-2px);
+}
+
+.ant-input {
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.ant-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.ant-menu-item {
+  transition: var(--transition);
+}
+
+.ant-menu-item:hover {
+  background: rgba(24, 144, 255, 0.1);
+}
+
+.ant-menu-item-selected {
+  background: rgba(24, 144, 255, 0.1);
+  color: var(--primary-color);
+}

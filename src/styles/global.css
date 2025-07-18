@@ -1,6 +1,8 @@
 :root {
-  --lightBlue: #edf1f4;
+  --lightBlue: #f6f8fa;
   --defaultWhite: white;
+  --professional-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --card-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .mt-5 {

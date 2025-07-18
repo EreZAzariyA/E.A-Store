@@ -1,11 +1,91 @@
+.side-filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .side-filter-container .filter {
-  border: 1px solid lightblue;
-  border-radius: 10px;
-  padding: 10px;
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.side-filter-container .filter:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.side-filter-container .filter-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.side-filter-container .price-range {
+  margin-bottom: 0;
+}
+
+.side-filter-container .price-range .ant-slider {
+  margin: 16px 0;
+}
+
+.side-filter-container .price-range .ant-slider-rail {
+  background: #f5f5f5;
+}
+
+.side-filter-container .price-range .ant-slider-track {
+  background: #1890ff;
+}
+
+.side-filter-container .price-range .ant-slider-handle {
+  border-color: #1890ff;
+}
+
+.side-filter-container .price-range .ant-slider-handle:hover {
+  border-color: #40a9ff;
+}
+
+.side-filter-container .price-range .ant-slider-handle:focus {
+  border-color: #40a9ff;
+  box-shadow: 0 0 0 5px rgba(24, 144, 255, 0.12);
+}
+
+@media (max-width: 768px) {
+  .side-filter-container {
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  
+  .side-filter-container .filter {
+    flex: 0 0 auto;
+    min-width: 200px;
+    padding: 12px;
+  }
+  
+  .side-filter-container .filter-title {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 500px) {
   .side-filter-container .filter.brands-filter {
     display: none;
+  }
+  
+  .side-filter-container .filter {
+    padding: 12px;
+    min-width: 180px;
+  }
+  
+  .side-filter-container .filter-title {
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 }

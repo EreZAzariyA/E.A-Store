@@ -1,0 +1,122 @@
+.brands-filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.brands-filter-container .brands-filter,
+.brands-filter-container .secondary-brands-filter {
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.brands-filter-container .brands-filter:hover,
+.brands-filter-container .secondary-brands-filter:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.brands-filter-container .filter-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Header brands filter styling */
+.sub-category-page header.brands-filter.filter {
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.sub-category-page header.brands-filter.filter:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Brands filter items styling */
+.brands-filter-container .ant-carousel .slick-slide {
+  padding: 0 6px;
+}
+
+.brands-filter-container .brand-item {
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 4px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.brands-filter-container .brand-item:hover {
+  border-color: #1890ff;
+  background: #f0f6ff;
+}
+
+.brands-filter-container .brand-item.selected {
+  border-color: #1890ff;
+  background: #1890ff;
+  color: white;
+}
+
+.brands-filter-container .brand-item.selected:hover {
+  background: #40a9ff;
+}
+
+@media (max-width: 768px) {
+  .brands-filter-container {
+    gap: 12px;
+  }
+  
+  .brands-filter-container .brands-filter,
+  .brands-filter-container .secondary-brands-filter {
+    padding: 12px;
+  }
+  
+  .brands-filter-container .filter-title {
+    font-size: 14px;
+  }
+  
+  .sub-category-page header.brands-filter.filter {
+    padding: 12px;
+  }
+  
+  .brands-filter-container .brand-item {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brands-filter-container .brands-filter,
+  .brands-filter-container .secondary-brands-filter {
+    padding: 12px;
+  }
+  
+  .brands-filter-container .filter-title {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .brands-filter-container .brand-item {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  
+  .sub-category-page header.brands-filter.filter {
+    padding: 12px;
+  }
+}
