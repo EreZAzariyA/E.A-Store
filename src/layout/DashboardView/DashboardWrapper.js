@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Breadcrumb, Menu } from "antd";
+import { Breadcrumb } from "antd";
 import { useSelector } from "react-redux";
 import { toCapitalize } from "../../utils/helpers";
 
@@ -47,35 +47,8 @@ export const DashboardWrapper = () => {
     setPathOptions(options);
   }, [categories, location.pathname, navigate, products, subCategories]);
 
-  const items = [
-    {
-      label: 'Customers-Support',
-      key: 'customers-support',
-      onClick: () => navigate('/customers-support'),
-    },
-    {
-      label: <span>Business Relations</span>,
-      key: 'business-relations',
-      onClick: () => navigate('/customers-support#business-relations')
-    },
-    {
-      label: <span>Gift Card</span>,
-      key: 'gift-card',
-      onClick: () => navigate('/gift-card')
-    },
-  ];
-
   return (
     <>
-      <Menu
-        disabledOverflow
-        mode="horizontal"
-        selectedKeys={[current]}
-        style={{ background: 'transparent', textAlign: 'left' }}
-        items={items}
-        className="top-menu-navbar"
-      />
-
       {pathOptions.length > 0 && (
         <Breadcrumb
           separator=">"

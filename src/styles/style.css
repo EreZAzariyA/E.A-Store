@@ -17,19 +17,28 @@ html, body, #root {
 
 /* Professional color variables */
 :root {
-  --primary-color: #1890ff;
-  --primary-hover: #40a9ff;
+  --primary-color: #667eea;
+  --primary-hover: #5a67d8;
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --success-color: #52c41a;
   --warning-color: #faad14;
   --error-color: #f5222d;
   --text-primary: #262626;
   --text-secondary: #8c8c8c;
+  --text-light: #bfbfbf;
   --border-color: #d9d9d9;
+  --border-light: #f0f0f0;
   --background-light: #fafafa;
-  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
-  --border-radius: 6px;
+  --background-white: #ffffff;
+  --background-dark: #262626;
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --border-radius: 8px;
+  --border-radius-large: 12px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --max-width: 1200px;
+  --header-height: 70px;
 }
 
 #loading-wrapper {
@@ -40,6 +49,7 @@ html, body, #root {
   justify-content: center;
 }
 
+/* Professional Loading Animation */
 .loader {
   width: 48px;
   height: 48px;
@@ -75,6 +85,75 @@ html, body, #root {
   height: 32px;
   border-color: var(--primary-color) var(--primary-color) transparent transparent;
   animation: rotation 1.5s linear infinite;
+}
+
+/* Global Button Styles */
+.ant-btn-primary {
+  background: var(--primary-gradient);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.ant-btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Global Card Styles */
+.ant-card {
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
+}
+
+.ant-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+/* Global Input Styles */
+.ant-input, .ant-input-number {
+  border-radius: var(--border-radius);
+  border-color: var(--border-light);
+  transition: var(--transition);
+}
+
+.ant-input:focus, .ant-input-number:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* Global Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.ant-typography h1, .ant-typography h2, .ant-typography h3, 
+.ant-typography h4, .ant-typography h5, .ant-typography h6 {
+  color: var(--text-primary);
+}
+
+/* Scroll bar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
     
 @keyframes rotation {

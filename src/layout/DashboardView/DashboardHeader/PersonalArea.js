@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authServices } from "../../../services/auth-services";
 import { Colors, HeartIcon, Sizes } from "../../../utils/helpers";
-import { Badge, Button, Col, Dropdown, Row, Space, Tooltip, Typography } from "antd";
+import { Badge, Button, Dropdown, Space, Tooltip, Typography } from "antd";
 import UserOutlined from "@ant-design/icons/UserOutlined";
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined";
 import { LiaShippingFastSolid } from "react-icons/lia";
@@ -41,38 +41,117 @@ export const PersonalArea = () => {
     }];
   }
 
+  const buttonStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '48px',
+    height: '48px',
+    background: 'rgba(255, 255, 255, 0.9)',
+    backdropFilter: 'blur(8px)',
+    border: '1px solid rgba(0, 0, 0, 0.08)',
+    borderRadius: '50%',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)'
+  };
+
+  const iconStyle = {
+    fontSize: '20px',
+    color: '#434343',
+    transition: 'all 0.3s ease'
+  };
+
   return (
-    <Row align={'middle'}>
-      <Col span={8}>
-        <Tooltip title="My Cart">
-          <Badge offset={[-10, 0]} count={products?.length}>
-            <Button type="link" onClick={() => navigate('/my-cart')}>
-              <ShoppingCartOutlined style={{ fontSize: '24px', color: Colors.ICON }} />
-            </Button>
-          </Badge>
-        </Tooltip>
-      </Col>
-      <Col span={8}>
-        <Tooltip title="My Favorites">
-          <Button type="link" onClick={() => navigate('/favorites')}>
-            <HeartIcon style={{ fontSize: '24px', color: Colors.ICON }} />
-          </Button>
-        </Tooltip>
-      </Col>
-      <Col span={8}>
-        <Dropdown
-          menu={{
-            items,
-            style: {
-              textAlign: 'center'
-            }
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '16px',
+      padding: '0 8px'
+    }}>
+      <Tooltip title="My Cart" placement="bottom">
+        <Badge
+          count={products?.length}
+          offset={[-4, 4]}
+          style={{
+            backgroundColor: '#667eea',
+            boxShadow: '0 2px 8px rgba(102, 126, 234, 0.3)'
           }}
         >
-          <Space>
-            <UserOutlined style={{ fontSize: '24px', color: Colors.ICON }} />
-          </Space>
-        </Dropdown>
-      </Col>
-    </Row>
+          <Button
+            type="text"
+            shape="circle"
+            size="large"
+            icon={<ShoppingCartOutlined style={iconStyle} />}
+            onClick={() => navigate('/my-cart')}
+            style={buttonStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)';
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+            }}
+          />
+        </Badge>
+      </Tooltip>
+
+      <Tooltip title="My Favorites" placement="bottom">
+        <Button
+          type="text"
+          shape="circle"
+          size="large"
+          icon={<HeartIcon style={iconStyle} />}
+          onClick={() => navigate('/favorites')}
+          style={buttonStyle}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)';
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+          }}
+        />
+      </Tooltip>
+
+      <Dropdown
+        menu={{
+          items,
+          style: {
+            minWidth: 180,
+            borderRadius: 12,
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+            border: '1px solid rgba(0, 0, 0, 0.08)',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(12px)'
+          }
+        }}
+        placement="bottomRight"
+        trigger={['click']}
+      >
+        <Button
+          type="text"
+          shape="circle"
+          size="large"
+          icon={<UserOutlined style={iconStyle} />}
+          style={buttonStyle}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)';
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+          }}
+        />
+      </Dropdown>
+    </div>
   );
 };

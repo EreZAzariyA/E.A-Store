@@ -11,8 +11,15 @@ export const ALLOWED_TYPES = {
 };
 
 export const Colors = {
-  ICON: '#08c',
-  DANGER: 'red'
+  ICON: '#5B7C99',
+  DANGER: '#E74C3C',
+  PRIMARY: '#2C3E50',
+  SECONDARY: '#34495E',
+  ACCENT: '#3498DB',
+  BACKGROUND: '#F8F9FA',
+  WHITE: '#FFFFFF',
+  LIGHT_GRAY: '#ECF0F1',
+  BORDER: '#E1E8ED'
 };
 
 export const Sizes = {

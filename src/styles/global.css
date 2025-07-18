@@ -24,6 +24,10 @@
   margin-top: 50px;
 }
 
+.mb-32 {
+  margin-bottom: 32px;
+}
+
 .p-5 {
   padding: 5px;
 }

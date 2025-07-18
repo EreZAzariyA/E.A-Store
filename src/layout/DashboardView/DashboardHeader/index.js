@@ -48,37 +48,70 @@ export const DashboardHeader = ({ sideBarHandler }) => {
   }, [user, admin]);
 
   return (
-    <Header>
-      <Row justify={admin ? 'start' : 'space-between'} align={'middle'}>
-        <Col>
+    <Header
+      style={{
+        background: 'rgba(255, 255, 255, 0.25)',
+        backdropFilter: 'blur(16px)',
+        height: '75px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+        padding: '0 12px'
+      }}
+    >
+      <Row
+        justify="space-between"
+        align="middle"
+        style={{ height: '100%' }}
+      >
+        <Col xs={16} sm={12} md={8} lg={6} xl={4}>
           <Logo />
         </Col>
 
         {!admin && (
           <>
-            <Col md={{ span: 0 }} xs={{ span: 4 }}>
-              <Row justify={"end"} align={'middle'}>
+            <Col xs={8} sm={0} md={0} lg={0} xl={0}>
+              <Row justify="end" align="middle" gutter={[8, 0]}>
                 <Col span={12}>
-                  <Button type="link"><CiSearch color={Colors.ICON} size={Sizes.ICON} onClick={() => navigate('search')} /></Button>
+                  <Button
+                    type="link"
+                    icon={<CiSearch color={Colors.ICON} size={Sizes.ICON} />}
+                    onClick={() => navigate('search')}
+                    style={{ padding: '4px 8px' }}
+                  />
                 </Col>
                 <Col span={12}>
-                  <Button type="link"><CiMenuBurger color={Colors.ICON} size={Sizes.ICON} onClick={() => sideBarHandler()} /></Button>
+                  <Button
+                    type="link"
+                    icon={<CiMenuBurger color={Colors.ICON} size={Sizes.ICON} />}
+                    onClick={() => sideBarHandler()}
+                    style={{ padding: '4px 8px' }}
+                  />
                 </Col>
               </Row>
             </Col>
 
-            <Col md={{ span: 18 }} xs={{ span: 0 }}>
-              <Row justify={"space-between"}>
-                <Col md={{ span: 18 }} className="search">
+            <Col xs={0} sm={12} md={16} lg={18} xl={20}>
+              <Row gutter={[16, 0]} justify="end" align="middle">
+                <Col xs={0} sm={16} md={16} lg={16} xl={18}>
                   <SearchInput />
                 </Col>
 
-                <Col md={{ span: 6 }} className="personal">
+                <Col xs={0} sm={8} md={8} lg={8} xl={6}>
                   <PersonalArea />
                 </Col>
               </Row>
             </Col>
           </>
+        )}
+
+        {admin && (
+          <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+            <Row justify="end" align="middle">
+              <PersonalArea />
+            </Row>
+          </Col>
         )}
       </Row>
     </Header>

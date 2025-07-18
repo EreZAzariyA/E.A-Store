@@ -10,6 +10,7 @@ import { AiOutlineShoppingCart, AiOutlineLogout, AiOutlineProfile } from "react-
 import { IoIosStarOutline } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { LiaShippingFastSolid } from "react-icons/lia";
+import { Footer } from "antd/es/layout/layout";
 
 const { Content, Sider } = Layout;
 
@@ -122,6 +123,7 @@ export const DashboardView = () => {
         <Content className="site-layout">
           <DashboardWrapper />
           <Outlet />
+          <Footer />
         </Content>
       </Layout>
     </Layout>

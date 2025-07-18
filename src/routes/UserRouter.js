@@ -17,7 +17,6 @@ import { PageNotFound } from "../components/components/PageNotFound";
 import { UserRoute } from "./user-router/index.js";
 import { SearchPage } from "../components/search-page/index.js";
 import { Orders } from "../components/orders/index.js";
-import { CustomersSupport } from "../components/customers-support/index.js";
 import OrderDetails from "../components/orders/order-details/index.js";
 
 const UserRouter = () => (
@@ -38,8 +37,6 @@ const UserRouter = () => (
           <Route path="my-orders" element={<UserRoute><Orders /></UserRoute>} />
           <Route path="my-orders/:order_id" element={<UserRoute><OrderDetails /></UserRoute>} />
           <Route path="favorites" element={<Favorites />} />
-
-          <Route path="customers-support" element={<CustomersSupport />} />
 
           <Route path="page-not-found" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to={'page-not-found'} replace />} />

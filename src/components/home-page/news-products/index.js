@@ -22,19 +22,10 @@ export const NewsProducts = () => {
   }, []);
 
   return (
-    <div className="news-products-main-container">
-      <div className="news-products-inner-container">
-
-        <h3 className="page-title">
-          <span>New</span>
-        </h3>
-
-        <div className="products-list">
-          {isLoading ? <Spin /> : products.map((product, index) => (
-            <ProductCard product={product} key={index || product._id} />
-          ))}
-        </div>
-      </div>
+    <div className="products-list">
+      {isLoading ? <Spin /> : products.map((product, index) => (
+        <ProductCard product={product} key={index || product._id} />
+      ))}
     </div>
   );
 };
