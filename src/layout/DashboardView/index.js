@@ -10,9 +10,20 @@ import { AiOutlineShoppingCart, AiOutlineLogout, AiOutlineProfile } from "react-
 import { IoIosStarOutline } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { LiaShippingFastSolid } from "react-icons/lia";
-import { Footer } from "antd/es/layout/layout";
+import { AppFooter } from "./Footer/Footer";
 
 const { Content, Sider } = Layout;
+
+const siderStyle = {
+  overflow: 'auto',
+  height: '100vh',
+  position: 'sticky',
+  insetInlineStart: 0,
+  top: 60,
+  bottom: 0,
+  scrollbarWidth: 'thin',
+  scrollbarGutter: 'stable',
+};
 
 export const DashboardView = () => {
   const navigate = useNavigate();
@@ -109,21 +120,19 @@ export const DashboardView = () => {
           collapsedWidth={0}
           breakpoint="md"
           onBreakpoint={handleOnBreakpoint}
+          style={siderStyle}
         >
-          <div>
-            <Menu
-              items={items}
-              mode="inline"
-              theme="light"
-              style={{ textAlign: 'justify', height: '100%', fontSize: 14 }}
-            />
-
-          </div>
+          <Menu
+            items={items}
+            mode="inline"
+            theme="light"
+            style={{ textAlign: 'justify', height: '100%', fontSize: 14 }}
+          />
         </Sider>
         <Content className="site-layout">
           <DashboardWrapper />
           <Outlet />
-          <Footer />
+          <AppFooter />
         </Content>
       </Layout>
     </Layout>

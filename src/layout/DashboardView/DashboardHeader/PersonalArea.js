@@ -66,7 +66,8 @@ export const PersonalArea = () => {
       display: 'flex',
       alignItems: 'center',
       gap: '16px',
-      padding: '0 8px'
+      padding: '0 8px',
+      justifyContent: 'flex-end'
     }}>
       <Tooltip title="My Cart" placement="bottom">
         <Badge
