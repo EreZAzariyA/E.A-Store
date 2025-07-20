@@ -3,10 +3,24 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AddToCartButton } from "../components/AddToCartButton";
 import { numberWithCommas } from "../../utils/helpers";
-import { Image, InputNumber, Spin } from "antd";
+import {
+  Image,
+  InputNumber,
+  Spin,
+  Row,
+  Col,
+  Card,
+  Typography,
+  Tag,
+  List,
+  Statistic,
+  Space,
+  Divider
+} from "antd";
 import { FcPaid, FcInTransit } from "react-icons/fc";
-import "./productPage.css";
 import { RemoveFromCartButton } from "../components/RemoveFromCartButton";
+
+const { Title, Text } = Typography;
 
 export const ProductPage = () => {
   const { product_id } = useParams();
@@ -23,87 +37,117 @@ export const ProductPage = () => {
     isAvailable = product.stock > 0;
 
     return (
-      <div className="product-page-container">
-        <div className="product-page-header">
-          <h1 className="product-name">{product.name}</h1>
-          <div className="product-id">
-            <span>Product ID: </span>{product._id}
-          </div>
-        </div>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: 24, backgroundColor: '#fafafa', minHeight: '100vh' }}>
+        <Card style={{ marginBottom: 24 }}>
+          <Title level={1} style={{ margin: '0 0 8px 0' }}>{product.name}</Title>
+          <Text type="secondary">Product ID: {product._id}</Text>
+        </Card>
 
-        <div className="product-page-content">
-          <div className="product-image-section">
-            <div className="product-image-container">
-              <Image preview={true} src={product.image_url} alt={product.name + ' img'} />
-            </div>
-            <div className="brand-section">
-              <Image preview={false} src={brand?.image_url} alt={brand?.name + ' img'} />
-              <div className="brand-info">
-                <p className="brand-label">Brand</p>
-                <h4 className="brand-name">{brand?.name}</h4>
-              </div>
-            </div>
-          </div>
-
-          <div className="product-details-section">
-            <div className="product-price-section">
-              <div className="product-price">
-                <span className="currency">$</span>{numberWithCommas(product.price) || 0}
-              </div>
-            </div>
-
-            <div className="product-availability">
-              <h3>Availability</h3>
-              <div className={`availability-badge ${isAvailable ? 'in-stock' : 'out-of-stock'}`}>
-                {isAvailable ? (
-                  <>
-                    <span>✅</span>
-                    <span>In Stock</span>
-                  </>
-                ) : (
-                  <>
-                    <span>❌</span>
-                    <span>Out of Stock</span>
-                  </>
-                )}
-              </div>
-            </div>
-
-            <div className="product-delivery-options">
-              <h3>Delivery Options</h3>
-              <ul className="delivery-options-list">
-                <li><FcPaid /> Collection from store</li>
-                <li><FcInTransit /> Home delivery available</li>
-              </ul>
-            </div>
-
-            <div className="product-description">
-              <h3>Description</h3>
-              <p>{product.description}</p>
-            </div>
-
-            <div className="quantity-section">
-              <h3>Quantity</h3>
-              <div className="quantity-controls">
-                <InputNumber
-                  disabled={!isAvailable}
-                  min={1}
-                  max={10}
-                  defaultValue={isInCart?.amount || amount}
-                  onChange={(val) => setAmount(val)}
+        <Row gutter={32}>
+          <Col xs={24} lg={12}>
+            <Card>
+              <Image
+                preview={true}
+                src={product.image_url}
+                alt={product.name + ' img'}
+                style={{ width: '100%', borderRadius: 12 }}
+              />
+              <Divider />
+              <Space align="center">
+                <Image
+                  preview={false}
+                  src={brand?.image_url}
+                  alt={brand?.name + ' img'}
+                  width={60}
+                  style={{ borderRadius: 8, padding: 8, backgroundColor: 'white' }}
                 />
-                <div className="action-buttons">
-                  {!isInCart && (
-                    <AddToCartButton isDisabled={!isAvailable} product={product} shoppingCart_id={shoppingCart?._id} amount={amount} />
-                  )}
-                  {isInCart && (
-                    <RemoveFromCartButton shoppingCart_id={shoppingCart?._id} product={product} />
-                  )}
+                <div>
+                  <Text type="secondary" style={{ fontSize: 12, display: 'block' }}>Brand</Text>
+                  <Title level={5} style={{ margin: 0 }}>{brand?.name}</Title>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+              </Space>
+            </Card>
+          </Col>
+
+          <Col xs={24} lg={12}>
+            <Card>
+              <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <div>
+                  <Statistic
+                    title=""
+                    value={numberWithCommas(product.price) || 0}
+                    prefix="$"
+                    valueStyle={{ fontSize: 36, fontWeight: 700, color: '#1890ff' }}
+                  />
+                </div>
+
+                <Divider />
+
+                <div>
+                  <Title level={4}>Availability</Title>
+                  <Tag
+                    color={isAvailable ? 'success' : 'error'}
+                    style={{ padding: '8px 16px', borderRadius: 20, fontSize: 14 }}
+                  >
+                    {isAvailable ? '✅ In Stock' : '❌ Out of Stock'}
+                  </Tag>
+                </div>
+
+                <Divider />
+
+                <div>
+                  <Title level={4}>Delivery Options</Title>
+                  <List
+                    size="small"
+                    dataSource={[
+                      { icon: <FcPaid />, text: 'Collection from store' },
+                      { icon: <FcInTransit />, text: 'Home delivery available' }
+                    ]}
+                    renderItem={(item) => (
+                      <List.Item>
+                        <Space>
+                          {item.icon}
+                          {item.text}
+                        </Space>
+                      </List.Item>
+                    )}
+                  />
+                </div>
+
+                <Divider />
+
+                <div>
+                  <Title level={4}>Description</Title>
+                  <Text>{product.description}</Text>
+                </div>
+
+                <Divider />
+
+                <div>
+                  <Title level={4}>Quantity</Title>
+                  <Space direction="vertical" style={{ width: '100%' }}>
+                    <InputNumber
+                      disabled={!isAvailable}
+                      min={1}
+                      max={10}
+                      defaultValue={isInCart?.amount || amount}
+                      onChange={(val) => setAmount(val)}
+                      style={{ width: 120 }}
+                    />
+                    <Space wrap>
+                      {!isInCart && (
+                        <AddToCartButton isDisabled={!isAvailable} product={product} shoppingCart_id={shoppingCart?._id} amount={amount} />
+                      )}
+                      {isInCart && (
+                        <RemoveFromCartButton shoppingCart_id={shoppingCart?._id} product={product} />
+                      )}
+                    </Space>
+                  </Space>
+                </div>
+              </Space>
+            </Card>
+          </Col>
+        </Row>
       </div>
     );
   } else <Spin />

@@ -5,7 +5,8 @@ import { EditTable } from "../components/EditTable";
 import { AdminInsert } from "../components/AdminInsert";
 import { adminProductsServices } from "../../../services/admin/products-services";
 import { ComponentsTypes, toLowerCase } from "../../../utils/helpers";
-import { Col, Input, Row, Select, Space, message } from "antd";
+import { Space, message } from "antd";
+import { Filters } from "../components/Filters";
 
 const Steps = {
   ADD_PRODUCT: "ADD_PRODUCT",
@@ -144,38 +145,12 @@ export const ProductsTable = () => {
     <Space direction="vertical" className="w-100">
       {!step && (
         <>
-          <Row align={'middle'} justify={'start'} gutter={[20, 10]}>
-            <Col>
-              <Input
-                allowClear
-                type="text"
-                placeholder="Search product"
-                onChange={(val) => setFilterState({...filterState, name: val.target.value})}
-              />
-            </Col>
-            <Col>
-              <Select
-                allowClear
-                onClear={() => setFilterState({...filterState, category_id: ''})}
-                style={{width: '200px'}}
-                value={filterState.category_id}
-                onSelect={(val) => setFilterState({...filterState, category_id: val })}
-                placeholder={"Select category"}
-                options={categories?.map((category) => ({label: category.category, key: category._id}))}
-              />
-            </Col>
-            <Col>
-              <Select
-                allowClear
-                onClear={() => setFilterState({...filterState, subCategory_id: ''})}
-                style={{ width: '200px' }}
-                value={filterState.subCategory_id}
-                placeholder="Select sub-category"
-                onSelect={(val) => setFilterState({...filterState, subCategory_id: val })}
-                options={subCategories?.map((subCategory) => ({ label: subCategory.subCategory, key: subCategory._id }))}
-              />
-            </Col>
-          </Row>
+          <Filters
+            product
+            categorySelect
+            subCategorySelect
+            handleFilterChange={(name, val) => setFilterState({ ...filterState, [name]: val })}
+          />
 
           <EditTable
             rowKey={'_id'}

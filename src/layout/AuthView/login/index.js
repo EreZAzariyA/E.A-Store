@@ -24,13 +24,9 @@ export const Login = () => {
 
   const formItemLayout = {
     className: 'auth-form login',
-    layout: "horizontal",
+    layout: "vertical",
     labelAlign: 'left',
-    labelCol: {
-      sm: { span: 6 },
-      lg: { span: 4 },
-    },
-    wrapperCol: {span: 24},
+
   };
 
   return (
@@ -60,7 +56,7 @@ export const Login = () => {
             <Input.Password placeholder="Enter your password" />
           </Form.Item>
 
-          <Button htmlType="submit" loading={loading}>Sign In</Button>
+          <Button ghost htmlType="submit" loading={loading}>Sign In</Button>
           <p>Don't have an account? <Link to={'/auth/register'}>Register</Link></p>
           <Button
             type="text"
@@ -68,7 +64,6 @@ export const Login = () => {
             style={{
               width: '100%',
               marginTop: '16px',
-              color: '#64748b',
               textDecoration: 'underline'
             }}
           >

@@ -10,7 +10,7 @@ import socketIo from './services/socket';
 interceptorsService.createInterceptors();
 socketIo.initSocket();
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const isAdmin = JSON.parse(process.env?.REACT_APP_IS_ADMIN || "false");
+const isAdmin = process.env.REACT_APP_IS_ADMIN ? JSON.parse(process.env.REACT_APP_IS_ADMIN) : false;
 
 
 if (isAdmin) {

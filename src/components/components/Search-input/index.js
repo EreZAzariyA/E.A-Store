@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { storeServices } from "../../../services/store-services";
 import { isArrayAndNotEmpty, validateString, Colors } from "../../../utils/helpers";
-import { Col, Row, Select } from "antd"
+import { Col, Row, Select, Typography } from "antd"
 
 export const SearchInput = () => {
   const [data, setData] = useState([]);
@@ -29,12 +29,6 @@ export const SearchInput = () => {
 
   return (
     <Select
-      style={{
-        width: '30vw',
-        height: '44px',
-        borderRadius: '12px',
-        fontSize: '14px'
-      }}
       showSearch
       allowClear
       value={value}
@@ -57,12 +51,8 @@ export const SearchInput = () => {
             borderRadius: '8px',
             transition: 'all 0.2s ease'
           }}>
-            <Col span={18} style={{
-              color: Colors.PRIMARY,
-              fontWeight: '500',
-              fontSize: '14px'
-            }}>
-              {d.text}
+            <Col span={18}>
+              <Typography.Text ellipsis={{ rows: 1 }}><strong>{d.text}</strong></Typography.Text>
             </Col>
             <Col span={6}>
               <img
@@ -72,7 +62,7 @@ export const SearchInput = () => {
                 height={60}
                 style={{
                   borderRadius: '8px',
-                  objectFit: 'cover',
+                  objectFit: 'contain',
                   border: `1px solid ${Colors.BORDER}`
                 }}
               />

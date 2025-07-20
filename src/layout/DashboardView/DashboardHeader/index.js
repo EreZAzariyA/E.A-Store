@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { PersonalArea } from "./PersonalArea";
 import { useSelector } from "react-redux";
 import { shoppingCartServices } from "../../../services/shoppingCart-services";
-import { Button, Col, Layout, Row } from "antd";
+import { Button, Col, Flex, Layout, Row } from "antd";
 import { storeServices } from "../../../services/store-services";
 import { ordersServices } from "../../../services/orders-services";
 import { CiMenuBurger, CiSearch } from "react-icons/ci";
@@ -48,60 +48,34 @@ export const DashboardHeader = ({ sideBarHandler }) => {
   }, [user, admin]);
 
   return (
-    <Header
-      style={{
-        background: 'rgba(255, 255, 255, 0.25)',
-        backdropFilter: 'blur(16px)',
-        height: '75px',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-        padding: '0 12px'
-      }}
-    >
-      <Row
-        justify="space-between"
-        align="middle"
-        style={{ height: '100%' }}
-      >
-        <Col xs={16} sm={12} md={8} lg={6} xl={4}>
+    <Header>
+      <Row align="middle">
+        <Col xs={16} sm={16} md={16} lg={4} xl={4}>
           <Logo />
         </Col>
 
         {!admin && (
           <>
-            <Col xs={8} sm={0} md={0} lg={0} xl={0}>
-              <Row justify="end" align="middle" gutter={[8, 0]}>
-                <Col span={12}>
-                  <Button
-                    type="link"
-                    icon={<CiSearch color={Colors.ICON} size={Sizes.ICON} />}
-                    onClick={() => navigate('search')}
-                    style={{ padding: '4px 8px' }}
-                  />
-                </Col>
-                <Col span={12}>
-                  <Button
-                    type="link"
-                    icon={<CiMenuBurger color={Colors.ICON} size={Sizes.ICON} />}
-                    onClick={() => sideBarHandler()}
-                    style={{ padding: '4px 8px' }}
-                  />
-                </Col>
-              </Row>
+            <Col xs={8} sm={8} md={8} lg={0} xl={0}>
+              <Flex justify="end" align="center" gap={8}>
+                <Button
+                  type="link"
+                  icon={<CiSearch color={Colors.ICON} size={Sizes.ICON} />}
+                  onClick={() => navigate('search')}
+                />
+                <Button
+                  type="link"
+                  icon={<CiMenuBurger color={Colors.ICON} size={Sizes.ICON} />}
+                  onClick={() => sideBarHandler()}
+                />
+              </Flex>
             </Col>
 
-            <Col xs={0} sm={12} md={16} lg={18} xl={20}>
-              <Row gutter={[16, 0]} justify="end" align="middle">
-                <Col xs={0} sm={16} md={16} lg={16} xl={18}>
-                  <SearchInput />
-                </Col>
-
-                <Col xs={0} sm={8} md={8} lg={8} xl={6}>
-                  <PersonalArea />
-                </Col>
-              </Row>
+            <Col xs={0} sm={0} md={0} lg={20} xl={20}>
+              <Flex justify="end" align="center" gap={16}>
+                <SearchInput />
+                <PersonalArea />
+              </Flex>
             </Col>
           </>
         )}
